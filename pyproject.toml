@@ -1,14 +1,14 @@
 [project]
-name = "replicate_openai"
-description = "ComfyUI nodes to call OpenAI models on Replicate: GPT-5 family (text) and gpt-image-2 (image generate/edit)."
+name = "comfyui_all_ai_providers"
+description = "ComfyUI nodes for multiple AI providers. Included: Replicate (OpenAI GPT-5 LLM + gpt-image-2) and a provider-neutral System Instructions node."
 version = "1.0.0"
 license = { text = "MIT" }
 dependencies = ["replicate"]
 
 [project.urls]
-Repository = "https://github.com/Hishamahmer/replicate-comfyui"
+Repository = "https://github.com/Hishamahmer/comfyui-all-ai-providers"
 
 [tool.comfy]
 PublisherId = "Hishamahmer"
-DisplayName = "Replicate OpenAI (LLM + gpt-image-2)"
-Repository = "https://github.com/Hishamahmer/replicate-comfyui"
+DisplayName = "ComfyUI All AI Providers"
+Repository = "https://github.com/Hishamahmer/comfyui-all-ai-providers"

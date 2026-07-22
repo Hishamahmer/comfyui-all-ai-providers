@@ -1,29 +1,27 @@
-"""
-ComfyUI custom nodes: call OpenAI models hosted on Replicate.
+"""Replicate provider nodes.
 
-Two nodes only (by design — nothing else is exposed here):
-  1. OpenAI LLM (Replicate)        -> text out (STRING)   [GPT-5 family]
-  2. OpenAI GPT-Image-2 (Replicate) -> image out (IMAGE)  [openai/gpt-image-2, generate + edit]
+  - OpenAI LLM (Replicate)        -> text out (STRING)   [GPT-5 family]
+  - OpenAI GPT-Image-2 (Replicate) -> image out (IMAGE)  [openai/gpt-image-2, generate + edit]
 
-Auth: each node has an `api_token` field. If left blank it falls back to the
-REPLICATE_API_TOKEN environment variable.
+Token: the node's `api_token` field (optional) -> REPLICATE_API_TOKEN env var -> .env file.
+Dependency: `replicate`.
 """
 
-import io
-import os
 import time
-import base64
 import asyncio
 
-import numpy as np
-import torch
-from PIL import Image
+from ..common.image_utils import (
+    collect_images_to_data_uris,
+    output_to_text,
+    output_to_bytes_list,
+    bytes_list_to_image_tensor,
+)
+from ..common.keys import resolve_key
 
 # ----------------------------------------------------------------------------
 # Config
 # ----------------------------------------------------------------------------
 
-# GPT-5 family text models on Replicate (ids under the `openai` org).
 GPT5_MODELS = [
     "openai/gpt-5",
     "openai/gpt-5-mini",
@@ -39,31 +37,32 @@ GPT5_MODELS = [
 ]
 
 IMAGE_MODEL = "openai/gpt-image-2"
-
-USER_AGENT = "replicate-openai-comfyui/1.0.0"
+USER_AGENT = "comfyui-all-ai-providers/1.0.0"
 
 # sentinel meaning "don't send this parameter — let the model use its default"
 DEFAULT = "default"
 
+TOKEN_HELP = ("No Replicate API token. Options: paste it into the node's `api_token` field, "
+              "set the REPLICATE_API_TOKEN environment variable, or add a line "
+              "`REPLICATE_API_TOKEN=...` to a .env file in the custom-node folder or ComfyUI root.")
+
+TOKEN_TOOLTIP = ("Replicate API token (optional). Blank = use REPLICATE_API_TOKEN from the "
+                 "environment or a .env file.")
+
 
 # ----------------------------------------------------------------------------
-# Helpers
+# Client + runner
 # ----------------------------------------------------------------------------
 
 def _get_client(api_token):
-    """Build a Replicate client. Prefer the node's api_token, else env var."""
     from replicate.client import Client
     import httpx
 
-    token = (api_token or "").strip() or os.environ.get("REPLICATE_API_TOKEN", "").strip()
+    token = resolve_key(api_token, "REPLICATE_API_TOKEN")
     if not token:
-        raise RuntimeError(
-            "No Replicate API token. Paste one into the node's `api_token` field, "
-            "or set the REPLICATE_API_TOKEN environment variable."
-        )
-    # Generous per-request timeout. The OVERALL run can take much longer than any single
-    # request — we don't block on one request; we poll (see _run_model), so a long model
-    # run never trips a read timeout.
+        raise RuntimeError(TOKEN_HELP)
+    # Generous per-request timeout. Overall run length is handled by polling (see
+    # _run_model), so a long model run never trips a read timeout.
     timeout = httpx.Timeout(connect=15.0, read=120.0, write=120.0, pool=60.0)
     return Client(api_token=token, timeout=timeout, headers={"User-Agent": USER_AGENT})
 
@@ -71,13 +70,10 @@ def _get_client(api_token):
 def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
     """Create a prediction and poll it to completion.
 
-    Unlike replicate.run()'s default, this does NOT ask the server to hold the HTTP
-    connection open until the model finishes (that "Prefer: wait" mode caps at ~60s and
-    causes httpx.ReadTimeout on longer models). Instead we create the prediction and poll
-    short GET requests, so a run of ANY duration is fine.
-
-    Also supports ComfyUI's Cancel button and an optional overall timeout.
-    `timeout_seconds` = 0 means wait indefinitely.
+    We do NOT use replicate.run()'s blocking "Prefer: wait" mode (caps ~60s and causes
+    httpx.ReadTimeout on longer models). Instead we create the prediction and poll short
+    GET requests, so a run of ANY duration is fine. Supports ComfyUI's Cancel button and
+    an optional overall timeout (0 = wait indefinitely).
     """
     try:
         import comfy.model_management as _mm
@@ -112,7 +108,7 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
             fails = 0
         except Exception as e:  # transient network hiccup — keep polling
             fails += 1
-            print(f"[replicate_openai] poll error (retrying {fails}/10): {e}")
+            print(f"[comfyui-all-ai-providers] poll error (retrying {fails}/10): {e}")
             if fails >= 10:
                 raise RuntimeError(f"Replicate polling failed repeatedly: {e}")
 
@@ -123,96 +119,8 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
     return prediction.output
 
 
-def _tensor_to_pil(image):
-    """A single ComfyUI IMAGE tensor (H,W,C) float 0..1 -> PIL.Image."""
-    arr = (image.cpu().numpy() * 255.0).clip(0, 255).astype(np.uint8)
-    if arr.ndim == 3 and arr.shape[2] == 1:
-        return Image.fromarray(arr[:, :, 0], mode="L")
-    return Image.fromarray(arr)
-
-
-def _image_batch_to_data_uris(images):
-    """A batched ComfyUI IMAGE tensor (B,H,W,C) -> list of PNG data URIs."""
-    uris = []
-    for i in range(images.shape[0]):
-        pil = _tensor_to_pil(images[i]).convert("RGB")
-        buf = io.BytesIO()
-        pil.save(buf, format="PNG")
-        b64 = base64.b64encode(buf.getvalue()).decode()
-        uris.append(f"data:image/png;base64,{b64}")
-    return uris
-
-
-def _collect_images_to_data_uris(*images):
-    """Several optional IMAGE sockets (each may be a batch) -> flat list of data URIs."""
-    uris = []
-    for img in images:
-        if img is not None:
-            uris.extend(_image_batch_to_data_uris(img))
-    return uris
-
-
-def _output_to_bytes_list(output):
-    """Normalise a Replicate image output into a list of raw image bytes.
-
-    Handles: FileOutput objects (.read()), http(s) URLs, data: URIs, raw bytes,
-    and lists of any of those.
-    """
-    items = output if isinstance(output, list) else [output]
-    out = []
-    for item in items:
-        if item is None:
-            continue
-        if hasattr(item, "read"):  # replicate FileOutput / file-like
-            out.append(item.read())
-        elif isinstance(item, (bytes, bytearray)):
-            out.append(bytes(item))
-        elif isinstance(item, str):
-            if item.startswith("data:"):
-                out.append(base64.b64decode(item.split(",", 1)[1]))
-            elif item.startswith("http://") or item.startswith("https://"):
-                import urllib.request  # stdlib — no extra dependency
-
-                with urllib.request.urlopen(item, timeout=300) as resp:
-                    out.append(resp.read())
-            else:  # assume raw base64
-                out.append(base64.b64decode(item))
-        else:
-            raise RuntimeError(f"Unexpected image output element: {type(item)}")
-    return out
-
-
-def _bytes_list_to_image_tensor(bytes_list):
-    """List of image bytes -> a single batched ComfyUI IMAGE tensor (B,H,W,C)."""
-    tensors = []
-    for data in bytes_list:
-        img = Image.open(io.BytesIO(data))
-        if img.mode != "RGB":
-            img = img.convert("RGB")
-        arr = np.asarray(img).astype(np.float32) / 255.0  # (H,W,3)
-        tensors.append(torch.from_numpy(arr)[None, ...])   # (1,H,W,3)
-    if not tensors:
-        raise RuntimeError("Model returned no image output.")
-    if len(tensors) == 1:
-        return tensors[0]
-    # pad-free concat only works if sizes match; gpt-image returns uniform sizes
-    return torch.cat(tensors, dim=0)
-
-
-def _output_to_text(output):
-    """Normalise a Replicate text output (str / list / streaming iterator) -> str."""
-    if isinstance(output, str):
-        return output.strip()
-    if isinstance(output, (list, tuple)):
-        return "".join(str(x) for x in output).strip()
-    try:
-        return "".join(str(x) for x in output).strip()  # iterator/stream
-    except TypeError:
-        return str(output).strip()
-
-
 # ----------------------------------------------------------------------------
-# Node 1: OpenAI LLM (Replicate) — GPT-5 family, text out
+# Node: OpenAI LLM (Replicate) — GPT-5 family, text out
 # ----------------------------------------------------------------------------
 
 class ReplicateOpenAILLM:
@@ -240,8 +148,7 @@ class ReplicateOpenAILLM:
                 "verbosity": ([DEFAULT, "low", "medium", "high"],),
                 "max_completion_tokens": ("INT", {"default": 0, "min": 0, "max": 128000,
                                                   "tooltip": "0 = model default."}),
-                "api_token": ("STRING", {"default": "",
-                                         "tooltip": "Replicate API token. Blank = use REPLICATE_API_TOKEN env var."}),
+                "api_token": ("STRING", {"default": "", "tooltip": TOKEN_TOOLTIP}),
                 "timeout_seconds": ("INT", {"default": 0, "min": 0, "max": 86400,
                                             "tooltip": "Max seconds to wait for the model. 0 = wait indefinitely."}),
                 "force_rerun": ("BOOLEAN", {"default": False,
@@ -271,7 +178,7 @@ class ReplicateOpenAILLM:
         inputs = {"prompt": prompt}
         if system_prompt.strip():
             inputs["system_prompt"] = system_prompt
-        image_uris = _collect_images_to_data_uris(image_1, image_2, image_3, image_4)
+        image_uris = collect_images_to_data_uris(image_1, image_2, image_3, image_4)
         if image_uris:
             inputs["image_input"] = image_uris
         if reasoning_effort != DEFAULT:
@@ -281,13 +188,13 @@ class ReplicateOpenAILLM:
         if max_completion_tokens and max_completion_tokens > 0:
             inputs["max_completion_tokens"] = int(max_completion_tokens)
 
-        print(f"[replicate_openai] running {model}")
+        print(f"[comfyui-all-ai-providers] running {model}")
         output = _run_model(client, model, inputs, timeout_seconds)
-        return (_output_to_text(output),)
+        return (output_to_text(output),)
 
 
 # ----------------------------------------------------------------------------
-# Node 2: OpenAI GPT-Image-2 (Replicate) — generate + edit, image out
+# Node: OpenAI GPT-Image-2 (Replicate) — generate + edit, image out
 # ----------------------------------------------------------------------------
 
 class ReplicateOpenAIGPTImage2:
@@ -314,8 +221,7 @@ class ReplicateOpenAIGPTImage2:
                 "background": ([DEFAULT, "auto", "transparent", "opaque"],),
                 "output_format": ([DEFAULT, "png", "jpeg", "webp"],),
                 "moderation": ([DEFAULT, "auto", "low"],),
-                "api_token": ("STRING", {"default": "",
-                                         "tooltip": "Replicate API token. Blank = use REPLICATE_API_TOKEN env var."}),
+                "api_token": ("STRING", {"default": "", "tooltip": TOKEN_TOOLTIP}),
                 "timeout_seconds": ("INT", {"default": 0, "min": 0, "max": 86400,
                                             "tooltip": "Max seconds to wait for the model. 0 = wait indefinitely."}),
                 "force_rerun": ("BOOLEAN", {"default": False,
@@ -344,7 +250,7 @@ class ReplicateOpenAIGPTImage2:
         client = _get_client(api_token)
 
         inputs = {"prompt": prompt, "number_of_images": int(number_of_images)}
-        image_uris = _collect_images_to_data_uris(image_1, image_2, image_3, image_4)
+        image_uris = collect_images_to_data_uris(image_1, image_2, image_3, image_4)
         if image_uris:
             inputs["input_images"] = image_uris
         if aspect_ratio != DEFAULT:
@@ -358,51 +264,18 @@ class ReplicateOpenAIGPTImage2:
         if moderation != DEFAULT:
             inputs["moderation"] = moderation
 
-        print(f"[replicate_openai] running {IMAGE_MODEL}")
+        print(f"[comfyui-all-ai-providers] running {IMAGE_MODEL}")
         output = _run_model(client, IMAGE_MODEL, inputs, timeout_seconds)
-        image = _bytes_list_to_image_tensor(_output_to_bytes_list(output))
+        image = bytes_list_to_image_tensor(output_to_bytes_list(output))
         return (image,)
 
-
-# ----------------------------------------------------------------------------
-# Node 3: System Instructions — reusable system prompt, text out
-# ----------------------------------------------------------------------------
-
-class SystemInstructions:
-    CATEGORY = "Replicate/OpenAI"
-    FUNCTION = "run"
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("system_instructions",)
-    DESCRIPTION = ("Hold reusable system instructions and output them as text. "
-                   "Wire the output into the LLM node's `system_prompt`.")
-
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "system_instructions": ("STRING", {
-                    "multiline": True,
-                    "default": "You are a helpful assistant.",
-                }),
-            },
-        }
-
-    def run(self, system_instructions):
-        return (system_instructions,)
-
-
-# ----------------------------------------------------------------------------
-# Registration
-# ----------------------------------------------------------------------------
 
 NODE_CLASS_MAPPINGS = {
     "ReplicateOpenAILLM": ReplicateOpenAILLM,
     "ReplicateOpenAIGPTImage2": ReplicateOpenAIGPTImage2,
-    "ReplicateOpenAISystemInstructions": SystemInstructions,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ReplicateOpenAILLM": "OpenAI LLM (Replicate)",
     "ReplicateOpenAIGPTImage2": "OpenAI GPT-Image-2 (Replicate)",
-    "ReplicateOpenAISystemInstructions": "System Instructions (Replicate/OpenAI)",
 }

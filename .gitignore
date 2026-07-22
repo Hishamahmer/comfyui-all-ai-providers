@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 *.pyo
 .DS_Store
+
+# never commit real API keys
+.env
