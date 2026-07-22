@@ -272,6 +272,6 @@ app.registerExtension({
     };
   },
   async setup() {
-    console.log("[ArkenNemesis] color picker UI loaded");
+    console.log("[arkennemesis] color picker UI loaded");
   },
 });

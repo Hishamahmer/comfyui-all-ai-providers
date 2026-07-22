@@ -1,6 +1,6 @@
-# ArkenNemesis — ComfyUI Nodes
+# arkennemesis — ComfyUI Nodes
 
-One pack, one menu (**ArkenNemesis**), many AI use cases: cloud LLMs, image generation,
+One pack, one menu (**arkennemesis**), many AI use cases: cloud LLMs, image generation,
 and utility nodes. Providers and use cases keep growing — each module loads independently,
 so nothing breaks anything else.
 
@@ -8,11 +8,11 @@ so nothing breaks anything else.
 
 | Menu | Node | What it does | Out |
 |---|---|---|---|
-| ArkenNemesis/**LLM** | ArkenNemesis Replicate LLM (OpenAI GPT-5) | GPT-5 family (`gpt-5`, `-mini`, `-nano`, `-pro`, `-structured`, `5.1`, `5.2`, `5.4`, `5.6-luna/terra/sol`) — text + vision (4 image inputs) | `STRING` |
-| ArkenNemesis/**Image Gen** | ArkenNemesis Replicate Image Gen (GPT-Image-2) | `openai/gpt-image-2` — text→image **and** image edit (4 image inputs) | `IMAGE` |
-| ArkenNemesis/**Utility** | ArkenNemesis System Instructions | reusable system prompt for any LLM node | `STRING` |
-| ArkenNemesis/**Utility** | ArkenNemesis Color Picker | pick a color: drag a pin on the image, screen eyedropper, or manual hex | `STRING` ×3 + `IMAGE` |
-| ArkenNemesis/**Utility** | ArkenNemesis Palette Analyzer | top-N dominant colors of an image | `STRING` ×2 + `IMAGE` |
+| arkennemesis/**LLM** | arkennemesis Replicate LLM (OpenAI GPT-5) | GPT-5 family (`gpt-5`, `-mini`, `-nano`, `-pro`, `-structured`, `5.1`, `5.2`, `5.4`, `5.6-luna/terra/sol`) — text + vision (4 image inputs) | `STRING` |
+| arkennemesis/**Image Gen** | arkennemesis Replicate Image Gen (GPT-Image-2) | `openai/gpt-image-2` — text→image **and** image edit (4 image inputs) | `IMAGE` |
+| arkennemesis/**Utility** | arkennemesis System Instructions | reusable system prompt for any LLM node | `STRING` |
+| arkennemesis/**Utility** | arkennemesis Color Picker | pick a color: drag a pin on the image, screen eyedropper, or manual hex | `STRING` ×3 + `IMAGE` |
+| arkennemesis/**Utility** | arkennemesis Palette Analyzer | top-N dominant colors of an image | `STRING` ×2 + `IMAGE` |
 
 ## Install
 
@@ -90,7 +90,7 @@ replicate_provider/ Replicate (OpenAI) nodes
 web/                front-end: activity badge, color-picker pin UI
 ```
 Add a module = new package exposing `NODE_CLASS_MAPPINGS` / `NODE_DISPLAY_NAME_MAPPINGS`,
-then register it in `__init__.py`. Put new nodes under an `ArkenNemesis/<category>` menu.
+then register it in `__init__.py`. Put new nodes under an `arkennemesis/<category>` menu.
 
 ## License
 

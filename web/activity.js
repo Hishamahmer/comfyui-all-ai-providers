@@ -103,7 +103,7 @@ function drawCooking(node, ctx) {
   if (!node.__repRunning || node.flags?.collapsed) return;
   if (!loggedDraw) {
     loggedDraw = true;
-    console.log("[ArkenNemesis] cooking badge drawing on canvas");
+    console.log("[arkennemesis] cooking badge drawing on canvas");
   }
 
   const now = performance.now();
@@ -131,7 +131,7 @@ function drawCooking(node, ctx) {
 app.registerExtension({
   name: "arkennemesis.activity",
   async setup() {
-    console.log("[ArkenNemesis] cooking indicator loaded");
+    console.log("[arkennemesis] cooking indicator loaded");
   },
   async beforeRegisterNodeDef(nodeType, nodeData) {
     if (!ANIMATED_NODES.has(nodeData.name)) return;
