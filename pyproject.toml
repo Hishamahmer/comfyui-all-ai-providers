@@ -1,0 +1,14 @@
+[project]
+name = "replicate_openai"
+description = "ComfyUI nodes to call OpenAI models on Replicate: GPT-5 family (text) and gpt-image-2 (image generate/edit)."
+version = "1.0.0"
+license = { text = "MIT" }
+dependencies = ["replicate"]
+
+[project.urls]
+Repository = "https://github.com/Hishamahmer/replicate-comfyui"
+
+[tool.comfy]
+PublisherId = "Hishamahmer"
+DisplayName = "Replicate OpenAI (LLM + gpt-image-2)"
+Repository = "https://github.com/Hishamahmer/replicate-comfyui"
