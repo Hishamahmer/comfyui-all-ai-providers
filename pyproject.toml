@@ -1,14 +1,14 @@
 [project]
-name = "comfyui_all_ai_providers"
-description = "ComfyUI nodes for multiple AI providers. Included: Replicate (OpenAI GPT-5 LLM + gpt-image-2) and a provider-neutral System Instructions node."
-version = "1.0.0"
+name = "comfyui_arkennemesis"
+description = "ArkenNemesis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions, Color Picker, Palette Analyzer)."
+version = "1.1.0"
 license = { text = "MIT" }
 dependencies = ["replicate"]
 
 [project.urls]
-Repository = "https://github.com/Hishamahmer/comfyui-all-ai-providers"
+Repository = "https://github.com/Hishamahmer/comfyui-arkennemesis"
 
 [tool.comfy]
 PublisherId = "Hishamahmer"
-DisplayName = "ComfyUI All AI Providers"
-Repository = "https://github.com/Hishamahmer/comfyui-all-ai-providers"
+DisplayName = "ArkenNemesis Nodes"
+Repository = "https://github.com/Hishamahmer/comfyui-arkennemesis"

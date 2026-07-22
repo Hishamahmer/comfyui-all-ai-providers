@@ -1,10 +1,13 @@
-"""comfyui-all-ai-providers — ComfyUI nodes for multiple AI providers.
+"""ArkenNemesis — ComfyUI nodes for many AI use cases, under one brand.
 
-Currently bundled: Replicate (OpenAI GPT-5 LLM + gpt-image-2) and a provider-neutral
-System Instructions node. More providers (Ollama, Fal, ...) drop in as sibling packages.
+Menu layout:  ArkenNemesis/LLM  ·  ArkenNemesis/Image Gen  ·  ArkenNemesis/Utility
 
-Each provider is loaded independently, so a missing optional dependency only disables
-that one provider instead of breaking the whole pack.
+Currently bundled: Replicate (OpenAI GPT-5 LLM + gpt-image-2), System Instructions,
+Color Picker, Palette Analyzer. More providers/use cases (Ollama, Fal, Excalidraw, ...)
+drop in as sibling packages.
+
+Each module is loaded independently, so a missing optional dependency only disables
+that one module instead of breaking the whole pack.
 """
 
 NODE_CLASS_MAPPINGS = {}
@@ -17,11 +20,18 @@ def _load(desc, importer):
         NODE_CLASS_MAPPINGS.update(cls_map)
         NODE_DISPLAY_NAME_MAPPINGS.update(disp_map)
     except Exception as e:  # never let one provider break the others
-        print(f"[comfyui-all-ai-providers] '{desc}' not loaded: {e}")
+        print(f"[ArkenNemesis] '{desc}' not loaded: {e}")
 
 
 def _common():
     from .common.system_instructions import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _colors():
+    from .common.color_nodes import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
     )
     return c, d
@@ -35,6 +45,7 @@ def _replicate():
 
 
 _load("common nodes", _common)
+_load("color nodes", _colors)
 _load("replicate provider", _replicate)
 # Add future providers here, e.g.:
 # _load("ollama provider", _ollama)

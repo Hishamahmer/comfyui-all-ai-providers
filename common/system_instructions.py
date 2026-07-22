@@ -6,7 +6,7 @@ ANY LLM node (Replicate, Ollama, Fal, ...) that accepts a system prompt / text i
 
 
 class SystemInstructions:
-    CATEGORY = "AI/Prompt"
+    CATEGORY = "ArkenNemesis/Utility"
     FUNCTION = "run"
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("system_instructions",)
@@ -33,5 +33,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SystemInstructions": "System Instructions",
+    "SystemInstructions": "ArkenNemesis System Instructions",
 }

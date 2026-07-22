@@ -103,7 +103,7 @@ function drawCooking(node, ctx) {
   if (!node.__repRunning || node.flags?.collapsed) return;
   if (!loggedDraw) {
     loggedDraw = true;
-    console.log("[replicate_openai] cooking badge drawing on canvas");
+    console.log("[ArkenNemesis] cooking badge drawing on canvas");
   }
 
   const now = performance.now();
@@ -129,9 +129,9 @@ function drawCooking(node, ctx) {
 }
 
 app.registerExtension({
-  name: "replicate_openai.cooking",
+  name: "arkennemesis.activity",
   async setup() {
-    console.log("[replicate_openai] cooking indicator loaded");
+    console.log("[ArkenNemesis] cooking indicator loaded");
   },
   async beforeRegisterNodeDef(nodeType, nodeData) {
     if (!ANIMATED_NODES.has(nodeData.name)) return;

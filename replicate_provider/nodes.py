@@ -37,7 +37,7 @@ GPT5_MODELS = [
 ]
 
 IMAGE_MODEL = "openai/gpt-image-2"
-USER_AGENT = "comfyui-all-ai-providers/1.0.0"
+USER_AGENT = "comfyui-arkennemesis/1.0.0"
 
 # sentinel meaning "don't send this parameter — let the model use its default"
 DEFAULT = "default"
@@ -108,7 +108,7 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
             fails = 0
         except Exception as e:  # transient network hiccup — keep polling
             fails += 1
-            print(f"[comfyui-all-ai-providers] poll error (retrying {fails}/10): {e}")
+            print(f"[ArkenNemesis] poll error (retrying {fails}/10): {e}")
             if fails >= 10:
                 raise RuntimeError(f"Replicate polling failed repeatedly: {e}")
 
@@ -124,7 +124,7 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
 # ----------------------------------------------------------------------------
 
 class ReplicateOpenAILLM:
-    CATEGORY = "Replicate/OpenAI"
+    CATEGORY = "ArkenNemesis/LLM"
     FUNCTION = "run"
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("text",)
@@ -188,7 +188,7 @@ class ReplicateOpenAILLM:
         if max_completion_tokens and max_completion_tokens > 0:
             inputs["max_completion_tokens"] = int(max_completion_tokens)
 
-        print(f"[comfyui-all-ai-providers] running {model}")
+        print(f"[ArkenNemesis] running {model}")
         output = _run_model(client, model, inputs, timeout_seconds)
         return (output_to_text(output),)
 
@@ -198,7 +198,7 @@ class ReplicateOpenAILLM:
 # ----------------------------------------------------------------------------
 
 class ReplicateOpenAIGPTImage2:
-    CATEGORY = "Replicate/OpenAI"
+    CATEGORY = "ArkenNemesis/Image Gen"
     FUNCTION = "run"
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
@@ -264,7 +264,7 @@ class ReplicateOpenAIGPTImage2:
         if moderation != DEFAULT:
             inputs["moderation"] = moderation
 
-        print(f"[comfyui-all-ai-providers] running {IMAGE_MODEL}")
+        print(f"[ArkenNemesis] running {IMAGE_MODEL}")
         output = _run_model(client, IMAGE_MODEL, inputs, timeout_seconds)
         image = bytes_list_to_image_tensor(output_to_bytes_list(output))
         return (image,)
@@ -276,6 +276,6 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ReplicateOpenAILLM": "OpenAI LLM (Replicate)",
-    "ReplicateOpenAIGPTImage2": "OpenAI GPT-Image-2 (Replicate)",
+    "ReplicateOpenAILLM": "ArkenNemesis Replicate LLM (OpenAI GPT-5)",
+    "ReplicateOpenAIGPTImage2": "ArkenNemesis Replicate Image Gen (GPT-Image-2)",
 }

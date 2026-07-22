@@ -1,1 +1,1 @@
-"""Shared, provider-neutral code (nodes + helpers) for comfyui-all-ai-providers."""
+"""Shared, provider-neutral code (nodes + helpers) for ArkenNemesis nodes."""
