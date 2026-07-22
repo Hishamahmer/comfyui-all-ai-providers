@@ -1,1 +1,1 @@
-"""Shared, provider-neutral code (nodes + helpers) for arkennemesis nodes."""
+"""Shared, provider-neutral code (nodes + helpers) for arkennemasis nodes."""

@@ -1,6 +1,6 @@
-"""arkennemesis — ComfyUI nodes for many AI use cases, under one brand.
+"""arkennemasis — ComfyUI nodes for many AI use cases, under one brand.
 
-Menu layout:  arkennemesis/LLM  ·  arkennemesis/Image Gen  ·  arkennemesis/Utility
+Menu layout:  arkennemasis/LLM  ·  arkennemasis/Image Gen  ·  arkennemasis/Utility
 
 Currently bundled: Replicate (OpenAI GPT-5 LLM + gpt-image-2), System Instructions,
 Color Picker, Palette Analyzer. More providers/use cases (Ollama, Fal, Excalidraw, ...)
@@ -20,7 +20,7 @@ def _load(desc, importer):
         NODE_CLASS_MAPPINGS.update(cls_map)
         NODE_DISPLAY_NAME_MAPPINGS.update(disp_map)
     except Exception as e:  # never let one provider break the others
-        print(f"[arkennemesis] '{desc}' not loaded: {e}")
+        print(f"[arkennemasis] '{desc}' not loaded: {e}")
 
 
 def _common():

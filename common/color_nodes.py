@@ -69,7 +69,7 @@ def _save_temp_preview(arr01):
 # ----------------------------------------------------------------------------
 
 class AIColorPicker:
-    CATEGORY = "arkennemesis/Utility"
+    CATEGORY = "arkennemasis/Utility"
     FUNCTION = "run"
     RETURN_TYPES = ("STRING", "STRING", "STRING", "IMAGE")
     RETURN_NAMES = ("hex", "rgb", "prompt_text", "swatch")
@@ -120,7 +120,7 @@ class AIColorPicker:
 
         hexs, rgbs, text = _fmt(r, g, b)
         swatch = _solid_swatch(r, g, b, int(swatch_size))
-        print(f"[arkennemesis] color picked: {text}")
+        print(f"[arkennemasis] color picked: {text}")
 
         ui = {}
         if image is not None:
@@ -157,7 +157,7 @@ def _kmeans(pixels, k, iters=12, seed=0):
 
 
 class AIPaletteAnalyzer:
-    CATEGORY = "arkennemesis/Utility"
+    CATEGORY = "arkennemasis/Utility"
     FUNCTION = "run"
     RETURN_TYPES = ("STRING", "STRING", "IMAGE")
     RETURN_NAMES = ("palette_text", "hex_list", "palette_image")
@@ -190,7 +190,7 @@ class AIPaletteAnalyzer:
 
         strip = torch.from_numpy(np.concatenate(blocks, axis=1))[None, ...]
         palette_text = "\n".join(lines)
-        print(f"[arkennemesis] palette: {', '.join(hexes)}")
+        print(f"[arkennemasis] palette: {', '.join(hexes)}")
         return (palette_text, ", ".join(hexes), strip)
 
 
@@ -200,6 +200,6 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "AIColorPicker": "arkennemesis Color Picker",
-    "AIPaletteAnalyzer": "arkennemesis Palette Analyzer",
+    "AIColorPicker": "arkennemasis Color Picker",
+    "AIPaletteAnalyzer": "arkennemasis Palette Analyzer",
 }

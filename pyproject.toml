@@ -1,14 +1,14 @@
 [project]
-name = "comfyui_arkennemesis"
-description = "arkennemesis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions, Color Picker, Palette Analyzer)."
+name = "comfyui_arkennemasis"
+description = "arkennemasis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions, Color Picker, Palette Analyzer)."
 version = "1.1.0"
 license = { text = "MIT" }
 dependencies = ["replicate"]
 
 [project.urls]
-Repository = "https://github.com/Hishamahmer/comfyui-arkennemesis"
+Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
 
 [tool.comfy]
 PublisherId = "Hishamahmer"
-DisplayName = "arkennemesis Nodes"
-Repository = "https://github.com/Hishamahmer/comfyui-arkennemesis"
+DisplayName = "arkennemasis Nodes"
+Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
