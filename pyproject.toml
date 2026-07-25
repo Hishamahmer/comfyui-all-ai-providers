@@ -1,6 +1,6 @@
 [project]
 name = "comfyui_arkennemasis"
-description = "arkennemasis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions, Color Picker, Palette Analyzer)."
+description = "arkennemasis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions)."
 version = "1.1.0"
 license = { text = "MIT" }
 dependencies = ["replicate"]

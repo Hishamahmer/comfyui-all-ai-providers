@@ -11,8 +11,6 @@ so nothing breaks anything else.
 | arkennemasis/**LLM** | arkennemasis Replicate LLM (OpenAI GPT-5) | GPT-5 family (`gpt-5`, `-mini`, `-nano`, `-pro`, `-structured`, `5.1`, `5.2`, `5.4`, `5.6-luna/terra/sol`) — text + vision (4 image inputs) | `STRING` |
 | arkennemasis/**Image Gen** | arkennemasis Replicate Image Gen (GPT-Image-2) | `openai/gpt-image-2` — text→image **and** image edit (4 image inputs) | `IMAGE` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
-| arkennemasis/**Utility** | arkennemasis Color Picker | pick a color: drag a pin on the image, screen eyedropper, or manual hex | `STRING` ×3 + `IMAGE` |
-| arkennemasis/**Utility** | arkennemasis Palette Analyzer | top-N dominant colors of an image | `STRING` ×2 + `IMAGE` |
 
 ## Install
 
@@ -63,18 +61,6 @@ Image(s) ────────────► Replicate LLM (image_1..4)   �
 Optional params (`quality`, `aspect_ratio`, `reasoning_effort`, …) left on **`default`** are
 not sent, so the model's own defaults apply. `timeout_seconds = 0` waits indefinitely.
 
-### Utility: color tools
-
-- **Color Picker** — three ways to pick: **drag the pin** on the image shown on the node
-  (live #hex/RGB readout; exact full-res value sampled at run time), **🎯 pick from screen**
-  (Chromium eyedropper — works over anything on your screen), or type a **manual hex**.
-  Outputs `hex` / `rgb` / `prompt_text` strings for LLM prompts and a solid `swatch` IMAGE
-  for image nodes. Need several colors? Duplicate the node — one pin each.
-  The image preview appears instantly when fed by Load Image; for generated images it
-  appears after the first run.
-- **Palette Analyzer** — top-N dominant colors → numbered list with hex/RGB/share (for
-  LLM prompts), a compact hex list, and a palette-strip IMAGE.
-
 ## Notes
 
 - Replicate calls are **paid** — each run bills your Replicate account.
@@ -85,9 +71,9 @@ not sent, so the model's own defaults apply. `timeout_seconds = 0` waits indefin
 ## Repo layout (for contributors)
 
 ```
-common/             shared + utility nodes: System Instructions, color tools, key/.env resolution
+common/             shared + utility nodes: System Instructions, image utils, key/.env resolution
 replicate_provider/ Replicate (OpenAI) nodes
-web/                front-end: activity badge, color-picker pin UI
+web/                front-end: activity badge
 ```
 Add a module = new package exposing `NODE_CLASS_MAPPINGS` / `NODE_DISPLAY_NAME_MAPPINGS`,
 then register it in `__init__.py`. Put new nodes under an `arkennemasis/<category>` menu.
