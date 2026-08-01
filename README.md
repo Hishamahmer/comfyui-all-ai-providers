@@ -10,7 +10,7 @@ so nothing breaks anything else.
 |---|---|---|---|
 | arkennemasis/**LLM** | arkennemasis Replicate LLM (OpenAI GPT-5) | GPT-5 family (`gpt-5`, `-mini`, `-nano`, `-pro`, `-structured`, `5.1`, `5.2`, `5.4`, `5.6-luna/terra/sol`) — text + vision (4 image inputs) | `STRING` |
 | arkennemasis/**Image Gen** | arkennemasis Replicate Image Gen (GPT-Image-2) | `openai/gpt-image-2` — text→image **and** image edit (4 image inputs) | `IMAGE` |
-| arkennemasis/**Image Gen** | arkennemasis Image Gen Settings (shared) | one node driving `aspect_ratio` / `quality` / `run_mode` / … on **many** Image Gen nodes at once | `ARK_IMAGE_SETTINGS` |
+| arkennemasis/**Image Gen** | arkennemasis Image Gen Settings (shared) | one node driving `aspect_ratio` / `quality` / `run_mode` / `background` / `output_format` / `moderation` / `timeout_seconds` / `api_token` on **many** Image Gen nodes at once | `ARK_IMAGE_SETTINGS` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches, picked at random from a seed — unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
 | arkennemasis/**Utility** | arkennemasis Run Folder (auto-numbered) | `<parent_dir>/<folder_name>_001`, `_002`, … — one fresh output folder per run | `STRING`, `INT` |
@@ -81,9 +81,13 @@ Image Gen Settings ─┬─► Image Gen #1 (settings)
                     └─► … 24 more
 ```
 
-Any field left on **`use node's own`** (`0` for `number_of_images`, `-1` for
-`timeout_seconds`, blank for `api_token`) falls through to that node's own widget, so you
-can share most settings and still override one node locally. `settings` is a *socket*, not
+Any field left on **`use node's own`** (`-1` for `timeout_seconds`, blank for `api_token`)
+falls through to that node's own widget, so you can share most settings and still override
+one node locally.
+
+`number_of_images` is deliberately **not** shared. Multiplying it across every wired node
+is rarely what you want, and in a graph that names files deterministically the extra images
+all land on the same filename and overwrite each other. Set it per node if you need it. `settings` is a *socket*, not
 a widget, so adding it did not shift any existing `widgets_values` index.
 
 ### Rate limits and concurrency

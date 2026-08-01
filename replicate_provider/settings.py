@@ -8,6 +8,10 @@ one place.
 
 Anything left on ``use node's own`` falls through to that node's own widget, so you can
 share most settings and still override one shot locally.
+
+``number_of_images`` is deliberately **not** shared. Multiplying it across every wired node
+is rarely intended, and in a graph that names files deterministically the extra images all
+land on the same filename and overwrite each other. Set it per node if you really want it.
 """
 
 INHERIT = "use node's own"
@@ -39,10 +43,6 @@ class ArkImageGenSettings:
                 "aspect_ratio": (ASPECT,),
                 "quality": (QUALITY,),
                 "run_mode": (RUN_MODE,),
-                "number_of_images": ("INT", {
-                    "default": 0, "min": 0, "max": 10,
-                    "tooltip": "0 = use each node's own value.",
-                }),
                 "background": (BACKGROUND,),
                 "output_format": (FORMAT,),
                 "moderation": (MODERATION,),
@@ -58,7 +58,7 @@ class ArkImageGenSettings:
             },
         }
 
-    def run(self, aspect_ratio, quality, run_mode, number_of_images, background,
+    def run(self, aspect_ratio, quality, run_mode, background,
             output_format, moderation, timeout_seconds, api_token):
         out = {}
         for key, val in (("aspect_ratio", aspect_ratio), ("quality", quality),
@@ -66,8 +66,6 @@ class ArkImageGenSettings:
                          ("output_format", output_format), ("moderation", moderation)):
             if val != INHERIT:
                 out[key] = val
-        if int(number_of_images) > 0:
-            out["number_of_images"] = int(number_of_images)
         if int(timeout_seconds) >= 0:
             out["timeout_seconds"] = int(timeout_seconds)
         if api_token.strip():
