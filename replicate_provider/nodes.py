@@ -17,6 +17,7 @@ from ..common.image_utils import (
     bytes_list_to_image_tensor,
 )
 from ..common.keys import resolve_key
+from ..common.throttle import serial_lock, with_rate_limit_retry
 
 # ----------------------------------------------------------------------------
 # Config
@@ -41,6 +42,8 @@ USER_AGENT = "comfyui-arkennemasis/1.0.0"
 
 # sentinel meaning "don't send this parameter — let the model use its default"
 DEFAULT = "default"
+RUN_ONE_AT_A_TIME = "one at a time"
+RUN_ALL_AT_ONCE = "all at once"
 
 TOKEN_HELP = ("No Replicate API token. Options: paste it into the node's `api_token` field, "
               "set the REPLICATE_API_TOKEN environment variable, or add a line "
@@ -81,7 +84,11 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
         _mm = None
 
     owner, _, name = model_ref.partition("/")
-    prediction = client.models.predictions.create(model=(owner, name), input=inputs)
+    # Creating the prediction is the call providers throttle; polling is not.
+    prediction = with_rate_limit_retry(
+        lambda: client.models.predictions.create(model=(owner, name), input=inputs),
+        log=lambda m: print(f"[arkennemasis] {m}"),
+    )
 
     start = time.time()
     fails = 0
@@ -153,6 +160,13 @@ class ReplicateOpenAILLM:
                                             "tooltip": "Max seconds to wait for the model. 0 = wait indefinitely."}),
                 "force_rerun": ("BOOLEAN", {"default": False,
                                             "tooltip": "Re-call the API even if inputs are unchanged."}),
+                "run_mode": ([RUN_ONE_AT_A_TIME, RUN_ALL_AT_ONCE], {
+                    "tooltip": "ComfyUI runs async nodes concurrently. 'one at a time' "
+                               "serialises every arkennemasis API node in the graph — use "
+                               "it when the provider throttles bursts (Replicate allows a "
+                               "burst of 1 under $5 credit). 'all at once' is faster when "
+                               "your rate limit allows it.",
+                }),
             },
         }
 
@@ -162,14 +176,20 @@ class ReplicateOpenAILLM:
 
     async def run(self, model, prompt, system_prompt="", image_1=None, image_2=None,
                   image_3=None, image_4=None, reasoning_effort=DEFAULT, verbosity=DEFAULT,
-                  max_completion_tokens=0, api_token="", timeout_seconds=0, force_rerun=False):
+                  max_completion_tokens=0, api_token="", timeout_seconds=0, force_rerun=False,
+                  run_mode=RUN_ONE_AT_A_TIME):
         # Offload the (long, blocking) network + poll to a worker thread so ComfyUI's
         # event loop stays responsive during the whole run.
-        return await asyncio.to_thread(
-            self._blocking, model, prompt, system_prompt, image_1, image_2, image_3,
-            image_4, reasoning_effort, verbosity, max_completion_tokens, api_token,
-            timeout_seconds,
-        )
+        async def _go():
+            return await asyncio.to_thread(
+                self._blocking, model, prompt, system_prompt, image_1, image_2, image_3,
+                image_4, reasoning_effort, verbosity, max_completion_tokens, api_token,
+                timeout_seconds,
+            )
+        if run_mode == RUN_ALL_AT_ONCE:
+            return await _go()
+        async with serial_lock():          # shares the queue with the image node
+            return await _go()
 
     def _blocking(self, model, prompt, system_prompt, image_1, image_2, image_3, image_4,
                   reasoning_effort, verbosity, max_completion_tokens, api_token, timeout_seconds):
@@ -226,6 +246,13 @@ class ReplicateOpenAIGPTImage2:
                                             "tooltip": "Max seconds to wait for the model. 0 = wait indefinitely."}),
                 "force_rerun": ("BOOLEAN", {"default": False,
                                             "tooltip": "Re-call the API even if inputs are unchanged."}),
+                "run_mode": ([RUN_ONE_AT_A_TIME, RUN_ALL_AT_ONCE], {
+                    "tooltip": "ComfyUI runs async nodes concurrently. 'one at a time' "
+                               "serialises every arkennemasis API node in the graph — use "
+                               "it when the provider throttles bursts (Replicate allows a "
+                               "burst of 1 under $5 credit). 'all at once' is faster when "
+                               "your rate limit allows it.",
+                }),
             },
         }
 
@@ -236,13 +263,18 @@ class ReplicateOpenAIGPTImage2:
     async def run(self, prompt, image_1=None, image_2=None, image_3=None, image_4=None,
                   number_of_images=1, aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   output_format=DEFAULT, moderation=DEFAULT, api_token="", timeout_seconds=0,
-                  force_rerun=False):
+                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME):
         # Offload blocking network + poll + image download to a worker thread.
-        return await asyncio.to_thread(
-            self._blocking, prompt, image_1, image_2, image_3, image_4, number_of_images,
-            aspect_ratio, quality, background, output_format, moderation, api_token,
-            timeout_seconds,
-        )
+        async def _go():
+            return await asyncio.to_thread(
+                self._blocking, prompt, image_1, image_2, image_3, image_4, number_of_images,
+                aspect_ratio, quality, background, output_format, moderation, api_token,
+                timeout_seconds,
+            )
+        if run_mode == RUN_ALL_AT_ONCE:
+            return await _go()
+        async with serial_lock():          # one arkennemasis API call at a time
+            return await _go()
 
     def _blocking(self, prompt, image_1, image_2, image_3, image_4, number_of_images,
                   aspect_ratio, quality, background, output_format, moderation, api_token,
