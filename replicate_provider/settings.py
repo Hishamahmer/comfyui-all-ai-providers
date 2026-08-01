@@ -16,7 +16,7 @@ land on the same filename and overwrite each other. Set it per node if you reall
 
 INHERIT = "use node's own"
 
-ASPECT = [INHERIT, "default", "1:1", "3:2", "2:3"]
+ASPECT = [INHERIT, "default", "1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "auto", "1024x1024", "1536x1024", "1024x1536", "1536x1152", "1152x1536", "2048x2048", "2048x1152", "1152x2048", "3840x2160", "2160x3840"]
 QUALITY = [INHERIT, "default", "low", "medium", "high", "auto"]
 BACKGROUND = [INHERIT, "default", "auto", "transparent", "opaque"]
 FORMAT = [INHERIT, "default", "png", "jpeg", "webp"]

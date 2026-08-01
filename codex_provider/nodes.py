@@ -44,13 +44,37 @@ SIZES = {DEFAULT: "auto", "1:1": "1024x1024", "3:2": "1536x1024", "2:3": "1024x1
 # work (same test returned exactly 1024x1536 and 1536x1024), so the orientation is
 # appended to the prompt. `size` is still sent in case the backend starts honouring it.
 ASPECT_TEXT = {
-    "1:1": ("Output format: a SQUARE image, 1:1 aspect ratio, 1024x1024 pixels — "
-            "equal width and height."),
-    "3:2": ("Output format: a LANDSCAPE image, 3:2 aspect ratio, 1536x1024 pixels — "
-            "wider than it is tall."),
-    "2:3": ("Output format: a PORTRAIT image, 2:3 aspect ratio, 1024x1536 pixels — "
-            "taller than it is wide."),
+    "1:1": "a SQUARE image, 1:1 aspect ratio, 1024x1024 pixels, equal width and height",
+    "3:2": "a LANDSCAPE image, 3:2 aspect ratio, 1536x1024 pixels, wider than it is tall",
+    "2:3": "a PORTRAIT image, 2:3 aspect ratio, 1024x1536 pixels, taller than it is wide",
+    "4:3": "a LANDSCAPE image, 4:3 aspect ratio, 1536x1152 pixels, wider than it is tall",
+    "3:4": "a PORTRAIT image, 3:4 aspect ratio, 1152x1536 pixels, taller than it is wide",
+    "16:9": "a WIDESCREEN image, 16:9 aspect ratio, 1792x1024 pixels, much wider than tall",
+    "9:16": "a VERTICAL image, 9:16 aspect ratio, 1024x1792 pixels, much taller than wide",
+    "auto": "",
 }
+
+
+def _aspect_line(aspect_ratio):
+    """The orientation sentence appended to the prompt, or '' when there is nothing to say.
+
+    Handles both named ratios and explicit WxH values from the shared Settings node.
+    """
+    if aspect_ratio in ("default", "auto"):
+        return ""
+    described = ASPECT_TEXT.get(aspect_ratio)
+    if described:
+        return "Output format: %s." % described
+    if "x" in aspect_ratio:                       # an explicit size like 2048x1152
+        try:
+            w, h = (int(v) for v in aspect_ratio.lower().split("x", 1))
+        except ValueError:
+            return ""
+        shape = ("a SQUARE image" if w == h else
+                 "a LANDSCAPE image, wider than it is tall" if w > h else
+                 "a PORTRAIT image, taller than it is wide")
+        return "Output format: %s, %dx%d pixels." % (shape, w, h)
+    return ""
 
 _UNSUPPORTED = "Tool choice 'image_generation' not found in 'tools' parameter."
 _UNSUPPORTED_HELP = (
@@ -162,7 +186,12 @@ class ArkCodexImageGen:
                 "image_2": ("IMAGE",),
                 "image_3": ("IMAGE",),
                 "image_4": ("IMAGE",),
-                "aspect_ratio": ([DEFAULT, "1:1", "3:2", "2:3"],),
+                "aspect_ratio": ([DEFAULT, "1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "auto", "1024x1024", "1536x1024", "1024x1536", "1536x1152", "1152x1536", "2048x2048", "2048x1152", "1152x2048", "3840x2160", "2160x3840"], {
+                    "tooltip": "Stated in the prompt, because this backend ignores "
+                               "the size field. Wide/tall targets land close but not "
+                               "exact (16:9 came back as 7:4). Use the Replicate node "
+                               "when the ratio must be precise.",
+                }),
                 "quality": ([DEFAULT, "low", "medium", "high"],),
                 "background": ([DEFAULT, "opaque", "transparent", "auto"],),
                 "codex_home": ("STRING", {
@@ -238,8 +267,9 @@ class ArkCodexImageGen:
 
         # `size` is ignored by this backend, so the shape has to be said in the prompt
         text = prompt
-        if aspect_ratio in ASPECT_TEXT:
-            text = prompt.rstrip() + "\n\n" + ASPECT_TEXT[aspect_ratio]
+        line = _aspect_line(aspect_ratio)
+        if line:
+            text = prompt.rstrip() + "\n\n" + line
         content = [{"type": "input_text", "text": text}]
         for uri in collect_images_to_data_uris(image_1, image_2, image_3, image_4):
             content.append({"type": "input_image", "image_url": uri})
