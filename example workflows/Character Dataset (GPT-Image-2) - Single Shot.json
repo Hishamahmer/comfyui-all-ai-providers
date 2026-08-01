@@ -1,0 +1,4759 @@
+{
+ "id": "ccc-gptimage2-single",
+ "extra": {
+  "ds": {
+   "scale": 0.3138428376721007,
+   "offset": [
+    -459.5012086651541,
+    -1852.7685463770654
+   ]
+  },
+  "frontendVersion": "1.45.19",
+  "anomalous_hashes": {
+   "529_flux2-vae.safetensors": {
+    "hash": "",
+    "size": 336211292
+   },
+   "527_flux-2-klein-9b-fp8.safetensors": {
+    "hash": "",
+    "size": 9433061528
+   },
+   "664_Flux2-Klein-9B-consistency-V2.safetensors": {
+    "hash": "efbfe93c4b3b1de94328e95e8f70f8b71411ce7b7cef7fbc27572b59557b77a0",
+    "size": 331379608
+   }
+  },
+  "VHS_MetadataImage": true,
+  "VHS_latentpreview": true,
+  "VHS_KeepIntermediate": true,
+  "VHS_latentpreviewrate": 0
+ },
+ "links": [
+  [
+   510,
+   547,
+   0,
+   550,
+   0,
+   "STRING"
+  ],
+  [
+   511,
+   549,
+   0,
+   551,
+   0,
+   "STRING"
+  ],
+  [
+   526,
+   535,
+   0,
+   560,
+   0,
+   "IMAGE"
+  ],
+  [
+   836,
+   535,
+   0,
+   537,
+   0,
+   "IMAGE"
+  ],
+  [
+   837,
+   537,
+   0,
+   562,
+   0,
+   "IMAGE"
+  ],
+  [
+   1136,
+   562,
+   0,
+   539,
+   0,
+   "IMAGE"
+  ],
+  [
+   1157,
+   1895,
+   0,
+   1896,
+   0,
+   "IMAGE"
+  ],
+  [
+   1160,
+   1902,
+   0,
+   1895,
+   0,
+   "IMAGE"
+  ],
+  [
+   1915,
+   2827,
+   0,
+   2778,
+   1,
+   "STRING"
+  ],
+  [
+   2042,
+   535,
+   0,
+   538,
+   0,
+   "IMAGE"
+  ],
+  [
+   2043,
+   1896,
+   0,
+   1899,
+   0,
+   "IMAGE"
+  ],
+  [
+   2051,
+   537,
+   0,
+   536,
+   0,
+   "IMAGE"
+  ],
+  [
+   2052,
+   1899,
+   0,
+   2055,
+   0,
+   "IMAGE"
+  ],
+  [
+   2069,
+   2905,
+   0,
+   2912,
+   0,
+   "STRING"
+  ],
+  [
+   2165,
+   3054,
+   0,
+   3056,
+   0,
+   "STRING"
+  ],
+  [
+   2166,
+   3055,
+   0,
+   3057,
+   0,
+   "STRING"
+  ],
+  [
+   2167,
+   3058,
+   0,
+   3060,
+   0,
+   "INT"
+  ],
+  [
+   2168,
+   3059,
+   0,
+   3061,
+   0,
+   "INT"
+  ],
+  [
+   2169,
+   3062,
+   0,
+   3063,
+   0,
+   "ARK_IMAGE_SETTINGS"
+  ],
+  [
+   2170,
+   3064,
+   0,
+   3065,
+   0,
+   "STRING"
+  ],
+  [
+   2171,
+   2827,
+   0,
+   2778,
+   0,
+   "STRING"
+  ],
+  [
+   2172,
+   3066,
+   0,
+   2778,
+   1,
+   "STRING"
+  ],
+  [
+   2173,
+   3067,
+   0,
+   2778,
+   2,
+   "STRING"
+  ],
+  [
+   2174,
+   3068,
+   0,
+   2778,
+   3,
+   "STRING"
+  ],
+  [
+   2175,
+   3069,
+   0,
+   2778,
+   4,
+   "STRING"
+  ],
+  [
+   2176,
+   2778,
+   0,
+   3077,
+   0,
+   "STRING"
+  ],
+  [
+   2177,
+   3070,
+   0,
+   3077,
+   1,
+   "IMAGE"
+  ],
+  [
+   2178,
+   3071,
+   0,
+   3077,
+   2,
+   "IMAGE"
+  ],
+  [
+   2179,
+   3076,
+   0,
+   3077,
+   3,
+   "ARK_IMAGE_SETTINGS"
+  ],
+  [
+   2180,
+   3077,
+   0,
+   3078,
+   0,
+   "IMAGE"
+  ],
+  [
+   2181,
+   3073,
+   0,
+   3078,
+   1,
+   "INT"
+  ],
+  [
+   2182,
+   3074,
+   0,
+   3078,
+   2,
+   "INT"
+  ],
+  [
+   2183,
+   3072,
+   0,
+   3080,
+   0,
+   "STRING"
+  ],
+  [
+   2184,
+   3079,
+   0,
+   3080,
+   1,
+   "STRING"
+  ],
+  [
+   2185,
+   3078,
+   0,
+   3081,
+   0,
+   "IMAGE"
+  ],
+  [
+   2186,
+   3075,
+   0,
+   3081,
+   1,
+   "STRING"
+  ],
+  [
+   2187,
+   3080,
+   0,
+   3081,
+   2,
+   "STRING"
+  ],
+  [
+   2188,
+   3072,
+   0,
+   3083,
+   0,
+   "STRING"
+  ],
+  [
+   2189,
+   3082,
+   0,
+   3083,
+   1,
+   "STRING"
+  ],
+  [
+   2190,
+   3083,
+   0,
+   3084,
+   0,
+   "STRING"
+  ],
+  [
+   2191,
+   3075,
+   0,
+   3084,
+   1,
+   "STRING"
+  ],
+  [
+   2192,
+   3080,
+   0,
+   3084,
+   2,
+   "STRING"
+  ],
+  [
+   2193,
+   3078,
+   0,
+   3084,
+   3,
+   "IMAGE"
+  ],
+  [
+   2194,
+   3078,
+   0,
+   2762,
+   0,
+   "IMAGE"
+  ],
+  [
+   2747,
+   1896,
+   0,
+   2055,
+   0,
+   "IMAGE"
+  ],
+  [
+   2748,
+   2913,
+   0,
+   3524,
+   0,
+   "STRING"
+  ],
+  [
+   2749,
+   3523,
+   0,
+   3524,
+   1,
+   "STRING"
+  ],
+  [
+   2750,
+   2892,
+   0,
+   2053,
+   0,
+   "IMAGE"
+  ],
+  [
+   2751,
+   3522,
+   0,
+   2053,
+   1,
+   "STRING"
+  ],
+  [
+   2752,
+   3524,
+   0,
+   2053,
+   2,
+   "STRING"
+  ],
+  [
+   2753,
+   2913,
+   0,
+   3526,
+   0,
+   "STRING"
+  ],
+  [
+   2754,
+   3525,
+   0,
+   3526,
+   1,
+   "STRING"
+  ],
+  [
+   2755,
+   3524,
+   0,
+   3526,
+   2,
+   "STRING"
+  ],
+  [
+   2756,
+   2892,
+   0,
+   3526,
+   3,
+   "IMAGE"
+  ],
+  [
+   2757,
+   1560,
+   0,
+   2923,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "nodes": [
+  {
+   "id": 550,
+   "pos": [
+    2160,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 335,
+   "title": "Set_style",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 510,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "style",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "style"
+   ]
+  },
+  {
+   "id": 562,
+   "pos": [
+    810,
+    3950
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    320
+   ],
+   "type": "ImageResizeKJv2",
+   "flags": {},
+   "order": 366,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 837,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "width"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "height"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      1136
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "ImageResizeKJv2"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    1024,
+    1024,
+    "lanczos",
+    "pad",
+    "0, 0, 0",
+    "center",
+    2,
+    "cpu"
+   ],
+   "title": "Resize -> INPUT_FACE  (image_1)"
+  },
+  {
+   "id": 2778,
+   "pos": [
+    2730,
+    4390
+   ],
+   "mode": 0,
+   "size": [
+    310,
+    244
+   ],
+   "type": "JoinStringMulti",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 300,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2171,
+     "name": "string_1",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2172,
+     "name": "string_2",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2173,
+     "name": "string_3",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2174,
+     "name": "string_4",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2175,
+     "name": "string_5",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "string",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      2176
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "JoinStringMulti"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    5,
+    "\n\n",
+    false,
+    null
+   ]
+  },
+  {
+   "id": 2762,
+   "pos": [
+    2730,
+    4460
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    100
+   ],
+   "type": "ImageCollect",
+   "flags": {},
+   "order": 378,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2194,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "links": [],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "a06574379dc77acb5a057c00ad646d6183bb5b3c",
+    "cnr_id": "comfyui-mickmumpitz-nodes",
+    "Node name for S&R": "ImageCollect"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "Dataset",
+    0
+   ]
+  },
+  {
+   "id": 2827,
+   "pos": [
+    2730,
+    3380
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    400
+   ],
+   "type": "StringConstantMultiline",
+   "flags": {},
+   "order": 212,
+   "title": "PROMPT - T-POSE",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      2171
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "StringConstantMultiline"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "Framing: full-body portrait, the whole body from the top of the head to the bare feet inside the frame, eye-level, 50mm.\nScene: standing in a frontal A-pose, arms held slightly away from the body, feet shoulder-width apart, neutral expression, mouth closed, looking into the lens.\nLighting: flat even studio light on a plain neutral white background.\nWardrobe: a plain fitted t-shirt and straight jeans, barefoot",
+    false
+   ]
+  },
+  {
+   "id": 551,
+   "pos": [
+    2160,
+    3930
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 328,
+   "title": "Set_clothes",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 511,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "clothes",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "clothes"
+   ]
+  },
+  {
+   "id": 560,
+   "pos": [
+    500,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    320
+   ],
+   "type": "ImageResizeKJv2",
+   "flags": {},
+   "order": 332,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 526,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "width"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "height"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "ImageResizeKJv2"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    1024,
+    1024,
+    "nearest-exact",
+    "pad",
+    "0, 0, 0",
+    "center",
+    2,
+    "cpu"
+   ],
+   "title": "Resize -> INPUT_IMAGE  (image_2)"
+  },
+  {
+   "id": 538,
+   "pos": [
+    500,
+    4030
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 334,
+   "title": "Set_INPUT_IMAGE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2042,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "INPUT_IMAGE",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "INPUT_IMAGE"
+   ]
+  },
+  {
+   "id": 1902,
+   "pos": [
+    1720,
+    5160
+   ],
+   "mode": 0,
+   "size": [
+    210,
+    60
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 232,
+   "title": "Get_INPUT_IMAGE",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      1160
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "INPUT_IMAGE"
+   ]
+  },
+  {
+   "id": 1895,
+   "pos": [
+    1720,
+    5250
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    250
+   ],
+   "type": "AutoCropFaces",
+   "flags": {},
+   "order": 307,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 1160,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "face",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      1157
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "output_1",
+     "type": "CROP_DATA",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "b2139db9a8ffb4707832106a58f519bbd04e6118",
+    "cnr_id": "ComfyUI-AutoCropFaces",
+    "Node name for S&R": "AutoCropFaces"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    1,
+    10,
+    0.4,
+    0,
+    1,
+    "1:1"
+   ],
+   "title": "Face crop (wide) -> REF_Image"
+  },
+  {
+   "id": 1896,
+   "pos": [
+    2030,
+    5250
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    330
+   ],
+   "type": "ImageResizeKJv2",
+   "flags": {},
+   "order": 348,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 1157,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "width"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "link": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "widget": {
+      "name": "height"
+     },
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      2043,
+      2747
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "width",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "height",
+     "type": "INT",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "mask",
+     "type": "MASK",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "7f43f2ce910a27971bdbbf3fb5a52081457f32e2",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "ImageResizeKJv2"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    1024,
+    1024,
+    "bilinear",
+    "crop",
+    "0, 0, 0",
+    "center",
+    1,
+    "cpu"
+   ],
+   "title": "Resize -> REF_Image"
+  },
+  {
+   "id": 2055,
+   "pos": [
+    1720,
+    5590
+   ],
+   "mode": 0,
+   "size": [
+    210,
+    60
+   ],
+   "type": "SetNode",
+   "color": "#2a363b",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 435,
+   "title": "Set_REF_Image",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2747,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "bgcolor": "#3f5159",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "REF_Image",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "REF_Image"
+   ]
+  },
+  {
+   "id": 2913,
+   "pos": [
+    470,
+    4620
+   ],
+   "mode": 0,
+   "size": [
+    210,
+    60
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 237,
+   "title": "Get_NAME",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      2748,
+      2753
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "NAME"
+   ]
+  },
+  {
+   "id": 2912,
+   "pos": [
+    2270,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    210,
+    60
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 331,
+   "title": "Set_NAME",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2069,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "NAME",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "NAME"
+   ]
+  },
+  {
+   "id": 536,
+   "pos": [
+    1120,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    390,
+    400
+   ],
+   "type": "PreviewImage",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 367,
+   "title": "Preview - INPUT_FACE (identity anchor)",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2051,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "0.24.1",
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PreviewImage"
+   },
+   "showAdvanced": null,
+   "widgets_values": []
+  },
+  {
+   "id": 2892,
+   "pos": [
+    2060,
+    5628
+   ],
+   "mode": 0,
+   "size": [
+    210,
+    60
+   ],
+   "type": "GetNode",
+   "color": "#2a363b",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 239,
+   "title": "Get_REF_Image",
+   "inputs": [],
+   "bgcolor": "#3f5159",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      2750,
+      2756
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "REF_Image"
+   ]
+  },
+  {
+   "id": 1899,
+   "pos": [
+    1720,
+    5690
+   ],
+   "mode": 0,
+   "size": [
+    290,
+    250
+   ],
+   "type": "PreviewImage",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 392,
+   "title": "Preview - REF_Image",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2043,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      2052
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "0.24.1",
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PreviewImage"
+   },
+   "showAdvanced": null,
+   "widgets_values": []
+  },
+  {
+   "id": 539,
+   "pos": [
+    810,
+    4472
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    108
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 422,
+   "title": "Set_INPUT_FACE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 1136,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "INPUT_FACE",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "INPUT_FACE"
+   ]
+  },
+  {
+   "id": 1900,
+   "pos": [
+    1260,
+    4540
+   ],
+   "mode": 0,
+   "size": [
+    752.81640625,
+    34
+   ],
+   "type": "MickmumpitzLabel",
+   "color": "#fff0",
+   "flags": {
+    "allow_interaction": true
+   },
+   "order": 244,
+   "title": "MickmumpitzLabel",
+   "inputs": [],
+   "bgcolor": "#fff0",
+   "outputs": [],
+   "properties": {
+    "text": "Here the base-image gets prepared to be added to the Dataset. Change settings or crop manually if necessary.",
+    "padding": 8,
+    "fontSize": 15,
+    "fontColor": "#ffffff",
+    "textAlign": "left",
+    "fontFamily": "Arial",
+    "borderRadius": 0,
+    "backgroundColor": "transparent"
+   },
+   "showAdvanced": null
+  },
+  {
+   "id": 2853,
+   "pos": [
+    2690,
+    3130
+   ],
+   "mode": 0,
+   "size": [
+    1082.796875,
+    136
+   ],
+   "type": "MickmumpitzLabel",
+   "color": "#fff0",
+   "flags": {
+    "allow_interaction": true
+   },
+   "order": 245,
+   "title": "MickmumpitzLabel",
+   "inputs": [],
+   "bgcolor": "#fff0",
+   "outputs": [],
+   "properties": {
+    "text": "1 DATASET CREATION",
+    "padding": 8,
+    "fontSize": 100,
+    "fontColor": "#ffffff",
+    "textAlign": "left",
+    "fontFamily": "Arial",
+    "borderRadius": 0,
+    "backgroundColor": "transparent"
+   },
+   "showAdvanced": null
+  },
+  {
+   "id": 2916,
+   "pos": [
+    120,
+    2620
+   ],
+   "mode": 0,
+   "size": [
+    1060.62890625,
+    136
+   ],
+   "type": "MickmumpitzLabel",
+   "color": "#fff0",
+   "flags": {
+    "allow_interaction": true
+   },
+   "order": 246,
+   "title": "MickmumpitzLabel",
+   "inputs": [],
+   "bgcolor": "#fff0",
+   "outputs": [],
+   "properties": {
+    "text": "SETTINGS & INPUTS",
+    "padding": 8,
+    "fontSize": 100,
+    "fontColor": "#ffffff",
+    "textAlign": "left",
+    "fontFamily": "Arial",
+    "borderRadius": 0,
+    "backgroundColor": "transparent"
+   },
+   "showAdvanced": null
+  },
+  {
+   "id": 2042,
+   "pos": [
+    -1170,
+    3600
+   ],
+   "mode": 0,
+   "size": [
+    682.7552253149177,
+    1137.94964157724
+   ],
+   "type": "MarkdownNote",
+   "color": "#97651BFF",
+   "flags": {},
+   "order": 247,
+   "inputs": [],
+   "bgcolor": "#B67921FF",
+   "outputs": [],
+   "properties": {},
+   "showAdvanced": null,
+   "widgets_values": [
+    "# Character Dataset (GPT-Image-2)\n\nGenerates a **25-image LoRA training dataset** of one character from a single photo,\nvia `openai/gpt-image-2` on Replicate. **No GPU is used** - local nodes only crop and\nresize; every generation is an API call.\n\n## Setup\n1. **Token** - `custom_nodes/comfyui-arkennemesis/.env` needs `REPLICATE_API_TOKEN=r8_...`\n2. **Load your photo** into the `Load Image` node (INPUTS). Full-body, well-lit,\n   front-facing works best - the face crop is derived from it.\n3. **Set NAME** (INPUTS) - it drives every output path.\n4. Optionally fill **STYLE** and **CLOTHES**; they are appended to all 24 prompts.\n\n## Cost - read before Run\nA full run is **24 sequential API calls at quality=high**, roughly **45-65 min**.\nTest one shot first: mute (Ctrl+M) the groups you are not testing. `force_rerun` is\noff, so re-queueing an unchanged shot does not re-bill - only what you changed.\n\n## Prompts\nEach shot is three lines - `Framing:` / `Scene:` / `Lighting:` - joined with the shared\nIDENTITY and EXCLUDE blocks (see the PROMPT TEMPLATE group).\n**Framing must stay first**, and never write \"full body\" unconditionally in the shared\nblock: both mistakes make close-up shots come back as full-body.\nDo not convert these to JSON - OpenAI recommends a skimmable labeled template.\n\n## Aspect ratio / quality\n`aspect_ratio` is a COMBO, and ComfyUI rejects STRING->COMBO links, so it cannot be\nwired to one shared node. Patch all 24 at once:\n`python claude/workflow-runbooks/character-dataset-gptimage2/set_shot_options.py --aspect 1:1`\nthen reload this workflow.\n"
+   ],
+   "title": "README - Character Dataset (GPT-Image-2)"
+  },
+  {
+   "id": 537,
+   "pos": [
+    810,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    250
+   ],
+   "type": "AutoCropFaces",
+   "flags": {},
+   "order": 333,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 836,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "face",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      837,
+      2051
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "output_1",
+     "type": "CROP_DATA",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "b2139db9a8ffb4707832106a58f519bbd04e6118",
+    "cnr_id": "ComfyUI-AutoCropFaces",
+    "Node name for S&R": "AutoCropFaces"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    1,
+    3,
+    0.45,
+    0,
+    50,
+    "1:1"
+   ],
+   "title": "Face crop -> INPUT_FACE"
+  },
+  {
+   "id": 2923,
+   "pos": [
+    500,
+    5650
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    400
+   ],
+   "type": "PreviewImage",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 396,
+   "title": "Preview - all shots that ran",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2757,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "0.26.1",
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PreviewImage"
+   },
+   "showAdvanced": null,
+   "widgets_values": []
+  },
+  {
+   "id": 549,
+   "pos": [
+    1720,
+    3930
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    220
+   ],
+   "type": "StringConstantMultiline",
+   "flags": {},
+   "order": 283,
+   "title": "WARDROBE NOTES [OPTIONAL] - things worn in EVERY shot",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      511
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "StringConstantMultiline"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "",
+    false
+   ]
+  },
+  {
+   "id": 2699,
+   "pos": [
+    2570,
+    3890
+   ],
+   "mode": 0,
+   "size": [
+    136,
+    160
+   ],
+   "type": "MickmumpitzLabel",
+   "color": "#fff0",
+   "flags": {
+    "allow_interaction": true
+   },
+   "order": 284,
+   "title": "MickmumpitzLabel",
+   "inputs": [],
+   "bgcolor": "#fff0",
+   "outputs": [],
+   "properties": {
+    "text": "→",
+    "padding": 8,
+    "fontSize": 120,
+    "fontColor": "#ffffff",
+    "textAlign": "left",
+    "fontFamily": "Arial",
+    "borderRadius": 0,
+    "backgroundColor": "transparent"
+   },
+   "showAdvanced": null
+  },
+  {
+   "id": 2053,
+   "pos": [
+    2060,
+    5690
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    250
+   ],
+   "type": "Image Save",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 395,
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2750,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2751,
+     "name": "output_path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2752,
+     "name": "filename_prefix",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "files",
+     "type": "STRING",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "44de705818d4663fefefde57ffe0ea5a9ea39df4",
+    "cnr_id": "was-ns",
+    "Node name for S&R": "Image Save"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "",
+    "",
+    "_",
+    3,
+    "false",
+    "png",
+    300,
+    100,
+    "true",
+    "false",
+    "prefix_as_filename",
+    "false",
+    "false",
+    "true",
+    "true"
+   ],
+   "title": "SAVE - reference tile"
+  },
+  {
+   "id": 1560,
+   "pos": [
+    150,
+    5650
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    150
+   ],
+   "type": "ImageCollectUnpack",
+   "flags": {},
+   "order": 287,
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      2757
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "a06574379dc77acb5a057c00ad646d6183bb5b3c",
+    "cnr_id": "comfyui-mickmumpitz-nodes",
+    "Node name for S&R": "ImageCollectUnpack"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "first",
+    "stretch",
+    "Dataset"
+   ],
+   "title": "Collect every shot that ran"
+  },
+  {
+   "id": 2905,
+   "pos": [
+    1960,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    100
+   ],
+   "type": "PrimitiveString",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 288,
+   "title": "NAME (drives every filename)",
+   "inputs": [],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      2069
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "0.20.1",
+    "cnr_id": "comfy-core",
+    "Node name for S&R": "PrimitiveString"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "Al1n4_02"
+   ]
+  },
+  {
+   "id": 535,
+   "pos": [
+    150,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    320,
+    400
+   ],
+   "type": "LoadImage",
+   "color": "#d4d4d4",
+   "flags": {},
+   "order": 293,
+   "inputs": [],
+   "bgcolor": "#c0c0c0",
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "links": [
+      526,
+      836,
+      2042
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "MASK",
+     "type": "MASK",
+     "label": null,
+     "links": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "0.3.71",
+    "cnr_id": "comfy-core",
+    "tabWidth": 65,
+    "enableTabs": false,
+    "tabXOffset": 10,
+    "hasSecondTab": false,
+    "secondTabText": "Send Back",
+    "ue_properties": {
+     "version": "7.7",
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "secondTabWidth": 65,
+    "secondTabOffset": 80,
+    "Node name for S&R": "LoadImage"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "ccc_ref_placeholder.png",
+    "image"
+   ],
+   "title": "Load Image (your character photo)"
+  },
+  {
+   "id": 547,
+   "pos": [
+    1720,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    220
+   ],
+   "type": "StringConstantMultiline",
+   "flags": {},
+   "order": 294,
+   "title": "STYLE [OPTIONAL]",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "links": [
+      510
+     ],
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "StringConstantMultiline"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "A woman ",
+    false
+   ]
+  },
+  {
+   "id": 3054,
+   "pos": [
+    1720,
+    4210
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    380
+   ],
+   "type": "StringConstantMultiline",
+   "flags": {},
+   "order": 0,
+   "title": "IDENTITY BLOCK (all 24 shots)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2165
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "StringConstantMultiline"
+   },
+   "widgets_values": [
+    "Subject: the SAME person shown in the reference images.\n\nReference roles:\nImage 1: face and hair identity anchor - use it for the exact likeness.\nImage 2: a wider view of the same person - use it for skin tone, build and hair length.\nDo NOT copy the clothing from the references: each shot states its own Wardrobe below.\n\nUse the references ONLY for the person's identity and appearance. Do NOT copy their crop,\ncamera distance, pose or background - the Framing, Scene and Lighting lines above define\nthis shot and always override the references.\n\nPreserve exactly: face geometry, facial features, eye colour, eyebrows, hairline, hair\ntexture and colour, skin tone, distinguishing marks, and - wherever the body is visible -\nthe same body proportions. Do not change the face, skin tone or identity in any way. It\nmust be unmistakably the same person.",
+    false
+   ]
+  },
+  {
+   "id": 3055,
+   "pos": [
+    1720,
+    4650
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    250
+   ],
+   "type": "StringConstantMultiline",
+   "flags": {},
+   "order": 0,
+   "title": "EXCLUDE BLOCK (all 24 shots)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2166
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "StringConstantMultiline"
+   },
+   "widgets_values": [
+    "Exclude: text, captions, watermarks, logos, borders, collage or split frames,\nadditional people, duplicated or malformed hands and limbs, plastic or over-smoothed skin,\nheavy beauty retouching.\nOutput: a single photorealistic photograph.",
+    false
+   ]
+  },
+  {
+   "id": 3056,
+   "pos": [
+    2160,
+    4210
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_IDENTITY",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2165,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "IDENTITY",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "IDENTITY"
+   ]
+  },
+  {
+   "id": 3057,
+   "pos": [
+    2160,
+    4650
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_EXCLUDE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2166,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "EXCLUDE",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "EXCLUDE"
+   ]
+  },
+  {
+   "id": 3058,
+   "pos": [
+    150,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    80
+   ],
+   "type": "PrimitiveInt",
+   "flags": {},
+   "order": 0,
+   "title": "HOW MANY SHOTS TO RUN  (1 = the only shot)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2167
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    1
+   ]
+  },
+  {
+   "id": 3059,
+   "pos": [
+    600,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    280,
+    80
+   ],
+   "type": "PrimitiveInt",
+   "flags": {},
+   "order": 0,
+   "title": "SHOT SEED  (change = different picks)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2168
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    0,
+    "fixed"
+   ]
+  },
+  {
+   "id": 3060,
+   "pos": [
+    460,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_shots_to_run",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2167,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "shots_to_run",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "shots_to_run"
+   ]
+  },
+  {
+   "id": 3061,
+   "pos": [
+    910,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_shot_seed",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2168,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "shot_seed",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "shot_seed"
+   ]
+  },
+  {
+   "id": 3062,
+   "pos": [
+    1060,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    380,
+    320
+   ],
+   "type": "ArkImageGenSettings",
+   "flags": {},
+   "order": 0,
+   "title": "SHARED IMAGE SETTINGS - look only, not the run size",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "settings",
+     "type": "ARK_IMAGE_SETTINGS",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2169
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkImageGenSettings"
+   },
+   "widgets_values": [
+    "2:3",
+    "high",
+    "one at a time",
+    "default",
+    "png",
+    "default",
+    -1,
+    ""
+   ]
+  },
+  {
+   "id": 3063,
+   "pos": [
+    1596,
+    3628
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_settings",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2169,
+     "name": "ARK_IMAGE_SETTINGS",
+     "type": "ARK_IMAGE_SETTINGS",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "ARK_IMAGE_SETTINGS",
+     "type": "ARK_IMAGE_SETTINGS",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "settings",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "settings"
+   ]
+  },
+  {
+   "id": 3064,
+   "pos": [
+    1500,
+    3070
+   ],
+   "mode": 0,
+   "size": [
+    380,
+    200
+   ],
+   "type": "ArkRunFolder",
+   "flags": {},
+   "order": 0,
+   "title": "RUN FOLDER (auto-numbered per run)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "folder_path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2170
+     ],
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "run_number",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkRunFolder"
+   },
+   "widgets_values": [
+    "CCC",
+    "dataset",
+    3,
+    true
+   ]
+  },
+  {
+   "id": 3065,
+   "pos": [
+    1900,
+    3032
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "SetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Set_run_folder",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2170,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": null,
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "previousName": "run_folder",
+    "Node name for S&R": "SetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "run_folder"
+   ]
+  },
+  {
+   "id": 3066,
+   "pos": [
+    2730,
+    3870
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_IDENTITY",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2172
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "IDENTITY"
+   ]
+  },
+  {
+   "id": 3067,
+   "pos": [
+    2730,
+    3920
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_style",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2173
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "style"
+   ]
+  },
+  {
+   "id": 3068,
+   "pos": [
+    2730,
+    3970
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_clothes",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2174
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "clothes"
+   ]
+  },
+  {
+   "id": 3069,
+   "pos": [
+    2730,
+    4020
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_EXCLUDE",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2175
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "EXCLUDE"
+   ]
+  },
+  {
+   "id": 3070,
+   "pos": [
+    2730,
+    4070
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_INPUT_FACE",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2177
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "INPUT_FACE"
+   ]
+  },
+  {
+   "id": 3071,
+   "pos": [
+    2730,
+    4120
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_INPUT_IMAGE",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2178
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "INPUT_IMAGE"
+   ]
+  },
+  {
+   "id": 3072,
+   "pos": [
+    2730,
+    4170
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_NAME",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2183,
+      2188
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "NAME"
+   ]
+  },
+  {
+   "id": 3073,
+   "pos": [
+    2730,
+    4220
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_shots_to_run",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2181
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "shots_to_run"
+   ]
+  },
+  {
+   "id": 3074,
+   "pos": [
+    2730,
+    4270
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_shot_seed",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "INT",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2182
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "shot_seed"
+   ]
+  },
+  {
+   "id": 3075,
+   "pos": [
+    2730,
+    4320
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_run_folder",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2186,
+      2191
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "run_folder"
+   ]
+  },
+  {
+   "id": 3076,
+   "pos": [
+    3160,
+    3320
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_settings",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "ARK_IMAGE_SETTINGS",
+     "type": "ARK_IMAGE_SETTINGS",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2179
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "settings"
+   ]
+  },
+  {
+   "id": 3077,
+   "pos": [
+    3160,
+    3380
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    560
+   ],
+   "type": "ReplicateOpenAIGPTImage2",
+   "flags": {},
+   "order": 0,
+   "title": "GPT-Image-2 - T-POSE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2176,
+     "name": "prompt",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2177,
+     "name": "image_1",
+     "type": "IMAGE",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2178,
+     "name": "image_2",
+     "type": "IMAGE",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2179,
+     "name": "settings",
+     "type": "ARK_IMAGE_SETTINGS",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2180
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ReplicateOpenAIGPTImage2"
+   },
+   "widgets_values": [
+    "",
+    1,
+    "2:3",
+    "high",
+    "default",
+    "png",
+    "default",
+    "",
+    0,
+    false,
+    "one at a time"
+   ]
+  },
+  {
+   "id": 3078,
+   "pos": [
+    3160,
+    4000
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    190
+   ],
+   "type": "ArkShotSelector",
+   "flags": {},
+   "order": 0,
+   "title": "SHOT SELECTOR (1 of 1 - leave at 1)",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2180,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2181,
+     "name": "how_many",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2182,
+     "name": "seed",
+     "type": "INT",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "image",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2185,
+      2193,
+      2194
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkShotSelector"
+   },
+   "widgets_values": [
+    0,
+    1,
+    1,
+    0
+   ]
+  },
+  {
+   "id": 3079,
+   "pos": [
+    2730,
+    4640
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    60
+   ],
+   "type": "PrimitiveString",
+   "flags": {},
+   "order": 0,
+   "title": "filename stem",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2184
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveString"
+   },
+   "widgets_values": [
+    "t-pose_image_001"
+   ]
+  },
+  {
+   "id": 3080,
+   "pos": [
+    2730,
+    4730
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    100
+   ],
+   "type": "JoinStringMulti",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "filename",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2183,
+     "name": "string_1",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2184,
+     "name": "string_2",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "string",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2187,
+      2192
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "JoinStringMulti"
+   },
+   "widgets_values": [
+    2,
+    "_",
+    false,
+    null
+   ]
+  },
+  {
+   "id": 3081,
+   "pos": [
+    3160,
+    4260
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    300
+   ],
+   "type": "Image Save",
+   "flags": {},
+   "order": 0,
+   "title": "SAVE - T-POSE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2185,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2186,
+     "name": "output_path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2187,
+     "name": "filename_prefix",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [],
+     "slot_index": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "name": "files",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "was-ns",
+    "Node name for S&R": "Image Save"
+   },
+   "widgets_values": [
+    "",
+    "",
+    "_",
+    3,
+    "false",
+    "png",
+    300,
+    100,
+    "true",
+    "false",
+    "prefix_as_filename",
+    "false",
+    "false",
+    "true",
+    "true"
+   ]
+  },
+  {
+   "id": 3082,
+   "pos": [
+    3160,
+    4620
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    140
+   ],
+   "type": "PrimitiveString",
+   "flags": {},
+   "order": 0,
+   "title": "caption (no identity words)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2189
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveString"
+   },
+   "widgets_values": [
+    "full body, standing in a frontal A-pose, arms slightly away from the body, neutral expression, wearing a plain fitted t-shirt and straight jeans, barefoot, plain white studio background"
+   ]
+  },
+  {
+   "id": 3083,
+   "pos": [
+    3160,
+    4810
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    100
+   ],
+   "type": "JoinStringMulti",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "caption text",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2188,
+     "name": "string_1",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2189,
+     "name": "string_2",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "string",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2190
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "JoinStringMulti"
+   },
+   "widgets_values": [
+    2,
+    ", ",
+    false,
+    null
+   ]
+  },
+  {
+   "id": 3084,
+   "pos": [
+    3160,
+    4880
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    260
+   ],
+   "type": "ArkTextFileSave",
+   "flags": {},
+   "order": 0,
+   "title": "CAPTION - T-POSE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2190,
+     "name": "text",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2191,
+     "name": "folder_path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2192,
+     "name": "filename",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2193,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkTextFileSave"
+   },
+   "widgets_values": [
+    "",
+    "",
+    "",
+    "txt",
+    true
+   ]
+  },
+  {
+   "id": 3522,
+   "pos": [
+    2400,
+    5590
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_run_folder",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2751
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "run_folder"
+   ]
+  },
+  {
+   "id": 3523,
+   "pos": [
+    2060,
+    6020
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    60
+   ],
+   "type": "PrimitiveString",
+   "flags": {},
+   "order": 0,
+   "title": "filename stem",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2749
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveString"
+   },
+   "widgets_values": [
+    "reference_image_002"
+   ]
+  },
+  {
+   "id": 3524,
+   "pos": [
+    2060,
+    6110
+   ],
+   "mode": 0,
+   "size": [
+    300,
+    100
+   ],
+   "type": "JoinStringMulti",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "filename",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2748,
+     "name": "string_1",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2749,
+     "name": "string_2",
+     "type": "STRING",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "string",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2752,
+      2755
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "Node name for S&R": "JoinStringMulti"
+   },
+   "widgets_values": [
+    2,
+    "_",
+    false,
+    null
+   ]
+  },
+  {
+   "id": 3525,
+   "pos": [
+    2400,
+    6120
+   ],
+   "mode": 0,
+   "size": [
+    225,
+    34
+   ],
+   "type": "GetNode",
+   "flags": {
+    "collapsed": true
+   },
+   "order": 0,
+   "title": "Get_run_folder",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "STRING",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2754
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "aux_id": "kijai/ComfyUI-KJNodes",
+    "Node name for S&R": "GetNode"
+   },
+   "showAdvanced": null,
+   "widgets_values": [
+    "run_folder"
+   ]
+  },
+  {
+   "id": 3526,
+   "pos": [
+    2060,
+    6190
+   ],
+   "mode": 0,
+   "size": [
+    420,
+    260
+   ],
+   "type": "ArkTextFileSave",
+   "flags": {},
+   "order": 0,
+   "title": "CAPTION - reference tile",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2753,
+     "name": "text",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2754,
+     "name": "folder_path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2755,
+     "name": "filename",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    },
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2756,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": 7,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "path",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkTextFileSave"
+   },
+   "widgets_values": [
+    "",
+    "",
+    "",
+    "txt",
+    true
+   ]
+  }
+ ],
+ "config": {},
+ "groups": [
+  {
+   "id": 78,
+   "color": "#7341ff",
+   "flags": {},
+   "title": "SHOT (edit the prompt + wardrobe here)",
+   "bounding": [
+    2710,
+    3260,
+    890,
+    2000
+   ]
+  },
+  {
+   "id": 105,
+   "title": "0 - RUN SETTINGS  (name, folder, how many, shared options)",
+   "bounding": [
+    130,
+    2980,
+    2300,
+    460
+   ],
+   "color": "#5f3f3f",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 106,
+   "title": "1 - INPUT PHOTO -> references",
+   "bounding": [
+    130,
+    3560,
+    1500,
+    900
+   ],
+   "color": "#3f5159",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 107,
+   "title": "2 - PROMPT TEXT (shared blocks)",
+   "bounding": [
+    1700,
+    3560,
+    940,
+    1400
+   ],
+   "color": "#3f789e",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 108,
+   "title": "3 - REFERENCE TILE (real photo -> image 002)",
+   "bounding": [
+    1700,
+    5080,
+    990,
+    1080
+   ],
+   "color": "#3f5159",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 109,
+   "title": "4 - PREVIEW",
+   "bounding": [
+    130,
+    5560,
+    1500,
+    640
+   ],
+   "color": "#59533f",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "version": 0.4,
+ "revision": 0,
+ "definitions": {
+  "subgraphs": []
+ },
+ "last_link_id": 2757,
+ "last_node_id": 3526,
+ "floatingLinks": null
+}

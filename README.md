@@ -13,6 +13,7 @@ so nothing breaks anything else.
 | arkennemasis/**Image Gen** | arkennemasis Image Gen Settings (shared) | one node driving `aspect_ratio` / `quality` / `run_mode` / `background` / `output_format` / `moderation` / `timeout_seconds` / `api_token` on **many** Image Gen nodes at once | `ARK_IMAGE_SETTINGS` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches, picked at random from a seed — unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
+| arkennemasis/**Utility** | arkennemasis Text File Save (caption sidecar) | writes `<folder>/<filename>.txt` next to a saved image — the image/caption pairing training toolkits expect | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Run Folder (auto-numbered) | `<parent_dir>/<folder_name>_001`, `_002`, … — one fresh output folder per run | `STRING`, `INT` |
 
 ## Install
@@ -137,6 +138,25 @@ folders. `IS_CHANGED` returns NaN so the path is recomputed each queued run rath
 served from cache; only the saves re-execute, so re-running does **not** re-bill an
 upstream API node.
 
+### Caption sidecars
+
+**Text File Save** writes `<folder_path>/<filename>.<extension>`. Give it the same folder
+and filename stem the image save uses and you get the pairing kohya / ai-toolkit /
+diffusers expect:
+
+```
+shot_001.png
+shot_001.txt
+```
+
+Wire the generating image into `images`: it binds the caption to that branch, so a branch
+skipped by a gate writes no orphan `.txt`.
+
+**Caption rule for character LoRAs:** anything you caption is *excluded* from what the LoRA
+learns. Caption the variable parts — pose, expression, wardrobe, background — and never the
+face, hair colour or eye colour. This is why feeding it a VLM description of the finished
+image is usually wrong: a VLM writes exactly the identity features you must not caption.
+
 ## Notes
 
 - Replicate calls are **paid** — each run bills your Replicate account.
@@ -164,6 +184,7 @@ comfyui-arkennemasis/
 │   ├── throttle.py             serial_lock() + with_rate_limit_retry() (429 backoff)
 │   ├── system_instructions.py  the System Instructions node
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
+│   ├── text_file_save.py       the Text File Save node (caption sidecars)
 │   └── run_folder.py           the Run Folder node (auto-numbered per run)
 │
 ├── replicate_provider/      ONE PROVIDER = ONE FOLDER
@@ -239,6 +260,7 @@ working**. Someone who only wants the Ollama nodes never needs a Replicate accou
 | survive a provider's 429 | `with_rate_limit_retry(lambda: client…create(…))` |
 | skip an expensive branch entirely | lazy input + `check_lazy_status` returning `[]`, then `ExecutionBlocker(None)` — see `common/shot_selector.py` |
 | one output folder per run | `next_run_folder(parent, name)` (`common/run_folder.py`) |
+| write a sidecar file atomically | `common/text_file_save.py` (`.part` + `os.replace`) |
 | activity badge on a node | add the class key to `ANIMATED_NODES` in `web/activity.js` |
 
 ### Three rules
