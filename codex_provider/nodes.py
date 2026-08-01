@@ -39,6 +39,19 @@ INSTRUCTIONS = ("You are an assistant that must fulfill image generation and ima
 # uses so one shared Settings node can drive both.
 SIZES = {DEFAULT: "auto", "1:1": "1024x1024", "3:2": "1536x1024", "2:3": "1024x1536"}
 
+# The Codex backend IGNORES the tool's `size` field — verified 2026-08-01: asking for
+# 1024x1536 and 1536x1024 both returned 1254x1254. Stating the shape in the prompt DOES
+# work (same test returned exactly 1024x1536 and 1536x1024), so the orientation is
+# appended to the prompt. `size` is still sent in case the backend starts honouring it.
+ASPECT_TEXT = {
+    "1:1": ("Output format: a SQUARE image, 1:1 aspect ratio, 1024x1024 pixels — "
+            "equal width and height."),
+    "3:2": ("Output format: a LANDSCAPE image, 3:2 aspect ratio, 1536x1024 pixels — "
+            "wider than it is tall."),
+    "2:3": ("Output format: a PORTRAIT image, 2:3 aspect ratio, 1024x1536 pixels — "
+            "taller than it is wide."),
+}
+
 _UNSUPPORTED = "Tool choice 'image_generation' not found in 'tools' parameter."
 _UNSUPPORTED_HELP = (
     "This ChatGPT account cannot use the hosted image tool. Try another account via "
@@ -223,7 +236,11 @@ class ArkCodexImageGen:
         who = codex_auth.describe(codex_home)
         account = "%s (%s)" % (who.get("email", "unknown"), who.get("plan", "?"))
 
-        content = [{"type": "input_text", "text": prompt}]
+        # `size` is ignored by this backend, so the shape has to be said in the prompt
+        text = prompt
+        if aspect_ratio in ASPECT_TEXT:
+            text = prompt.rstrip() + "\n\n" + ASPECT_TEXT[aspect_ratio]
+        content = [{"type": "input_text", "text": text}]
         for uri in collect_images_to_data_uris(image_1, image_2, image_3, image_4):
             content.append({"type": "input_image", "image_url": uri})
 

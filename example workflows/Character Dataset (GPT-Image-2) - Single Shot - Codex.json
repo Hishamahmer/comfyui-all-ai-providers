@@ -377,12 +377,20 @@
    2194,
    3078,
    0,
+   3085,
+   0,
+   "IMAGE"
+  ],
+  [
+   2195,
+   3078,
+   0,
    2762,
    0,
    "IMAGE"
   ],
   [
-   2747,
+   2771,
    1896,
    0,
    2055,
@@ -390,23 +398,23 @@
    "IMAGE"
   ],
   [
-   2748,
+   2772,
    2913,
    0,
-   3524,
+   3548,
    0,
    "STRING"
   ],
   [
-   2749,
-   3523,
+   2773,
+   3547,
    0,
-   3524,
+   3548,
    1,
    "STRING"
   ],
   [
-   2750,
+   2774,
    2892,
    0,
    2053,
@@ -414,55 +422,55 @@
    "IMAGE"
   ],
   [
-   2751,
-   3522,
+   2775,
+   3546,
    0,
    2053,
    1,
    "STRING"
   ],
   [
-   2752,
-   3524,
+   2776,
+   3548,
    0,
    2053,
    2,
    "STRING"
   ],
   [
-   2753,
+   2777,
    2913,
    0,
-   3526,
+   3550,
    0,
    "STRING"
   ],
   [
-   2754,
-   3525,
+   2778,
+   3549,
    0,
-   3526,
+   3550,
    1,
    "STRING"
   ],
   [
-   2755,
-   3524,
+   2779,
+   3548,
    0,
-   3526,
+   3550,
    2,
    "STRING"
   ],
   [
-   2756,
+   2780,
    2892,
    0,
-   3526,
+   3550,
    3,
    "IMAGE"
   ],
   [
-   2757,
+   2781,
    1560,
    0,
    2923,
@@ -827,7 +835,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2194,
+     "link": 2195,
      "name": "image",
      "type": "IMAGE",
      "label": null,
@@ -909,7 +917,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body portrait, the whole body from the top of the head to the bare feet inside the frame, eye-level, 50mm.\nScene: standing in a frontal A-pose, arms held slightly away from the body, feet shoulder-width apart, neutral expression, mouth closed, looking into the lens.\nLighting: flat even studio light on a plain neutral white background.\nWardrobe: a plain fitted t-shirt and straight jeans, barefoot",
+    "Framing: full-body portrait, head to bare feet fully in frame, eye-level, 50mm, subject centred.\nScene: standing in a relaxed frontal A-pose, arms a little away from the body, feet shoulder-width, weight even, neutral expression, mouth closed, calm eyes to the lens.\nLighting: clean two-light studio setup on a seamless white cyclorama, large softbox key just off-axis with subtle fill and a soft contact shadow at the feet. Neutral white balance, true-to-life skin, crisp edge detail.\nWardrobe: a plain fitted t-shirt and straight jeans, barefoot\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
     false
    ]
   },
@@ -1400,7 +1408,7 @@
      "label": null,
      "links": [
       2043,
-      2747
+      2771
      ],
      "shape": null,
      "locked": null,
@@ -1496,7 +1504,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2747,
+     "link": 2771,
      "name": "IMAGE",
      "type": "IMAGE",
      "label": null,
@@ -1562,8 +1570,8 @@
      "type": "STRING",
      "label": null,
      "links": [
-      2748,
-      2753
+      2772,
+      2777
      ],
      "shape": null,
      "locked": null,
@@ -1729,8 +1737,8 @@
      "type": "IMAGE",
      "label": null,
      "links": [
-      2750,
-      2756
+      2774,
+      2780
      ],
      "shape": null,
      "locked": null,
@@ -2095,7 +2103,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2757,
+     "link": 2781,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -2231,7 +2239,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2750,
+     "link": 2774,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -2245,7 +2253,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2751,
+     "link": 2775,
      "name": "output_path",
      "type": "STRING",
      "label": null,
@@ -2259,7 +2267,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2752,
+     "link": 2776,
      "name": "filename_prefix",
      "type": "STRING",
      "label": null,
@@ -2352,7 +2360,7 @@
      "type": "IMAGE",
      "label": null,
      "links": [
-      2757
+      2781
      ],
      "shape": null,
      "locked": null,
@@ -3896,7 +3904,8 @@
      "links": [
       2185,
       2193,
-      2194
+      2194,
+      2195
      ],
      "slot_index": null
     }
@@ -4367,7 +4376,44 @@
    ]
   },
   {
-   "id": 3522,
+   "id": 3085,
+   "pos": [
+    2730,
+    4820
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    380
+   ],
+   "type": "PreviewImage",
+   "flags": {},
+   "order": 0,
+   "title": "PREVIEW - T-POSE",
+   "inputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "link": 2194,
+     "name": "images",
+     "type": "IMAGE",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 3546,
    "pos": [
     2400,
     5590
@@ -4398,7 +4444,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2751
+      2775
      ],
      "slot_index": null
     }
@@ -4413,7 +4459,7 @@
    ]
   },
   {
-   "id": 3523,
+   "id": 3547,
    "pos": [
     2060,
     6020
@@ -4442,7 +4488,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2749
+      2773
      ],
      "slot_index": null
     }
@@ -4455,7 +4501,7 @@
    ]
   },
   {
-   "id": 3524,
+   "id": 3548,
    "pos": [
     2060,
     6110
@@ -4475,7 +4521,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2748,
+     "link": 2772,
      "name": "string_1",
      "type": "STRING",
      "label": null,
@@ -4489,7 +4535,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2749,
+     "link": 2773,
      "name": "string_2",
      "type": "STRING",
      "label": null,
@@ -4515,8 +4561,8 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2752,
-      2755
+      2776,
+      2779
      ],
      "slot_index": null
     }
@@ -4533,7 +4579,7 @@
    ]
   },
   {
-   "id": 3525,
+   "id": 3549,
    "pos": [
     2400,
     6120
@@ -4564,7 +4610,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2754
+      2778
      ],
      "slot_index": null
     }
@@ -4579,7 +4625,7 @@
    ]
   },
   {
-   "id": 3526,
+   "id": 3550,
    "pos": [
     2060,
     6190
@@ -4597,7 +4643,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2753,
+     "link": 2777,
      "name": "text",
      "type": "STRING",
      "label": null,
@@ -4611,7 +4657,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2754,
+     "link": 2778,
      "name": "folder_path",
      "type": "STRING",
      "label": null,
@@ -4625,7 +4671,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2755,
+     "link": 2779,
      "name": "filename",
      "type": "STRING",
      "label": null,
@@ -4639,7 +4685,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2756,
+     "link": 2780,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -4697,7 +4743,7 @@
   },
   {
    "id": 105,
-   "title": "0 - RUN SETTINGS  (Codex / ChatGPT login — no API key)",
+   "title": "0 - RUN SETTINGS  (Codex / ChatGPT login - no API key)",
    "bounding": [
     130,
     2980,
@@ -4766,7 +4812,7 @@
  "definitions": {
   "subgraphs": []
  },
- "last_link_id": 2757,
- "last_node_id": 3526,
+ "last_link_id": 2781,
+ "last_node_id": 3550,
  "floatingLinks": null
 }
