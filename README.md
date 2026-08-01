@@ -304,7 +304,7 @@ working**. Someone who only wants the Ollama nodes never needs a Replicate accou
 | write a sidecar file atomically | `common/text_file_save.py` (`.part` + `os.replace`) |
 | activity badge on a node | add the class key to `ANIMATED_NODES` in `web/activity.js` |
 
-### Three rules
+### Four rules
 
 1. **Class keys are permanent.** `"OllamaLLM"` is the ID saved inside every workflow —
    renaming it breaks those workflows ("missing node" on load). Display names and
@@ -314,6 +314,20 @@ working**. Someone who only wants the Ollama nodes never needs a Replicate accou
 3. **Append new widgets at the end** of the `optional` block. A workflow stores widget
    values as a positional list, so inserting one in the middle shifts every later value and
    silently corrupts saved workflows. Adding a *socket* (a non-widget type) is always safe.
+4. **Every node that makes the user wait gets the activity badge.** If it calls a network
+   API, polls, or otherwise takes more than a moment, add its class key to
+   `ANIMATED_NODES` in `web/activity.js` — otherwise the graph looks frozen and people
+   re-queue it. Instant nodes stay out: a spinner that appears and vanishes in one frame
+   is just flicker.
+
+   ```js
+   const ANIMATED_NODES = new Set([
+     "ReplicateOpenAILLM",
+     "ReplicateOpenAIGPTImage2",
+     "ArkCodexImageGen",
+     "YourNewLongRunningNode",   // <- add it here
+   ]);
+   ```
 
 ## License
 

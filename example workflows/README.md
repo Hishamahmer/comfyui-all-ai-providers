@@ -19,6 +19,21 @@ API-format graphs, so they open by drag-and-drop onto the canvas.
 |---|---|---|
 | **Character Dataset (GPT-Image-2)** | Replicate Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Builds a 25-image character LoRA training dataset from a single photo: 24 generated shots + the real reference tile, each with a caption `.txt`. |
 | **Character Dataset (GPT-Image-2) - Single Shot** | the same, with one API node | Prompt-testing rig: iterate a shot for one paid call instead of 24. |
+| **Character Dataset (GPT-Image-2) - Codex** | Codex Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Identical to the 24-shot workflow but generated through your **ChatGPT/Codex login** — no API key, billed to your ChatGPT plan. |
+| **Character Dataset (GPT-Image-2) - Single Shot - Codex** | the same, with one API node | One-call prompt testing on the ChatGPT login. |
+
+### The Codex twins
+
+Same graph, same prompts, same references, same saves and captions — only the generator
+differs, so the two are directly comparable.
+
+Run `codex login` once in a terminal; the node reads the CLI's own `~/.codex/auth.json`.
+There is **no OAuth flow in ComfyUI** and no API key. For several ChatGPT accounts, give
+each its own `CODEX_HOME` folder and set the node's `codex_home` per node — the `account`
+output names the signed-in email so you can see which login made an image.
+
+> Availability is account-dependent: not every ChatGPT plan can call the hosted image
+> tool. The node says so plainly if yours cannot.
 
 ### Character Dataset (GPT-Image-2)
 

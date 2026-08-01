@@ -8,9 +8,14 @@
 import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 
+// RULE: every node that makes the user WAIT belongs in this set — network calls,
+// polling, anything slower than a moment. Without it the graph looks frozen and people
+// re-queue. Instant nodes stay out: a spinner that appears and vanishes in one frame is
+// just flicker.
 const ANIMATED_NODES = new Set([
   "ReplicateOpenAILLM",
   "ReplicateOpenAIGPTImage2",
+  "ArkCodexImageGen",
 ]);
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
