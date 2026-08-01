@@ -36,6 +36,13 @@ def _shot_selector():
     return c, d
 
 
+def _run_folder():
+    from .common.run_folder import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _replicate():
     from .replicate_provider.nodes import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -45,6 +52,7 @@ def _replicate():
 
 _load("common nodes", _common)
 _load("shot selector", _shot_selector)
+_load("run folder", _run_folder)
 _load("replicate provider", _replicate)
 # Add future providers here, e.g.:
 # _load("ollama provider", _ollama)
