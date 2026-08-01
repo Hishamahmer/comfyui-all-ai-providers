@@ -18,6 +18,7 @@ from ..common.image_utils import (
 )
 from ..common.keys import resolve_key
 from ..common.throttle import serial_lock, with_rate_limit_retry
+from .settings import SETTINGS_TYPE
 
 # ----------------------------------------------------------------------------
 # Config
@@ -253,6 +254,12 @@ class ReplicateOpenAIGPTImage2:
                                "burst of 1 under $5 credit). 'all at once' is faster when "
                                "your rate limit allows it.",
                 }),
+                "settings": (SETTINGS_TYPE, {
+                    "tooltip": "Optional: wire one 'Image Gen Settings (shared)' node in "
+                               "here to drive this and every other Image Gen node from a "
+                               "single place. Any field it leaves on \"use node's own\" "
+                               "falls back to the widgets above.",
+                }),
             },
         }
 
@@ -263,7 +270,19 @@ class ReplicateOpenAIGPTImage2:
     async def run(self, prompt, image_1=None, image_2=None, image_3=None, image_4=None,
                   number_of_images=1, aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   output_format=DEFAULT, moderation=DEFAULT, api_token="", timeout_seconds=0,
-                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME):
+                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None):
+        # A wired Settings node overrides the widgets above, field by field.
+        if settings:
+            number_of_images = settings.get("number_of_images", number_of_images)
+            aspect_ratio = settings.get("aspect_ratio", aspect_ratio)
+            quality = settings.get("quality", quality)
+            background = settings.get("background", background)
+            output_format = settings.get("output_format", output_format)
+            moderation = settings.get("moderation", moderation)
+            timeout_seconds = settings.get("timeout_seconds", timeout_seconds)
+            api_token = settings.get("api_token", api_token)
+            run_mode = settings.get("run_mode", run_mode)
+
         # Offload blocking network + poll + image download to a worker thread.
         async def _go():
             return await asyncio.to_thread(
@@ -302,12 +321,18 @@ class ReplicateOpenAIGPTImage2:
         return (image,)
 
 
+from .settings import (
+    NODE_CLASS_MAPPINGS as _SET_CLS, NODE_DISPLAY_NAME_MAPPINGS as _SET_DISP,
+)
+
 NODE_CLASS_MAPPINGS = {
     "ReplicateOpenAILLM": ReplicateOpenAILLM,
     "ReplicateOpenAIGPTImage2": ReplicateOpenAIGPTImage2,
+    **_SET_CLS,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ReplicateOpenAILLM": "arkennemasis Replicate LLM (OpenAI GPT-5)",
     "ReplicateOpenAIGPTImage2": "arkennemasis Replicate Image Gen (GPT-Image-2)",
+    **_SET_DISP,
 }
