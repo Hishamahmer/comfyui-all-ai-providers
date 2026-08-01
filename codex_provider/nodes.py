@@ -37,7 +37,33 @@ INSTRUCTIONS = ("You are an assistant that must fulfill image generation and ima
 
 # gpt-image-2's supported canvases, keyed by the same vocabulary the Replicate node
 # uses so one shared Settings node can drive both.
-SIZES = {DEFAULT: "auto", "1:1": "1024x1024", "3:2": "1536x1024", "2:3": "1024x1536"}
+# Pixel sizes for the named ratios. Best-effort only — this backend ignores the tool's
+# `size` field, so the prompt line below is what actually shapes the output.
+SIZES = {
+    "1:1": "1024x1024",
+    "3:2": "1536x1024",
+    "2:3": "1024x1536",
+    "4:3": "1536x1152",
+    "3:4": "1152x1536",
+    "16:9": "1792x1024",
+    "9:16": "1024x1792",
+}
+
+
+def _tool_size(aspect_ratio):
+    """A WxH string for the tool, or '' when there is nothing sensible to send.
+
+    Must never raise: the aspect list includes ratios and explicit sizes, and a value we
+    have no mapping for is not a reason to fail a paid call.
+    """
+    if aspect_ratio in (DEFAULT, "auto", "", None):
+        return ""
+    mapped = SIZES.get(aspect_ratio)
+    if mapped:
+        return mapped
+    if "x" in str(aspect_ratio).lower():          # already an explicit size
+        return str(aspect_ratio).lower()
+    return ""
 
 # The Codex backend IGNORES the tool's `size` field — verified 2026-08-01: asking for
 # 1024x1536 and 1536x1024 both returned 1254x1254. Stating the shape in the prompt DOES
@@ -276,8 +302,11 @@ class ArkCodexImageGen:
 
         tool = {"type": "image_generation", "model": IMAGE_MODEL,
                 "output_format": "png", "partial_images": 1}
-        if aspect_ratio != DEFAULT:
-            tool["size"] = SIZES[aspect_ratio]
+        # Best-effort only: this backend ignores `size` (the prompt line above is what
+        # actually works). Never raise on a ratio we have no pixel mapping for.
+        size = _tool_size(aspect_ratio)
+        if size:
+            tool["size"] = size
         if quality not in (DEFAULT, "auto"):     # Codex has no "auto" quality
             tool["quality"] = quality
         if background != DEFAULT:
