@@ -85,10 +85,12 @@ Any field left on **`use node's own`** (`-1` for `timeout_seconds`, blank for `a
 falls through to that node's own widget, so you can share most settings and still override
 one node locally.
 
+`settings` is a *socket*, not a widget, so adding it did not shift any existing
+`widgets_values` index.
+
 `number_of_images` is deliberately **not** shared. Multiplying it across every wired node
 is rarely what you want, and in a graph that names files deterministically the extra images
-all land on the same filename and overwrite each other. Set it per node if you need it. `settings` is a *socket*, not
-a widget, so adding it did not shift any existing `widgets_values` index.
+all land on the same filename and overwrite each other. Set it per node if you need it.
 
 ### Rate limits and concurrency
 
