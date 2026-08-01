@@ -50,6 +50,13 @@ def _run_folder():
     return c, d
 
 
+def _codex():
+    from .codex_provider.nodes import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _replicate():
     from .replicate_provider.nodes import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -62,6 +69,7 @@ _load("shot selector", _shot_selector)
 _load("run folder", _run_folder)
 _load("text file save", _text_file_save)
 _load("replicate provider", _replicate)
+_load("codex provider", _codex)
 # Add future providers here, e.g.:
 # _load("ollama provider", _ollama)
 # _load("fal provider", _fal)

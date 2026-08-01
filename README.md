@@ -11,6 +11,8 @@ so nothing breaks anything else.
 | arkennemasis/**LLM** | arkennemasis Replicate LLM (OpenAI GPT-5) | GPT-5 family (`gpt-5`, `-mini`, `-nano`, `-pro`, `-structured`, `5.1`, `5.2`, `5.4`, `5.6-luna/terra/sol`) — text + vision (4 image inputs) | `STRING` |
 | arkennemasis/**Image Gen** | arkennemasis Replicate Image Gen (GPT-Image-2) | `openai/gpt-image-2` — text→image **and** image edit (4 image inputs) | `IMAGE` |
 | arkennemasis/**Image Gen** | arkennemasis Image Gen Settings (shared) | one node driving `aspect_ratio` / `quality` / `run_mode` / `background` / `output_format` / `moderation` / `timeout_seconds` / `api_token` on **many** Image Gen nodes at once | `ARK_IMAGE_SETTINGS` |
+| arkennemasis/**Image Gen** | arkennemasis Codex Image Gen (ChatGPT login) | `gpt-image-2` through your **`codex login`** — no API key, billed to your ChatGPT plan | `IMAGE`, `STRING` |
+| arkennemasis/**Utility** | arkennemasis Codex Login Status | which ChatGPT account this machine will use, and when its token expires | `STRING` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches, picked at random from a seed — unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
 | arkennemasis/**Utility** | arkennemasis Text File Save (caption sidecar) | writes `<folder>/<filename>.txt` next to a saved image — the image/caption pairing training toolkits expect | `STRING` |
@@ -138,6 +140,40 @@ folders. `IS_CHANGED` returns NaN so the path is recomputed each queued run rath
 served from cache; only the saves re-execute, so re-running does **not** re-bill an
 upstream API node.
 
+### Image generation with a ChatGPT login (no API key)
+
+**Codex Image Gen** reuses the OAuth credentials the Codex CLI already wrote — the very
+same login, not a copy:
+
+```
+codex login          # once, in a terminal; opens the browser
+```
+
+It reads `$CODEX_HOME/auth.json`, else `~/.codex/auth.json`. **No OAuth flow is
+implemented in ComfyUI** — logging in stays the CLI's job. `codex logout` and the node
+stops working; log in as someone else and the node follows.
+
+**Multiple accounts:** give each its own folder and point `codex_home` at the one you
+want. Different nodes can use different accounts in the same graph.
+
+```powershell
+$env:CODEX_HOME = "C:\CodexAccounts\work"
+codex login
+```
+
+The node's `account` output and its console line both name the signed-in email, so you
+can always see which account produced an image. **Codex Login Status** reports it without
+generating anything.
+
+Token handling: an expired access token is refreshed against
+`https://auth.openai.com/oauth/token` and **saved back atomically**, preserving every
+other key in the file. That write matters — the endpoint may return a *rotated* refresh
+token, and dropping it would break the login on the next rotation. Set `allow_refresh`
+off to fail instead of ever writing.
+
+> Availability is account-dependent: not every ChatGPT plan can call the hosted image
+> tool. If yours cannot, the node says so plainly instead of dumping an HTTP error.
+
 ### Caption sidecars
 
 **Text File Save** writes `<folder_path>/<filename>.<extension>`. Give it the same folder
@@ -186,6 +222,10 @@ comfyui-arkennemasis/
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
 │   ├── text_file_save.py       the Text File Save node (caption sidecars)
 │   └── run_folder.py           the Run Folder node (auto-numbered per run)
+│
+├── codex_provider/          ChatGPT/Codex OAuth — no API key
+│   ├── auth.py                 reads `codex login` creds, refreshes + persists them
+│   └── nodes.py                Codex Image Gen + Codex Login Status
 │
 ├── replicate_provider/      ONE PROVIDER = ONE FOLDER
 │   ├── nodes.py                Replicate LLM + Image Gen nodes
@@ -260,6 +300,7 @@ working**. Someone who only wants the Ollama nodes never needs a Replicate accou
 | survive a provider's 429 | `with_rate_limit_retry(lambda: client…create(…))` |
 | skip an expensive branch entirely | lazy input + `check_lazy_status` returning `[]`, then `ExecutionBlocker(None)` — see `common/shot_selector.py` |
 | one output folder per run | `next_run_folder(parent, name)` (`common/run_folder.py`) |
+| reuse a `codex login` session | `codex_provider/auth.py` (`get_access_token`, `request_headers`) |
 | write a sidecar file atomically | `common/text_file_save.py` (`.part` + `os.replace`) |
 | activity badge on a node | add the class key to `ANIMATED_NODES` in `web/activity.js` |
 
