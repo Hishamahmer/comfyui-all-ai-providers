@@ -20,7 +20,9 @@ from ..common.image_utils import (
     bytes_list_to_image_tensor,
     output_to_bytes_list,
 )
-from ..common.throttle import serial_lock, with_rate_limit_retry
+from ..common.throttle import (
+    concurrency_gate, serial_lock, with_rate_limit_retry,
+)
 from ..replicate_provider.settings import SETTINGS_TYPE
 from . import auth as codex_auth
 
@@ -243,6 +245,12 @@ class ArkCodexImageGen:
                     "tooltip": "ComfyUI runs async nodes concurrently. 'one at a time' "
                                "serialises every arkennemasis API node in the graph.",
                 }),
+                "max_concurrent": ("INT", {
+                    "default": 2, "min": 0, "max": 32,
+                    "tooltip": "Only used when run_mode is 'all at once': how many "
+                               "arkennemasis API calls may be in flight together. "
+                               "0 = no cap. 2 is a safe default for a 24-shot batch.",
+                }),
                 "settings": (SETTINGS_TYPE, {
                     "tooltip": "Optional: the shared 'Image Gen Settings' node, so this "
                                "and the Replicate nodes follow one place. Codex uses "
@@ -261,7 +269,8 @@ class ArkCodexImageGen:
     async def run(self, prompt, image_1=None, image_2=None, image_3=None, image_4=None,
                   aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   codex_home="", allow_refresh=True, timeout_seconds=300,
-                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None):
+                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None,
+                  max_concurrent=2):
         import asyncio
 
         if settings:                       # a wired Settings node overrides the widgets
@@ -269,6 +278,7 @@ class ArkCodexImageGen:
             quality = settings.get("quality", quality)
             background = settings.get("background", background)
             run_mode = settings.get("run_mode", run_mode)
+            max_concurrent = settings.get("max_concurrent", max_concurrent)
             timeout_seconds = settings.get("timeout_seconds", timeout_seconds)
 
         async def go():
@@ -278,9 +288,10 @@ class ArkCodexImageGen:
                 timeout_seconds,
             )
 
-        if run_mode == RUN_ALL_AT_ONCE:
-            return await go()
-        async with serial_lock():
+        # 'all at once' still respects max_concurrent; 'one at a time' is always 1.
+        gate = (concurrency_gate(max_concurrent) if run_mode == RUN_ALL_AT_ONCE
+                else serial_lock())
+        async with gate:
             return await go()
 
     def _blocking(self, prompt, image_1, image_2, image_3, image_4, aspect_ratio,

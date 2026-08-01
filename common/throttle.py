@@ -13,11 +13,13 @@ Two independent mitigations live here:
 """
 
 import asyncio
+import contextlib
 import random
 import re
 import time
 
 _LOCKS = {}
+_SEMAPHORES = {}
 
 
 def serial_lock(key="replicate"):
@@ -32,6 +34,31 @@ def serial_lock(key="replicate"):
     if lock is None:
         lock = _LOCKS[k] = asyncio.Lock()
     return lock
+
+
+def concurrency_gate(limit, key="replicate"):
+    """An async context manager capping concurrent calls to ``limit``.
+
+    ``limit <= 0`` means no cap. Like :func:`serial_lock` the semaphore is keyed by the
+    running loop, and it is rebuilt if the limit changes so turning the dial takes effect
+    on the next run instead of needing a restart.
+    """
+    try:
+        limit = int(limit)
+    except (TypeError, ValueError):
+        limit = 0
+    if limit <= 0:
+        return contextlib.nullcontext()
+    if limit == 1:
+        return serial_lock(key)
+
+    loop = asyncio.get_running_loop()
+    k = (id(loop), key)
+    sem, current = _SEMAPHORES.get(k, (None, None))
+    if sem is None or current != limit:
+        sem = asyncio.Semaphore(limit)
+        _SEMAPHORES[k] = (sem, limit)
+    return sem
 
 
 def is_rate_limited(exc):

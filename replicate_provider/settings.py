@@ -55,11 +55,17 @@ class ArkImageGenSettings:
                     "tooltip": "Blank = each node's own field, then REPLICATE_API_TOKEN "
                                "from the environment or a .env file.",
                 }),
+                "max_concurrent": ("INT", {
+                    "default": -1, "min": -1, "max": 32,
+                    "tooltip": "-1 = use each node's own value. 0 = no cap. "
+                               "Only applies when run_mode is 'all at once'.",
+                }),
             },
         }
 
     def run(self, aspect_ratio, quality, run_mode, background,
-            output_format, moderation, timeout_seconds, api_token):
+            output_format, moderation, timeout_seconds, api_token,
+            max_concurrent=-1):
         out = {}
         for key, val in (("aspect_ratio", aspect_ratio), ("quality", quality),
                          ("run_mode", run_mode), ("background", background),
@@ -68,6 +74,8 @@ class ArkImageGenSettings:
                 out[key] = val
         if int(timeout_seconds) >= 0:
             out["timeout_seconds"] = int(timeout_seconds)
+        if int(max_concurrent) >= 0:
+            out["max_concurrent"] = int(max_concurrent)
         if api_token.strip():
             out["api_token"] = api_token.strip()
         return (out,)

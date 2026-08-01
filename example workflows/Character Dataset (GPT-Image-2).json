@@ -12900,12 +12900,13 @@
    "widgets_values": [
     "2:3",
     "high",
-    "one at a time",
+    "all at once",
     "default",
     "png",
     "default",
     -1,
-    ""
+    "",
+    2
    ]
   },
   {
@@ -13704,7 +13705,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -14905,7 +14907,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -16106,7 +16109,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -17307,7 +17311,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -18508,7 +18513,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -19709,7 +19715,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -20910,7 +20917,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -22111,7 +22119,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -23312,7 +23321,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -24513,7 +24523,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -25714,7 +25725,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -26915,7 +26927,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -28116,7 +28129,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -29317,7 +29331,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -30518,7 +30533,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -31719,7 +31735,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -32920,7 +32937,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -34121,7 +34139,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -35322,7 +35341,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -36523,7 +36543,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -37724,7 +37745,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -38925,7 +38947,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -40126,7 +40149,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
@@ -41327,7 +41351,8 @@
     "",
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {

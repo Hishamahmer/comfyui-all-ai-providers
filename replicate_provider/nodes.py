@@ -17,7 +17,9 @@ from ..common.image_utils import (
     bytes_list_to_image_tensor,
 )
 from ..common.keys import resolve_key
-from ..common.throttle import serial_lock, with_rate_limit_retry
+from ..common.throttle import (
+    concurrency_gate, serial_lock, with_rate_limit_retry,
+)
 from .settings import SETTINGS_TYPE
 
 # ----------------------------------------------------------------------------
@@ -168,6 +170,12 @@ class ReplicateOpenAILLM:
                                "burst of 1 under $5 credit). 'all at once' is faster when "
                                "your rate limit allows it.",
                 }),
+                "max_concurrent": ("INT", {
+                    "default": 2, "min": 0, "max": 32,
+                    "tooltip": "Only used when run_mode is 'all at once': how many "
+                               "arkennemasis API calls may be in flight together. "
+                               "0 = no cap. 2 is a safe default for a 24-shot batch.",
+                }),
             },
         }
 
@@ -178,7 +186,7 @@ class ReplicateOpenAILLM:
     async def run(self, model, prompt, system_prompt="", image_1=None, image_2=None,
                   image_3=None, image_4=None, reasoning_effort=DEFAULT, verbosity=DEFAULT,
                   max_completion_tokens=0, api_token="", timeout_seconds=0, force_rerun=False,
-                  run_mode=RUN_ONE_AT_A_TIME):
+                  run_mode=RUN_ONE_AT_A_TIME, max_concurrent=2):
         # Offload the (long, blocking) network + poll to a worker thread so ComfyUI's
         # event loop stays responsive during the whole run.
         async def _go():
@@ -187,9 +195,10 @@ class ReplicateOpenAILLM:
                 image_4, reasoning_effort, verbosity, max_completion_tokens, api_token,
                 timeout_seconds,
             )
-        if run_mode == RUN_ALL_AT_ONCE:
-            return await _go()
-        async with serial_lock():          # shares the queue with the image node
+        # 'all at once' still respects max_concurrent; 'one at a time' is always 1.
+        gate = (concurrency_gate(max_concurrent) if run_mode == RUN_ALL_AT_ONCE
+                else serial_lock())
+        async with gate:
             return await _go()
 
     def _blocking(self, model, prompt, system_prompt, image_1, image_2, image_3, image_4,
@@ -256,6 +265,12 @@ class ReplicateOpenAIGPTImage2:
                                "burst of 1 under $5 credit). 'all at once' is faster when "
                                "your rate limit allows it.",
                 }),
+                "max_concurrent": ("INT", {
+                    "default": 2, "min": 0, "max": 32,
+                    "tooltip": "Only used when run_mode is 'all at once': how many "
+                               "arkennemasis API calls may be in flight together. "
+                               "0 = no cap. 2 is a safe default for a 24-shot batch.",
+                }),
                 "settings": (SETTINGS_TYPE, {
                     "tooltip": "Optional: wire one 'Image Gen Settings (shared)' node in "
                                "here to drive this and every other Image Gen node from a "
@@ -272,7 +287,8 @@ class ReplicateOpenAIGPTImage2:
     async def run(self, prompt, image_1=None, image_2=None, image_3=None, image_4=None,
                   number_of_images=1, aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   output_format=DEFAULT, moderation=DEFAULT, api_token="", timeout_seconds=0,
-                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None):
+                  force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None,
+                  max_concurrent=2):
         # A wired Settings node overrides the widgets above, field by field.
         if settings:
             number_of_images = settings.get("number_of_images", number_of_images)
@@ -284,6 +300,7 @@ class ReplicateOpenAIGPTImage2:
             timeout_seconds = settings.get("timeout_seconds", timeout_seconds)
             api_token = settings.get("api_token", api_token)
             run_mode = settings.get("run_mode", run_mode)
+            max_concurrent = settings.get("max_concurrent", max_concurrent)
 
         # Offload blocking network + poll + image download to a worker thread.
         async def _go():
@@ -292,9 +309,9 @@ class ReplicateOpenAIGPTImage2:
                 aspect_ratio, quality, background, output_format, moderation, api_token,
                 timeout_seconds,
             )
-        if run_mode == RUN_ALL_AT_ONCE:
-            return await _go()
-        async with serial_lock():          # one arkennemasis API call at a time
+        gate = (concurrency_gate(max_concurrent) if run_mode == RUN_ALL_AT_ONCE
+                else serial_lock())
+        async with gate:
             return await _go()
 
     def _blocking(self, prompt, image_1, image_2, image_3, image_4, number_of_images,

@@ -2963,12 +2963,13 @@
    "widgets_values": [
     "2:3",
     "high",
-    "one at a time",
+    "all at once",
     "default",
     "png",
     "default",
     -1,
-    ""
+    "",
+    2
    ]
   },
   {
@@ -3780,7 +3781,8 @@
     true,
     0,
     false,
-    "one at a time"
+    "all at once",
+    2
    ]
   },
   {
