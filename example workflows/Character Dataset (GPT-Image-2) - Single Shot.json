@@ -30,14 +30,6 @@
  },
  "links": [
   [
-   510,
-   547,
-   0,
-   550,
-   0,
-   "STRING"
-  ],
-  [
    511,
    549,
    0,
@@ -391,6 +383,14 @@
   ],
   [
    2771,
+   3546,
+   0,
+   550,
+   0,
+   "STRING"
+  ],
+  [
+   2772,
    1896,
    0,
    2055,
@@ -398,23 +398,23 @@
    "IMAGE"
   ],
   [
-   2772,
+   2773,
    2913,
    0,
-   3548,
+   3549,
    0,
-   "STRING"
-  ],
-  [
-   2773,
-   3547,
-   0,
-   3548,
-   1,
    "STRING"
   ],
   [
    2774,
+   3548,
+   0,
+   3549,
+   1,
+   "STRING"
+  ],
+  [
+   2775,
    2892,
    0,
    2053,
@@ -422,55 +422,55 @@
    "IMAGE"
   ],
   [
-   2775,
-   3546,
+   2776,
+   3547,
    0,
    2053,
    1,
-   "STRING"
-  ],
-  [
-   2776,
-   3548,
-   0,
-   2053,
-   2,
    "STRING"
   ],
   [
    2777,
-   2913,
-   0,
-   3550,
-   0,
-   "STRING"
-  ],
-  [
-   2778,
    3549,
    0,
-   3550,
-   1,
-   "STRING"
-  ],
-  [
-   2779,
-   3548,
-   0,
-   3550,
+   2053,
    2,
    "STRING"
   ],
   [
+   2778,
+   2913,
+   0,
+   3551,
+   0,
+   "STRING"
+  ],
+  [
+   2779,
+   3550,
+   0,
+   3551,
+   1,
+   "STRING"
+  ],
+  [
    2780,
+   3549,
+   0,
+   3551,
+   2,
+   "STRING"
+  ],
+  [
+   2781,
    2892,
    0,
-   3550,
+   3551,
    3,
    "IMAGE"
   ],
   [
-   2781,
+   2782,
    1560,
    0,
    2923,
@@ -500,7 +500,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 510,
+     "link": 2771,
      "name": "STRING",
      "type": "STRING",
      "label": null,
@@ -1408,7 +1408,7 @@
      "label": null,
      "links": [
       2043,
-      2771
+      2772
      ],
      "shape": null,
      "locked": null,
@@ -1504,7 +1504,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2771,
+     "link": 2772,
      "name": "IMAGE",
      "type": "IMAGE",
      "label": null,
@@ -1570,8 +1570,8 @@
      "type": "STRING",
      "label": null,
      "links": [
-      2772,
-      2777
+      2773,
+      2778
      ],
      "shape": null,
      "locked": null,
@@ -1737,8 +1737,8 @@
      "type": "IMAGE",
      "label": null,
      "links": [
-      2774,
-      2780
+      2775,
+      2781
      ],
      "shape": null,
      "locked": null,
@@ -2103,7 +2103,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2781,
+     "link": 2782,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -2239,7 +2239,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2774,
+     "link": 2775,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -2253,7 +2253,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2775,
+     "link": 2776,
      "name": "output_path",
      "type": "STRING",
      "label": null,
@@ -2267,7 +2267,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2776,
+     "link": 2777,
      "name": "filename_prefix",
      "type": "STRING",
      "label": null,
@@ -2360,7 +2360,7 @@
      "type": "IMAGE",
      "label": null,
      "links": [
-      2781
+      2782
      ],
      "shape": null,
      "locked": null,
@@ -2507,52 +2507,6 @@
     "image"
    ],
    "title": "Load Image (your character photo)"
-  },
-  {
-   "id": 547,
-   "pos": [
-    1720,
-    3650
-   ],
-   "mode": 0,
-   "size": [
-    400,
-    220
-   ],
-   "type": "StringConstantMultiline",
-   "flags": {},
-   "order": 294,
-   "title": "STYLE [OPTIONAL]",
-   "inputs": [],
-   "outputs": [
-    {
-     "dir": null,
-     "pos": null,
-     "name": "STRING",
-     "type": "STRING",
-     "label": null,
-     "links": [
-      510
-     ],
-     "shape": null,
-     "locked": null,
-     "color_on": null,
-     "color_off": null,
-     "removable": null,
-     "nameLocked": null,
-     "slot_index": null
-    }
-   ],
-   "properties": {
-    "ver": "72a2e59734ad77162c573100113147d2c8fc2898",
-    "cnr_id": "comfyui-kjnodes",
-    "Node name for S&R": "StringConstantMultiline"
-   },
-   "showAdvanced": null,
-   "widgets_values": [
-    "A woman ",
-    false
-   ]
   },
   {
    "id": 3054,
@@ -4402,6 +4356,51 @@
   {
    "id": 3546,
    "pos": [
+    1720,
+    3650
+   ],
+   "mode": 0,
+   "size": [
+    400,
+    220
+   ],
+   "type": "ArkSubjectLine",
+   "flags": {},
+   "order": 0,
+   "title": "SUBJECT - gender + notes (drives all 24 prompts)",
+   "inputs": [],
+   "outputs": [
+    {
+     "dir": null,
+     "pos": null,
+     "name": "subject",
+     "type": "STRING",
+     "label": null,
+     "shape": null,
+     "locked": null,
+     "color_on": null,
+     "color_off": null,
+     "removable": null,
+     "nameLocked": null,
+     "links": [
+      2771
+     ],
+     "slot_index": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfyui-arkennemasis",
+    "Node name for S&R": "ArkSubjectLine"
+   },
+   "widgets_values": [
+    "let the reference decide",
+    "",
+    "Subject:"
+   ]
+  },
+  {
+   "id": 3547,
+   "pos": [
     2400,
     5590
    ],
@@ -4431,7 +4430,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2775
+      2776
      ],
      "slot_index": null
     }
@@ -4446,7 +4445,7 @@
    ]
   },
   {
-   "id": 3547,
+   "id": 3548,
    "pos": [
     2060,
     6020
@@ -4475,7 +4474,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2773
+      2774
      ],
      "slot_index": null
     }
@@ -4488,7 +4487,7 @@
    ]
   },
   {
-   "id": 3548,
+   "id": 3549,
    "pos": [
     2060,
     6110
@@ -4508,7 +4507,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2772,
+     "link": 2773,
      "name": "string_1",
      "type": "STRING",
      "label": null,
@@ -4522,7 +4521,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2773,
+     "link": 2774,
      "name": "string_2",
      "type": "STRING",
      "label": null,
@@ -4548,8 +4547,8 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2776,
-      2779
+      2777,
+      2780
      ],
      "slot_index": null
     }
@@ -4566,7 +4565,7 @@
    ]
   },
   {
-   "id": 3549,
+   "id": 3550,
    "pos": [
     2400,
     6120
@@ -4597,7 +4596,7 @@
      "removable": null,
      "nameLocked": null,
      "links": [
-      2778
+      2779
      ],
      "slot_index": null
     }
@@ -4612,7 +4611,7 @@
    ]
   },
   {
-   "id": 3550,
+   "id": 3551,
    "pos": [
     2060,
     6190
@@ -4630,7 +4629,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2777,
+     "link": 2778,
      "name": "text",
      "type": "STRING",
      "label": null,
@@ -4644,7 +4643,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2778,
+     "link": 2779,
      "name": "folder_path",
      "type": "STRING",
      "label": null,
@@ -4658,7 +4657,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2779,
+     "link": 2780,
      "name": "filename",
      "type": "STRING",
      "label": null,
@@ -4672,7 +4671,7 @@
     {
      "dir": null,
      "pos": null,
-     "link": 2780,
+     "link": 2781,
      "name": "images",
      "type": "IMAGE",
      "label": null,
@@ -4799,7 +4798,7 @@
  "definitions": {
   "subgraphs": []
  },
- "last_link_id": 2781,
- "last_node_id": 3550,
+ "last_link_id": 2782,
+ "last_node_id": 3551,
  "floatingLinks": null
 }

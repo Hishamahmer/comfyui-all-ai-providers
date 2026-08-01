@@ -43,6 +43,13 @@ def _text_file_save():
     return c, d
 
 
+def _subject_line():
+    from .common.subject_line import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _run_folder():
     from .common.run_folder import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -67,6 +74,7 @@ def _replicate():
 _load("common nodes", _common)
 _load("shot selector", _shot_selector)
 _load("run folder", _run_folder)
+_load("subject line", _subject_line)
 _load("text file save", _text_file_save)
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
