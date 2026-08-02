@@ -28,13 +28,26 @@ except ImportError:                             # very old builds kept it in exe
     from execution import ExecutionBlocker
 
 
-def selected_indices(how_many, total_shots, seed):
-    """The chosen slot numbers. Deterministic for a given (how_many, total, seed)."""
+ORDERED = "first N in order"
+RANDOM = "random from seed"
+SELECTION_MODES = [ORDERED, RANDOM]
+
+
+def selected_indices(how_many, total_shots, seed, selection=ORDERED):
+    """The chosen slot numbers. Deterministic for a given set of inputs.
+
+    ``first N in order``  -> slots 0..N-1. What you want when the first few slots are
+                             the ones you are actively working on.
+    ``random from seed``  -> an unbiased sample, for a representative spread across the
+                             whole set without paying for all of it.
+    """
     total = max(0, int(total_shots))
     n = max(0, min(int(how_many), total))
     if n >= total:
         return set(range(total))
-    return set(random.Random(int(seed)).sample(range(total), n))
+    if selection == RANDOM:
+        return set(random.Random(int(seed)).sample(range(total), n))
+    return set(range(n))
 
 
 class ArkShotSelector:
@@ -42,10 +55,11 @@ class ArkShotSelector:
     FUNCTION = "run"
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
-    DESCRIPTION = ("Run only N of M expensive branches, picked at random from a seed. "
-                   "Put one after each generator, give them all the same how_many/seed "
-                   "and a unique shot_index. Unselected branches never execute, so a "
-                   "paid API node upstream is never called.")
+    DESCRIPTION = ("Run only N of M expensive branches - either the first N in order or "
+                   "a random sample from a seed. Put one after each generator, give them "
+                   "all the same how_many/seed/selection and a unique shot_index. "
+                   "Unselected branches never execute, so a paid API node upstream is "
+                   "never called.")
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -73,19 +87,29 @@ class ArkShotSelector:
                 # slot, and this input is normally driven by a link anyway.
                 "seed": ("INT", {
                     "default": 0, "min": 0, "max": 0xFFFFFFFFFFFFFFFF,
-                    "tooltip": "Changes which branches are picked. Same seed = same set.",
+                    "tooltip": "Only used by 'random from seed'. Same seed = same set.",
+                }),
+                # MUST stay last: widgets_values is positional, so a new widget appended
+                # anywhere else shifts every later value on every existing copy.
+                "selection": (SELECTION_MODES, {
+                    "default": ORDERED,
+                    "tooltip": "'first N in order' runs slots 1..N - use it when the "
+                               "first slots are the ones you are working on. 'random "
+                               "from seed' takes an unbiased sample of the whole set.",
                 }),
             },
         }
 
-    def check_lazy_status(self, shot_index, how_many, total_shots, seed, image=None):
+    def check_lazy_status(self, shot_index, how_many, total_shots, seed,
+                          selection=ORDERED, image=None):
         # Returning [] leaves `image` unevaluated -> the upstream branch never runs.
-        if int(shot_index) in selected_indices(how_many, total_shots, seed):
+        if int(shot_index) in selected_indices(how_many, total_shots, seed, selection):
             return ["image"]
         return []
 
-    def run(self, shot_index, how_many, total_shots, seed, image=None):
-        if int(shot_index) in selected_indices(how_many, total_shots, seed) and image is not None:
+    def run(self, shot_index, how_many, total_shots, seed, selection=ORDERED, image=None):
+        if (int(shot_index) in selected_indices(how_many, total_shots, seed, selection)
+                and image is not None):
             return (image,)
         return (ExecutionBlocker(None),)      # silent: skips everything downstream
 
