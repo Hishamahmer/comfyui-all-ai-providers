@@ -47,13 +47,19 @@ def output_to_bytes_list(output):
     Handles FileOutput objects (.read()), http(s) URLs, data: URIs, raw bytes,
     and lists of any of those.
     """
+    from .throttle import with_retry     # local import keeps this module dependency-free
+
     items = output if isinstance(output, list) else [output]
     out = []
     for item in items:
         if item is None:
             continue
         if hasattr(item, "read"):  # file-like / SDK FileOutput
-            out.append(item.read())
+            # The image is already generated and already paid for, so a dropped
+            # connection here must not lose it. Replicate's FileOutput.read() opens a
+            # fresh GET each call, so retrying it is safe.
+            out.append(with_retry(item.read,
+                                  log=lambda m: print("[arkennemasis] %s" % m)))
         elif isinstance(item, (bytes, bytearray)):
             out.append(bytes(item))
         elif isinstance(item, str):
@@ -62,8 +68,12 @@ def output_to_bytes_list(output):
             elif item.startswith("http://") or item.startswith("https://"):
                 import urllib.request  # stdlib — no extra dependency
 
-                with urllib.request.urlopen(item, timeout=300) as resp:
-                    out.append(resp.read())
+                def fetch(url=item):
+                    with urllib.request.urlopen(url, timeout=300) as resp:
+                        return resp.read()
+
+                out.append(with_retry(fetch,
+                                      log=lambda m: print("[arkennemasis] %s" % m)))
             else:  # assume raw base64
                 out.append(base64.b64decode(item))
         else:

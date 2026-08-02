@@ -18,7 +18,7 @@ from ..common.image_utils import (
 )
 from ..common.keys import resolve_key
 from ..common.throttle import (
-    concurrency_gate, serial_lock, with_rate_limit_retry,
+    concurrency_gate, serial_lock, with_retry,
 )
 from .settings import SETTINGS_TYPE
 
@@ -88,7 +88,7 @@ def _run_model(client, model_ref, inputs, timeout_seconds=0, poll_interval=2.0):
 
     owner, _, name = model_ref.partition("/")
     # Creating the prediction is the call providers throttle; polling is not.
-    prediction = with_rate_limit_retry(
+    prediction = with_retry(
         lambda: client.models.predictions.create(model=(owner, name), input=inputs),
         log=lambda m: print(f"[arkennemasis] {m}"),
     )

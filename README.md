@@ -109,9 +109,28 @@ Both API nodes therefore have a **`run_mode`** widget:
 | **`one at a time`** (default) | an asyncio lock serialises **every** arkennemasis API node in the graph |
 | **`all at once`** | the original concurrent behaviour — faster when your rate limit allows it |
 
-Independently of the mode, a 429 is retried with **exponential backoff**, honouring the
-`Retry-After` header or the *"resets in ~Ns"* hint in the message. Non-rate-limit errors
-still fail immediately.
+`max_concurrent` sets how many calls `all at once` may actually have in flight (default
+**2**, `0` = uncapped).
+
+### Retries — what is retried, and what is not
+
+A node exception aborts the **whole ComfyUI prompt**, so on a 24-image batch one bad
+minute of network throws away every shot still queued. `common/throttle.with_retry`
+therefore retries anything that got **no complete answer**:
+
+| Retried | Not retried |
+|---|---|
+| `429` — backs off exponentially, honouring `Retry-After` or the *"resets in ~Ns"* hint | a moderation refusal |
+| `500 / 502 / 503 / 504` | a malformed request (`400`) |
+| a dropped or truncated connection (`RemoteProtocolError`, read timeouts, *"incomplete chunked read"*) | an expired or wrong login (`401 / 403`) |
+| an SSE stream that ends with no completion event | an account without the image tool |
+
+Dropped connections retry after a couple of seconds — waiting a minute does not make a
+socket healthier. Rate limits keep the long backoff. Six attempts, then the original
+error is raised.
+
+The Codex node also tells a **finished** image apart from a `partial_images` preview, so a
+stream cut short mid-render can never be saved as if it were the final result.
 
 ### Running only some of many expensive branches
 
@@ -217,7 +236,7 @@ comfyui-arkennemasis/
 ├── common/                  SHARED CODE — written once, reused by every module
 │   ├── keys.py                 resolve_key(): node field → env var → .env
 │   ├── image_utils.py          tensor ↔ data-URI ↔ bytes, text normalising
-│   ├── throttle.py             serial_lock() + with_rate_limit_retry() (429 backoff)
+│   ├── throttle.py             serial_lock(), concurrency_gate(), with_retry()
 │   ├── system_instructions.py  the System Instructions node
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
 │   ├── text_file_save.py       the Text File Save node (caption sidecars)
@@ -297,7 +316,8 @@ working**. Someone who only wants the Ollama nodes never needs a Replicate accou
 | stream / list / str → clean text | `output_to_text(out)` |
 | long API call without freezing the UI | copy the `async run()` + `asyncio.to_thread(self._blocking, …)` pattern in `replicate_provider/nodes.py` |
 | serialise calls across nodes | `async with serial_lock(): …` (`common/throttle.py`) |
-| survive a provider's 429 | `with_rate_limit_retry(lambda: client…create(…))` |
+| survive a 429, a 5xx or a dropped connection | `with_retry(lambda: client…create(…))` — retries only calls that got no complete answer; refusals and bad requests raise straight away |
+| mark your own exception retryable | set `retryable = True` on it; `common/throttle.is_transient` honours it |
 | skip an expensive branch entirely | lazy input + `check_lazy_status` returning `[]`, then `ExecutionBlocker(None)` — see `common/shot_selector.py` |
 | one output folder per run | `next_run_folder(parent, name)` (`common/run_folder.py`) |
 | reuse a `codex login` session | `codex_provider/auth.py` (`get_access_token`, `request_headers`) |

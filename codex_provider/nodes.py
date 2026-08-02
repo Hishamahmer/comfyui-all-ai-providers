@@ -21,7 +21,7 @@ from ..common.image_utils import (
     output_to_bytes_list,
 )
 from ..common.throttle import (
-    concurrency_gate, serial_lock, with_rate_limit_retry,
+    concurrency_gate, serial_lock, with_retry,
 )
 from ..replicate_provider.settings import SETTINGS_TYPE
 from . import auth as codex_auth
@@ -171,26 +171,42 @@ def _iter_sse(response):
 
 
 def _find_image_b64(value):
-    """Newest base64 image anywhere in an event payload (shapes vary by version)."""
-    found = None
+    """``(base64, is_final)`` — newest image in an event payload (shapes vary by version).
+
+    ``is_final`` separates a finished render from a `partial_images` preview. They used to
+    be indistinguishable, so a stream cut short mid-render could silently hand back a
+    half-drawn image as if it were the result.
+    """
+    found = (None, False)
     if isinstance(value, dict):
         if value.get("type") == "image_generation_call":
             result = value.get("result")
             if isinstance(result, str) and result:
-                found = result
+                found = (result, True)
         partial = value.get("partial_image_b64")
         if isinstance(partial, str) and partial:
-            found = partial
+            found = (partial, False)
         for child in value.values():
             nested = _find_image_b64(child)
-            if nested:
+            if nested[0]:
                 found = nested
     elif isinstance(value, list):
         for child in value:
             nested = _find_image_b64(child)
-            if nested:
+            if nested[0]:
                 found = nested
     return found
+
+
+# Any of these means the backend finished talking. Without one, the stream was cut off.
+_TERMINAL_EVENTS = ("response.completed", "response.failed", "response.incomplete",
+                    "response.error", "error")
+
+
+class CodexStreamTruncated(RuntimeError):
+    """The backend closed the SSE stream before the image finished."""
+
+    retryable = True          # read by common.throttle.is_transient
 
 
 class ArkCodexImageGen:
@@ -339,7 +355,8 @@ class ArkCodexImageGen:
         headers = codex_auth.request_headers(token)
 
         def call():
-            image_b64 = None
+            final_b64 = partial_b64 = None
+            finished = False
             with httpx.Client(timeout=timeout, headers=headers) as http:
                 with http.stream("POST", BASE_URL + "/responses", json=payload) as resp:
                     if resp.status_code >= 400:
@@ -352,17 +369,35 @@ class ArkCodexImageGen:
                                 "Codex rejected the login (HTTP %s). Run `codex login` "
                                 "(or check codex_home). Body: %s"
                                 % (resp.status_code, body[:300]))
-                        raise RuntimeError("Codex Responses API returned HTTP %s: %s"
+                        err = RuntimeError("Codex Responses API returned HTTP %s: %s"
                                            % (resp.status_code, body[:400]))
+                        # 429/5xx are "try again"; 4xx is our request being wrong.
+                        err.retryable = resp.status_code in (429, 500, 502, 503, 504)
+                        raise err
                     for event in _iter_sse(resp):
-                        found = _find_image_b64(event)
+                        if isinstance(event, dict) and event.get("type") in _TERMINAL_EVENTS:
+                            finished = True
+                        found, is_final = _find_image_b64(event)
                         if found:
-                            image_b64 = found
-            return image_b64
+                            if is_final:
+                                final_b64 = found
+                            else:
+                                partial_b64 = found
+            if final_b64:
+                return final_b64
+            # A stream that stops early usually raises inside iter_lines (that is the
+            # RemoteProtocolError case), but it can also just end. Both retry.
+            if not finished:
+                raise CodexStreamTruncated(
+                    "Codex closed the stream before the image finished (no completion "
+                    "event).")
+            if partial_b64:
+                print("[arkennemasis] warning: only a partial_images preview came back; "
+                      "using it, quality may be lower than requested")
+            return partial_b64
 
         print("[arkennemasis] %s via Codex login as %s" % (IMAGE_MODEL, account))
-        image_b64 = with_rate_limit_retry(
-            call, log=lambda m: print("[arkennemasis] %s" % m))
+        image_b64 = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))
         if not image_b64:
             raise RuntimeError(
                 "Codex returned no image. The account may not have the image tool, or "
