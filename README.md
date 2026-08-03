@@ -4,6 +4,40 @@ One pack, one menu (**arkennemasis**), many AI use cases: cloud LLMs, image gene
 and utility nodes. Providers and use cases keep growing — each module loads independently,
 so nothing breaks anything else.
 
+---
+
+## ⭐ Generate images with your ChatGPT subscription — no API key
+
+If you already pay for ChatGPT, **you can generate `gpt-image-2` images in ComfyUI without
+buying any API credit.** Install the pack, run `codex login` once in a terminal, and the
+**Codex Image Gen** node signs in with your existing ChatGPT account. Images bill against
+your plan instead of per call.
+
+**ChatGPT Plus at $20/month is enough** and is what this pack is developed against.
+
+```sh
+codex login      # once, in your own terminal — not inside ComfyUI
+```
+
+There is no API key field and no OAuth flow in ComfyUI — the node reads the Codex CLI's
+own login. Drop in **Codex Login Status** to confirm the account and plan before you run
+anything. Full details in [What each path needs](#what-each-path-needs).
+
+## 🎬 Ready-made workflow: character LoRA training dataset
+
+[`example workflows/`](example%20workflows/) ships a complete
+**Character Dataset (GPT-Image-2) - Codex** workflow: drop in **one photo of a person** and
+it produces a **25-image LoRA training dataset** — 24 generated shots plus the real
+reference tile, each with a matching caption `.txt`, in an auto-numbered folder. Ready to
+feed straight into LoRA training.
+
+All 24 shots are distinct looks — street candid, studio campaign, black-and-white
+editorial, festive ethnic wear, automotive, poolside, snow and more — with 24 different
+outfits, so the model learns the *person* rather than the clothes or the room. No GPU
+needed; every generation is an API call.
+
+---
+
 ## Nodes
 
 | Menu | Node | What it does | Out |
