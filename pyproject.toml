@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-arkennemasis"
-description = "One pack, many AI use cases: OpenAI GPT-5 text/vision and gpt-image-2 through Replicate, the same image model through your ChatGPT (Codex CLI) login with no API key, plus utility nodes for batch generation - shared image settings, run-N-of-M shot selection that never bills skipped branches, auto-numbered run folders, caption sidecars and reusable system prompts."
-version = "1.2.0"
+description = "Generate images with your ChatGPT subscription - no API key. Use your existing ChatGPT Plus login through the Codex CLI to run OpenAI gpt-image-2 (GPT Image 2) inside ComfyUI, billed to your ChatGPT plan instead of per image. Also includes Replicate nodes for gpt-image-2 image generation and image editing, and OpenAI GPT-5 (text + vision) as an LLM node, plus utility nodes for batch generation: shared image settings, run-N-of-M shot selection that never bills skipped branches, auto-numbered run folders, caption sidecars and reusable system prompts. Ships a ready-made character LoRA training dataset workflow - one photo in, 25 captioned training images out. One pack, one menu, many use cases - new providers and node types are added regularly, and each module loads independently so nothing breaks anything else. Keywords: ChatGPT, ChatGPT Plus, ChatGPT Image 2, ChatGPT image generator, Codex, Codex CLI, OpenAI, GPT-Image-2, GPT Image 2, gpt-image-2, GPT-5, Replicate, image generation, image edit, text to image, LoRA dataset, character LoRA, dataset generator."
+version = "1.2.1"
 license = { file = "LICENSE" }
 dependencies = ["replicate", "httpx"]
 
@@ -10,5 +10,5 @@ Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
 
 [tool.comfy]
 PublisherId = "hishamahmer"
-DisplayName = "arkennemasis Nodes"
+DisplayName = "arkennemasis - ChatGPT / Codex / Replicate AI nodes"
 Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
