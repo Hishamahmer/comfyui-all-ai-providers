@@ -9,6 +9,6 @@ dependencies = ["replicate", "httpx"]
 Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
 
 [tool.comfy]
-PublisherId = "Hishamahmer"
+PublisherId = "hishamahmer"
 DisplayName = "arkennemasis Nodes"
 Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"
