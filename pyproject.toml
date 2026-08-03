@@ -1,9 +1,9 @@
 [project]
 name = "comfyui_arkennemasis"
-description = "arkennemasis — ComfyUI nodes for many AI use cases: Replicate LLM + image gen nodes (more providers coming) plus utility nodes (System Instructions)."
-version = "1.1.0"
-license = { text = "MIT" }
-dependencies = ["replicate"]
+description = "One pack, many AI use cases: OpenAI GPT-5 text/vision and gpt-image-2 through Replicate, the same image model through your ChatGPT (Codex CLI) login with no API key, plus utility nodes for batch generation - shared image settings, run-N-of-M shot selection that never bills skipped branches, auto-numbered run folders, caption sidecars and reusable system prompts."
+version = "1.2.0"
+license = { file = "LICENSE" }
+dependencies = ["replicate", "httpx"]
 
 [project.urls]
 Repository = "https://github.com/Hishamahmer/comfyui-arkennemasis"

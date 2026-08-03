@@ -25,16 +25,49 @@ cd ComfyUI/custom_nodes
 git clone https://github.com/Hishamahmer/comfyui-arkennemasis
 ```
 
-Install the dependency, then restart ComfyUI:
+Install the dependencies, then restart ComfyUI:
 
 ```sh
 # portable build:
 python_embeded\python.exe -m pip install -r ComfyUI\custom_nodes\comfyui-arkennemasis\requirements.txt
 # normal install:
-pip install replicate
+pip install replicate httpx
 ```
 
 Or in **ComfyUI-Manager** → *Install via Git URL* → paste the repo URL (deps auto-install).
+
+## What each path needs
+
+The two image-generation paths reach the **same** `gpt-image-2` model. Pick whichever you
+already pay for — you do not need both.
+
+| Path | Nodes | What it requires |
+|---|---|---|
+| **Replicate** | Replicate LLM, Replicate Image Gen | A Replicate account and an API key. Pay-as-you-go per image. |
+| **Codex / ChatGPT** | Codex Image Gen, Codex Login Status | A **paid ChatGPT subscription** and the **Codex CLI already logged in on this machine**. No API key. Images bill against your ChatGPT plan instead of per call. |
+
+### Codex path — read this before you try it
+
+1. **A paid ChatGPT plan is required.** The free tier cannot call the hosted image tool.
+   **ChatGPT Plus at $20/month is the recommended plan** and is what this pack is
+   developed against. Business/Pro plans work too.
+2. **Install the Codex CLI and sign in from your own terminal**, on the same machine and
+   the same user account that runs ComfyUI:
+   ```sh
+   codex login
+   ```
+   This writes `~/.codex/auth.json`. The nodes read that file directly — **there is no
+   OAuth flow inside ComfyUI and nowhere to paste a password.** If you have not run
+   `codex login`, the Codex nodes will tell you so and stop.
+3. **Check it worked** by dropping in the **Codex Login Status** node — it reports the
+   signed-in account, the plan and when the token expires.
+
+> Availability is account-dependent: not every ChatGPT plan or region can call the hosted
+> image tool. The node says so plainly rather than failing cryptically.
+
+Running several ChatGPT accounts? Give each its own `CODEX_HOME` folder and set the node's
+`codex_home` per node. The Codex Image Gen node's `account` output names the signed-in
+email, so you can see which login produced an image.
 
 ## API keys — three ways (pasting is optional)
 

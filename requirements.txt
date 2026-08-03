@@ -1,1 +1,8 @@
+# Replicate provider (Replicate LLM + Replicate Image Gen)
 replicate
+
+# Codex provider (Codex Image Gen + Codex Login Status) — streams the hosted image tool
+# over HTTP. ComfyUI does not guarantee httpx is present, and __init__.py loads each
+# provider independently, so without this the Codex nodes silently fail to load while
+# the rest of the pack still works. Declaring it makes that a non-issue.
+httpx

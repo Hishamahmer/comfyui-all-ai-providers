@@ -2,7 +2,12 @@
 
 Menu layout:  arkennemasis/LLM  ·  arkennemasis/Image Gen  ·  arkennemasis/Utility
 
-Currently bundled: Replicate (OpenAI GPT-5 LLM + gpt-image-2) and System Instructions.
+Currently bundled:
+  * Replicate  — OpenAI GPT-5 LLM (text + vision) and gpt-image-2, via an API key.
+  * Codex      — the same image model through the ChatGPT/Codex CLI login, no API key.
+                 Requires a paid ChatGPT plan and `codex login` already run in a terminal.
+  * Utility    — System Instructions, Shot Selector, Run Folder, Text File Save,
+                 Subject Line, Codex Login Status, and the shared Image Gen Settings.
 More providers/use cases (Ollama, Fal, Excalidraw, ...) drop in as sibling packages.
 
 Each module is loaded independently, so a missing optional dependency only disables

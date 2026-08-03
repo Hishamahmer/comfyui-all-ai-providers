@@ -19,15 +19,26 @@ API-format graphs, so they open by drag-and-drop onto the canvas.
 |---|---|---|
 | **Character Dataset (GPT-Image-2) - Codex** | Codex Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Builds a 25-image character LoRA training dataset from a single photo: 24 generated shots + the real reference tile, each with a caption `.txt`. Generated through your **ChatGPT/Codex login** — no API key. |
 
-### Running it on the Codex login
+### Requirements — this workflow will not run without these
 
-Run `codex login` once in a terminal; the node reads the CLI's own `~/.codex/auth.json`.
-There is **no OAuth flow in ComfyUI** and no API key. For several ChatGPT accounts, give
-each its own `CODEX_HOME` folder and set the node's `codex_home` per node — the `account`
-output names the signed-in email so you can see which login made an image.
+1. **A paid ChatGPT subscription.** The free tier cannot call the hosted image tool.
+   **ChatGPT Plus at $20/month is the recommended plan.**
+2. **The Codex CLI signed in on the machine that runs ComfyUI**, under the same user
+   account:
+   ```sh
+   codex login
+   ```
+   The node reads the CLI's own `~/.codex/auth.json`. There is **no OAuth flow in ComfyUI
+   and no API key field** — if you have not logged in from a terminal first, every shot
+   fails immediately. Verify with the **Codex Login Status** node, which reports the
+   account, plan and token expiry.
 
-> Availability is account-dependent: not every ChatGPT plan can call the hosted image
-> tool. The node says so plainly if yours cannot.
+> Availability is account-dependent: not every ChatGPT plan or region can call the hosted
+> image tool. The node says so plainly if yours cannot.
+
+Running several ChatGPT accounts? Give each its own `CODEX_HOME` folder and set the node's
+`codex_home` per node — the `account` output names the signed-in email so you can see
+which login made an image.
 
 Prefer an API key? Swap every **Codex Image Gen** node for **Replicate Image Gen** — the
 graph is otherwise identical, and the widgets map by name (`prompt`, `aspect_ratio`,
