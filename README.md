@@ -14,7 +14,7 @@ so nothing breaks anything else.
 | arkennemasis/**Image Gen** | arkennemasis Codex Image Gen (ChatGPT login) | `gpt-image-2` through your **`codex login`** — no API key, billed to your ChatGPT plan | `IMAGE`, `STRING` |
 | arkennemasis/**Utility** | arkennemasis Codex Login Status | which ChatGPT account this machine will use, and when its token expires | `STRING` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
-| arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches, picked at random from a seed — unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
+| arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches — the **first N in order**, or a random sample from a seed. Unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
 | arkennemasis/**Utility** | arkennemasis Text File Save (caption sidecar) | writes `<folder>/<filename>.txt` next to a saved image — the image/caption pairing training toolkits expect | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Run Folder (auto-numbered) | `<parent_dir>/<folder_name>_001`, `_002`, … — one fresh output folder per run | `STRING`, `INT` |
 
@@ -135,8 +135,17 @@ stream cut short mid-render can never be saved as if it were the final result.
 ### Running only some of many expensive branches
 
 **Shot Selector** sits between each generator and its consumers. Give every copy the same
-`how_many` / `seed` / `total_shots` and a unique `shot_index`; each copy derives the *same*
-chosen set independently, so no extra wiring is needed.
+`how_many` / `seed` / `total_shots` / `selection` and a unique `shot_index`; each copy
+derives the *same* chosen set independently, so no extra wiring is needed.
+
+`selection` picks how the set is chosen:
+
+| Mode | Behaviour | Use it when |
+|---|---|---|
+| `first N in order` *(default)* | runs slots `1..N` | the first branches are the ones you are iterating on — `how_many = 5` runs the first five, no seed needed |
+| `random from seed` | an unbiased sample of the whole set | you want a representative spread across every branch without paying for all of them |
+
+`seed` only matters in `random from seed`.
 
 `image` is a **lazy** input, so an unselected branch is never evaluated — the API node
 upstream is never called, and never billed. Unselected returns `ExecutionBlocker(None)`,

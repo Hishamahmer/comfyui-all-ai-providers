@@ -48,9 +48,9 @@ comfyui-mickmumpitz-nodes.
 | Control | Ships as | Set to |
 |---|---|---|
 | `Load Image` (group 1) | `ccc_ref_placeholder.png` | your character photo (will show as missing until you do) |
-| `NAME` (group 0) | `Al1n4_02` | your character name — drives every filename |
+| `NAME` (group 0) | `MyCharacter` | your character name — drives every filename, and doubles as the LoRA trigger word |
 | `folder_name` (group 0) | `dataset` | your dataset name |
-| shots to run (group 0) | `24` | **start with 2–3** — a full run is 24 paid API calls |
+| shots to run (group 0) | `24` | **start with 2–3** — a full run is 24 paid API calls. The Shot Selector defaults to `first N in order`, so `3` runs the first three shots |
 
 **Output:** `ComfyUI/output/CCC/<folder_name>_001/` with `<NAME>_<shot>_image_001.png`
 … `_025.png`, **each with a matching `.txt` caption**. Each Run makes a new numbered folder.
@@ -59,7 +59,32 @@ comfyui-mickmumpitz-nodes.
 background — never face, hair or eye colour, since anything captioned is *excluded* from
 what the LoRA learns. The reference tile is captioned with the trigger word alone.
 
-**Shot list** is balanced for character-LoRA training — roughly front 46% /
-three-quarter 29% / profile 8% / back 8% / high-low 8%, a mix of close-up, waist-up and
-full-body framing, and **a different outfit in every shot** so the model learns the person
-rather than the clothes.
+### The prompts
+
+Every one of the 24 shots is a **JSON "system instruction"** rather than a paragraph of
+prose. Each carries its own `framing`, `style_description` (aesthetic, fashion, lighting,
+photographic treatment, colour palette), a `compositional_deconstruction` with bounding
+boxes, and per-slot `constraints`.
+
+They describe the **photograph, not the person** — face, hair, skin and build always come
+from your reference image, and the garments drape to whatever build it shows. That is what
+lets one fixed prompt set work for any subject. The prompts are gender-neutral throughout;
+gender is stated once, in the **Subject** node, and flows to all 24.
+
+**Shot list** is balanced for character-LoRA training:
+
+- **Framing** — 5 tight (close-up / extreme close-up) · 5 waist-up · 6 three-quarter
+  length · 8 full body
+- **Angles** — 2 profiles, 1 back angle, 1 straight-down overhead, 2 low, 1 high
+- **24 distinct wardrobes** and 24 distinct locations, so the model learns the person
+  rather than the clothes or the room
+- **24 distinct looks** — black-and-white editorial, pastel beauty, glasshouse, seaside
+  backlit, street candid, studio campaign, phone selfie, quiet-luxury interior, festive
+  ethnic wear, music room, automotive, 70s funk, creator wall, corporate lobby,
+  laundromat, marble plaza, atelier, cobalt studio, overhead, direct flash, rain glass,
+  running track, poolside, snow
+
+Three clauses are shared by all 24 and are the place to edit global behaviour: **content
+safety** (keeps every shot inside what an image model will generate), **rendering** (real
+photographic texture, no glossy AI-render look) and **white balance** (neutral, never a
+warm cast).
