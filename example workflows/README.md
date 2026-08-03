@@ -17,15 +17,9 @@ API-format graphs, so they open by drag-and-drop onto the canvas.
 
 | Workflow | Nodes it demonstrates | Notes |
 |---|---|---|
-| **Character Dataset (GPT-Image-2)** | Replicate Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Builds a 25-image character LoRA training dataset from a single photo: 24 generated shots + the real reference tile, each with a caption `.txt`. |
-| **Character Dataset (GPT-Image-2) - Single Shot** | the same, with one API node | Prompt-testing rig: iterate a shot for one paid call instead of 24. |
-| **Character Dataset (GPT-Image-2) - Codex** | Codex Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Identical to the 24-shot workflow but generated through your **ChatGPT/Codex login** — no API key, billed to your ChatGPT plan. |
-| **Character Dataset (GPT-Image-2) - Single Shot - Codex** | the same, with one API node | One-call prompt testing on the ChatGPT login. |
+| **Character Dataset (GPT-Image-2) - Codex** | Codex Image Gen · Image Gen Settings · Shot Selector · Run Folder · Text File Save | Builds a 25-image character LoRA training dataset from a single photo: 24 generated shots + the real reference tile, each with a caption `.txt`. Generated through your **ChatGPT/Codex login** — no API key. |
 
-### The Codex twins
-
-Same graph, same prompts, same references, same saves and captions — only the generator
-differs, so the two are directly comparable.
+### Running it on the Codex login
 
 Run `codex login` once in a terminal; the node reads the CLI's own `~/.codex/auth.json`.
 There is **no OAuth flow in ComfyUI** and no API key. For several ChatGPT accounts, give
@@ -35,13 +29,16 @@ output names the signed-in email so you can see which login made an image.
 > Availability is account-dependent: not every ChatGPT plan can call the hosted image
 > tool. The node says so plainly if yours cannot.
 
-### Character Dataset (GPT-Image-2)
+Prefer an API key? Swap every **Codex Image Gen** node for **Replicate Image Gen** — the
+graph is otherwise identical, and the widgets map by name (`prompt`, `aspect_ratio`,
+`quality`, `background`, `timeout_seconds`, `run_mode`, `max_concurrent`).
+
+### Character Dataset (GPT-Image-2) - Codex
 
 One photo in, a **LoRA-ready dataset folder** out.
 
-**Needs:** a Replicate token (`REPLICATE_API_TOKEN` in your environment or a `.env` in the
-ComfyUI root), plus KJNodes, WAS Node Suite, ComfyUI-AutoCropFaces and
-comfyui-mickmumpitz-nodes.
+**Needs:** a ChatGPT login via `codex login`, plus KJNodes, WAS Node Suite,
+ComfyUI-AutoCropFaces and comfyui-mickmumpitz-nodes.
 
 **Set before running** — the shipped values are placeholders:
 
@@ -50,7 +47,7 @@ comfyui-mickmumpitz-nodes.
 | `Load Image` (group 1) | `ccc_ref_placeholder.png` | your character photo (will show as missing until you do) |
 | `NAME` (group 0) | `MyCharacter` | your character name — drives every filename, and doubles as the LoRA trigger word |
 | `folder_name` (group 0) | `dataset` | your dataset name |
-| shots to run (group 0) | `24` | **start with 2–3** — a full run is 24 paid API calls. The Shot Selector defaults to `first N in order`, so `3` runs the first three shots |
+| shots to run (group 0) | `24` | **start with 2–3** — a full run is 24 image generations against your ChatGPT plan. The Shot Selector defaults to `first N in order`, so `3` runs the first three shots |
 
 **Output:** `ComfyUI/output/CCC/<folder_name>_001/` with `<NAME>_<shot>_image_001.png`
 … `_025.png`, **each with a matching `.txt` caption**. Each Run makes a new numbered folder.
