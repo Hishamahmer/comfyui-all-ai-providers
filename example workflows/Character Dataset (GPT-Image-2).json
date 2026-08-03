@@ -6741,7 +6741,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 157,
-   "title": "PROMPT - CLOSE-SAD",
+   "title": "PROMPT - WESTERN-FUNK",
    "inputs": [],
    "outputs": [
     {
@@ -6769,7 +6769,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: CLOSE-UP, head and shoulders filling the frame, cropped at the upper chest. Do NOT show the full body.\nScene: a quiet downcast expression, mouth closed, eyes lowered and distant, a still and private moment.\nLighting: cool diffuse light on a rain-soaked city street at dusk, wet neon reflections thrown out of focus behind, faint droplets on skin and hair. Muted teal-and-amber cinematic grade.\nWardrobe: a dark hooded sweatshirt, hood down\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 50mm at chest height, subject standing centre-left and angled about 30 degrees to the lens, the room opening out behind them. Face sharp and occupying the upper third of the frame.\",\n  \"high_level_description\": \"A 1970s funk-soul styled portrait in a bright whitewashed games room - the person standing relaxed and impeccably dressed in wide-lapel tailoring, one hand resting on the rail of a billiard table, holding the camera's gaze with easy swagger. Reads as a retro album-cover portrait: stylish and confident, never threatening.\",\n  \"style_description\": {\n    \"aesthetics\": \"1970s funk and soul album-cover photography, shot bright. Pale panelling, clean period colour and confident relaxed posture. Retro and groovy but light-filled, never smoky or dim.\",\n    \"fashion\": \"A wide-lapel off-white corduroy suit jacket worn open over a pale blue open-collar shirt, matching flared trousers, a slim silver chain, and white leather boots. Hair fully visible, no hat.\",\n    \"lighting\": \"Broad neutral daylight through a wide window behind the camera as the key, filling the room evenly and bouncing off pale walls, with only a faint shadow under the table. Clean white balance, bright and open, face fully and evenly lit.\",\n    \"photo\": \"1970s colour film stock with a clean neutral palette, gentle halation in the highlights, fine grain, shallow depth of field, sharp on the face.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F1EEE7\",\n      \"#6FA08C\",\n      \"#D6DEE6\",\n      \"#B9B2A6\",\n      \"#3A3A38\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A bright 1970s games room: pale sage billiard felt, whitewashed timber panelling, a light linen banquette and a chrome floor lamp, pale patterned carpet underfoot. Clean, airy and softly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          180,\n          110,\n          760,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing tall and relaxed with the weight on one leg, one hand resting easily on the rail of the billiard table and the other in a trouser pocket, shoulders open, chin level, a slow confident closed-mouth smile, direct gaze to the lens.\",\n        \"color_palette\": [\n          \"#F1EEE7\",\n          \"#D6DEE6\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          380,\n          900,\n          1000,\n          1400\n        ],\n        \"desc\": \"The corner of a billiard table with pale sage felt and a light ash-timber rail running diagonally out of frame to the right.\",\n        \"color_palette\": [\n          \"#6FA08C\",\n          \"#C9C2B4\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          560,\n          40,\n          900,\n          380\n        ],\n        \"desc\": \"A slim chrome pendant lamp hanging over the table at the top right, unlit and reading as a clean silhouette against the bright wall.\",\n        \"color_palette\": [\n          \"#C6CBD0\",\n          \"#F1EEE7\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, warmly but correctly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, cue or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. The mood is stylish and good-humoured, never menacing - relaxed posture, open hands, no threatening or confrontational body language. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -6787,7 +6787,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 168,
-   "title": "PROMPT - FOREST",
+   "title": "PROMPT - MONO-EDITORIAL",
    "inputs": [],
    "outputs": [
     {
@@ -6815,7 +6815,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body wide shot from a slightly elevated camera, whole body in frame.\nScene: crouched low in deep forest, one hand on a mossy trunk, head turned down toward a small frog on the leaf litter, absorbed and still.\nLighting: last golden sun cutting through the canopy in visible shafts, long shadows across the forest floor, motes drifting in the beams. Rich greens, warm highlights, painterly depth.\nWardrobe: a weatherproof outdoor jacket, cargo trousers and hiking boots\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"EXTREME CLOSE-UP head shot, 85mm, cropped just below the collarbone, head filling almost the entire frame. Do NOT show the torso, hips, legs or a full-body view.\",\n  \"high_level_description\": \"A high-contrast black-and-white fashion portrait against a raw concrete wall - the person square to the lens, quiet and unguarded, hard daylight raking across the face from one side. Reads as a monochrome magazine editorial, grainy and unretouched.\",\n  \"style_description\": {\n    \"aesthetics\": \"Black-and-white reportage fashion portraiture. Raw, textural, stripped back to structure and skin. No props, no styling flourish, nothing decorative.\",\n    \"fashion\": \"A plain black fine-gauge knit, only the neckline entering the frame.\",\n    \"lighting\": \"Hard directional daylight from one side carving a crisp light-to-shade transition down the face, with a large white bounce close in on the opposite side so the shadow side stays open and fully detailed. Nothing goes black.\",\n    \"photo\": \"Black-and-white 35mm negative film, visible silver grain, a long open tonal scale, critical focus on the eyes, real pore texture and no retouching.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F4F4F4\",\n      \"#C8C8C8\",\n      \"#8E8E8E\",\n      \"#5A5A5A\",\n      \"#2E2E2E\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A raw pale poured-concrete wall close behind the head, its pitting and form lines just readable, rendered in open greys and slightly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          40,\n          0,\n          960,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, head squared to the lens and held level, shoulders still, gaze straight down the barrel, mouth closed and jaw relaxed, expression quiet and unguarded.\",\n        \"color_palette\": [\n          \"#2E2E2E\",\n          \"#8E8E8E\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"The concrete wall filling the frame behind the head, carrying a soft tonal gradient from the lit side to the bounced side.\",\n        \"color_palette\": [\n          \"#C8C8C8\",\n          \"#8E8E8E\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, hood or headband covering the hairline, and no hair, hand, prop or hard shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garment drapes to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic black-and-white photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -6833,7 +6833,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 169,
-   "title": "PROMPT - OFFICE",
+   "title": "PROMPT - GLASS-LOBBY",
    "inputs": [],
    "outputs": [
     {
@@ -6861,7 +6861,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: WAIST-UP shot at a THREE-QUARTER angle, body turned about 45 degrees, cropped around the waist.\nScene: seated at a wide marble meeting table glancing down at a wristwatch, composed and busy, a city skyline beyond the glass.\nLighting: flat cool daylight under an overcast sky, soft reflections in marble and glass. Restrained corporate-editorial grade.\nWardrobe: a tailored blazer over a crisp shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 35mm at chest height, subject standing left of centre and turned about 30 degrees to the lens with the lobby opening out behind them.\",\n  \"high_level_description\": \"A cool corporate frame in a bright glass-and-steel lobby - the person standing squared and still against a full-height glazed wall, one hand in a pocket, holding a level gaze. Reads as a restrained business-of-fashion portrait: precise, moneyed, unhurried.\",\n  \"style_description\": {\n    \"aesthetics\": \"Corporate architectural editorial. Hard clean lines, cool daylight, polished stone, deep negative space. Precise and impersonal, expensive without display.\",\n    \"fashion\": \"Sharp light-grey tailoring - a well-cut single-breasted jacket worn open over a fine white shirt with no tie, and matching flat-front trousers.\",\n    \"lighting\": \"Cool white daylight flooding through a full-height glass wall from camera left, soft and directionless, with pale stone bouncing clean fill from below. Neutral to slightly cool white balance, open shadows throughout.\",\n    \"photo\": \"Full-frame digital, 35mm, deep clean detail with the lobby softly falling away behind, true neutral colour, minimal grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#DFE4E8\",\n      \"#B0B9C1\",\n      \"#8C99A4\",\n      \"#F3F5F6\",\n      \"#3C444C\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A bright office lobby: a full-height glazed wall divided by slim dark mullions, pale polished stone floor carrying a soft reflection, a low steel bench far back. Clean, empty and softly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          130,\n          100,\n          640,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing squared and still with weight even, one hand in a jacket pocket and the other loose at the side, shoulders open, chin level, composed and unsmiling with a direct gaze to the lens.\",\n        \"color_palette\": [\n          \"#B0B9C1\",\n          \"#F3F5F6\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          560,\n          0,\n          1000,\n          1200\n        ],\n        \"desc\": \"The glazed wall behind and to the right, its slim vertical mullions cutting clean lines against bright flat daylight beyond.\",\n        \"color_palette\": [\n          \"#DFE4E8\",\n          \"#3C444C\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          1180,\n          1000,\n          1500\n        ],\n        \"desc\": \"Pale polished stone flooring in the foreground carrying a soft vertical reflection and a faint contact shadow at the feet.\",\n        \"color_palette\": [\n          \"#E8EBEE\",\n          \"#B0B9C1\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, mullion or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, signage or brand marks anywhere, including on the glazing. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -6879,7 +6879,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 170,
-   "title": "PROMPT - CLOSE-PROFILE",
+   "title": "PROMPT - ETHNIC-FESTIVE",
    "inputs": [],
    "outputs": [
     {
@@ -6907,7 +6907,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: EXTREME CLOSE-UP profile, head and shoulders filling the frame, cropped at the upper chest. Do NOT show the full body, hips or legs.\nScene: head turned to a clean 90-degree side profile, only one side of the face visible, chin level, arms loose.\nLighting: single soft key from the front edge so the profile line reads bright against the background, a whisper of rim on the back of the hair. Sculptural gallery-portrait feel.\nWardrobe: a collared cotton shirt, top button open\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY hero shot, head to feet entirely in frame, 50mm at chest height looking very slightly up, subject centred and facing the lens square-on, with generous headroom so the architecture behind reads.\",\n  \"high_level_description\": \"An opulent Indian festive-wear campaign frame - the person standing tall and regal in richly embroidered ethnic formalwear before bright pale palatial architecture, clean daylight filling the scene, poised and quietly commanding. Reads as a premium wedding-wear brand campaign.\",\n  \"style_description\": {\n    \"aesthetics\": \"High-gloss Indian festive-wear campaign photography. Ornate heritage architecture, ceremonial grandeur, immaculate styling, bright celebratory clarity. Polished and aspirational rather than documentary.\",\n    \"fashion\": \"Floor-length ivory raw-silk ethnic formalwear with fine tonal gold thread embroidery across the chest, collar and cuffs, a structured mandarin-collar overlayer, fitted cream churidar trousers gathered at the ankle, a softly embroidered pale-gold stole draped over one shoulder, and cream formal juttis.\",\n    \"lighting\": \"Bright open daylight flooding the courtyard from above and one side, soft and enveloping, pale stone bouncing generous fill into every shadow. Clean neutral white balance, luminous and airy, soft highlights on the silk and embroidery.\",\n    \"photo\": \"Medium-format digital, richly saturated true colour, crisp detail in the embroidery, shallow depth of field softening the architecture behind.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F2EAD9\",\n      \"#D9C08A\",\n      \"#EFEFEA\",\n      \"#C9B79A\",\n      \"#8A8070\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A bright palatial marble courtyard - carved pale ivory scalloped archways and fluted columns receding into soft open daylight, intricate jali screens filtering bright sun into the space beyond. Richly detailed but thrown well out of focus, and airy rather than shadowy.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          280,\n          90,\n          730,\n          1470\n        ],\n        \"desc\": \"The person from the reference images, standing tall and centred with shoulders squared and chin level, one hand relaxed at the side and the other resting lightly against the waist, weight even, composed and confident gaze directly to the lens, mouth closed.\",\n        \"color_palette\": [\n          \"#F2EAD9\",\n          \"#D9C08A\",\n          \"#EFEFEA\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          60,\n          1000,\n          1100\n        ],\n        \"desc\": \"Carved pale ivory scalloped archways and columns framing the subject symmetrically on both sides, softly defocused.\",\n        \"color_palette\": [\n          \"#EDE4D4\",\n          \"#C9BCA6\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          60,\n          140,\n          260,\n          560\n        ],\n        \"desc\": \"A bright shaft of daylight falling through an arch at the upper left, lifting the whole space and softly blown out.\",\n        \"color_palette\": [\n          \"#FBF7EE\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no turban, headwear or veil covering the hairline, and no hair, hand, stole or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -6925,7 +6925,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 171,
-   "title": "PROMPT - HALF-3Q",
+   "title": "PROMPT - FLASH-NIGHT",
    "inputs": [],
    "outputs": [
     {
@@ -6953,7 +6953,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: WAIST-UP shot at a THREE-QUARTER body angle, one shoulder nearer the camera, cropped at the hips. Do NOT show the legs or a full-body view.\nScene: standing on a city street, hands in pockets, calm and self-assured, looking straight to camera while people blur past.\nLighting: soft overcast daylight, even and shadowless, the street compressed into muted bokeh. Understated street-portrait grade.\nWardrobe: a long dark overcoat over a polo neck\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"Candid WAIST-UP shot at a THREE-QUARTER angle, cropped at the waist, 35mm at chest height, subject slightly off-centre. Do NOT show the legs or a full-body view.\",\n  \"high_level_description\": \"A direct-flash night snapshot outside a venue - the person caught mid-turn toward the camera, one hand half-raised in an open gesture, genuinely amused. Reads as a real photo off a compact camera at the end of a night out: immediate, unplanned, alive.\",\n  \"style_description\": {\n    \"aesthetics\": \"1990s compact-camera flash snapshot. Hard frontal flash, crisp subject, sudden falloff behind. Unposed, immediate, a little imperfect.\",\n    \"fashion\": \"A matt black nylon bomber jacket zipped halfway over a plain white t-shirt, with straight dark grey trousers.\",\n    \"lighting\": \"Hard direct on-camera flash as the only key - clean white, slightly overexposing the nearest shoulder, with a crisp shadow thrown onto the wall just behind and the background falling away into open cool grey. Neutral white balance, no coloured spill, no warm street light.\",\n    \"photo\": \"35mm compact camera on colour negative film, visible grain, slight barrel distortion, punchy flash contrast, background never fully black.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F2F3F4\",\n      \"#9BA3A9\",\n      \"#5A6167\",\n      \"#2C3135\",\n      \"#C9CED2\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"The pale rendered wall outside a venue at night, a doorway and a slice of wet pavement just readable, everything beyond the flash falling into an open cool grey rather than solid black.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          140,\n          100,\n          860,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, turned about 45 degrees and caught mid-turn back toward the lens, one hand half-raised in a relaxed open gesture, shoulders loose, mouth open in a genuine laugh, eyes to the camera.\",\n        \"color_palette\": [\n          \"#2C3135\",\n          \"#F2F3F4\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          520,\n          200,\n          1000,\n          1200\n        ],\n        \"desc\": \"The hard-edged flash shadow thrown by the subject onto the pale wall just behind them, offset slightly to one side.\",\n        \"color_palette\": [\n          \"#9BA3A9\",\n          \"#5A6167\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp and correctly exposed under the flash without blowing out, neutral skin rendering, both eyes clearly visible and open, no red-eye. No sunglasses, no eyeglasses, no hat, and no hair, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, signage, logos or brand marks anywhere. No date stamp. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -6971,7 +6971,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 172,
-   "title": "PROMPT - HIGH-ANGLE",
+   "title": "PROMPT - OVERHEAD-PETALS",
    "inputs": [],
    "outputs": [
     {
@@ -6999,7 +6999,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: wide shot from a HIGH angle looking steeply down, whole body in frame.\nScene: caught mid-reaction looking up at the camera, genuinely surprised, mouth open, hands frozen mid-gesture.\nLighting: clean natural daylight from above with a soft shadow pooling beneath. Graphic, playful, top-down composition.\nWardrobe: a patterned short-sleeved shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY shot from directly OVERHEAD looking straight down, whole body in frame, 35mm, subject lying centred on the floor with clear space all around.\",\n  \"high_level_description\": \"A graphic top-down portrait - the person lying on their back on a pale seamless floor with arms and legs in a relaxed open shape, scattered white and pale pink petals around them, looking straight up into the lens. Reads as a playful poster-like editorial: flat, clean and quietly surreal.\",\n  \"style_description\": {\n    \"aesthetics\": \"Top-down graphic editorial. Flat pale ground, symmetrical open pose, scattered organic detail. Calm, poster-like, gently surreal.\",\n    \"fashion\": \"A plain white heavyweight cotton t-shirt with pale blue-grey wide-leg jeans, barefoot.\",\n    \"lighting\": \"Broad even overhead studio light directly above the camera, soft and almost shadowless with only a faint contact shadow beneath the body. Clean neutral white balance, bright and flat.\",\n    \"photo\": \"Full-frame digital, 35mm, deep focus edge to edge, true colour, fine grain, shot perpendicular so the floor reads perfectly flat.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F4F2EF\",\n      \"#E8CBD2\",\n      \"#FBFAF8\",\n      \"#AEB6BE\",\n      \"#3E4247\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A pale seamless floor filling the whole frame, smooth and almost shadowless, reading as a flat field of soft off-white with a faint even texture.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          250,\n          260,\n          760,\n          1290\n        ],\n        \"desc\": \"The person from the reference images, lying on their back with arms relaxed and slightly away from the body and legs a little apart in an open, unforced shape, head centred and looking straight up into the overhead lens, mouth closed, calm and open expression.\",\n        \"color_palette\": [\n          \"#FBFAF8\",\n          \"#AEB6BE\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"Loose white and pale pink flower petals scattered unevenly across the floor around the body, denser toward the corners and clear of the face.\",\n        \"color_palette\": [\n          \"#E8CBD2\",\n          \"#FBFAF8\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open, the head oriented so the face reads upright to the camera. No sunglasses, no eyeglasses, no hat, and no hair, hand, petal or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7017,7 +7017,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 174,
-   "title": "PROMPT - RUNNING",
+   "title": "PROMPT - TRACK-ATHLETIC",
    "inputs": [],
    "outputs": [
     {
@@ -7045,7 +7045,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: MEDIUM CLOSE-UP with a sense of motion, upper body filling the frame.\nScene: running hard through an abandoned industrial site, breath short, jaw set, eyes fixed ahead, urgent and driven.\nLighting: the last red glow on the horizon after sunset with cold blue shadow filling the rest, dust and grit in the air. High-contrast thriller grade, motion blur in the background only.\nWardrobe: technical running gear, a lightweight zip top and shorts\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 85mm at chest height, subject turned about 20 degrees to the lens with the track running away behind.\",\n  \"high_level_description\": \"A clean sports editorial on a running track - the person standing upright between efforts with hands on hips, chest still rising, chin up and eyes level to the lens. Reads as a performance-brand campaign: crisp, cool and unglamorised.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary performance-sport editorial. Clean synthetic surfaces, crisp white lane lines, technical fabric, no styling gloss. Direct and physical.\",\n    \"fashion\": \"A technical white short-sleeved running top with a subtle mesh panel and navy running shorts, a plain grey elastic band at the wrist.\",\n    \"lighting\": \"Bright flat overcast daylight, soft and directionless, with the pale track bouncing clean fill upward. Neutral white balance, open shadows, no sun.\",\n    \"photo\": \"Full-frame digital, 85mm, shallow depth of field compressing the lanes behind into soft bands, true neutral colour, fine grain, sharp on the eyes.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#6E8FA8\",\n      \"#F4F6F7\",\n      \"#2C3E58\",\n      \"#B9C4CB\",\n      \"#3F474D\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A blue-grey synthetic running track with crisp white lane lines curving away behind the subject, a low pale barrier and empty stand beyond, all thrown well out of focus under a bright white sky.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          200,\n          90,\n          800,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing upright and turned about 20 degrees to the lens with both hands resting on the hips, shoulders open and slightly lifted from breathing, chin up, level direct gaze, mouth slightly parted.\",\n        \"color_palette\": [\n          \"#F4F6F7\",\n          \"#2C3E58\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          700,\n          1000,\n          1500\n        ],\n        \"desc\": \"The track surface and white lane lines running diagonally across the lower frame behind the subject, softly defocused.\",\n        \"color_palette\": [\n          \"#6E8FA8\",\n          \"#F4F6F7\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no cap, headband or hood covering the hairline, and no hair, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, lane numerals, logos or brand marks anywhere, including on the sportswear. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7063,7 +7063,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 176,
-   "title": "PROMPT - CLOSE-3Q-LEFT",
+   "title": "PROMPT - ATELIER-FABRIC",
    "inputs": [],
    "outputs": [
     {
@@ -7091,7 +7091,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: CLOSE-UP head shot at a THREE-QUARTER angle, head turned about 45 degrees to the left so both eyes stay visible and the far cheek is partly hidden, head filling most of the frame. Do NOT show the full body.\nScene: neutral composed expression, mouth closed, eyes to the lens.\nLighting: soft directional key from the turned side with a gentle shadow down the far cheek, plain mid-grey background. Clean modern editorial portrait.\nWardrobe: a plain dark crew-neck top\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"WAIST-UP shot at a THREE-QUARTER body angle, one shoulder nearer the camera, cropped at the hips, 50mm at eye level. Do NOT show the legs, the feet or a full-body view.\",\n  \"high_level_description\": \"A maker's portrait in a bright design atelier - the person standing among bolts of pastel cloth stacked on end, one hand resting on a roll, looking up from the work with an easy half-smile. Reads as a craft-magazine profile: quiet, tactile and full of colour.\",\n  \"style_description\": {\n    \"aesthetics\": \"Craft-studio editorial. Soft stacked colour, honest materials, working space rather than showroom. Tactile, calm, unfussy.\",\n    \"fashion\": \"A soft chalk-white cotton work coat worn open over a fine grey marl t-shirt, sleeves pushed to the forearm.\",\n    \"lighting\": \"Large diffuse north daylight from a tall studio window to the right, cool and even, wrapping the face with almost no shadow and letting the cloth colours read true. Clean neutral white balance.\",\n    \"photo\": \"Full-frame digital, 50mm, moderate depth of field so the fabric rolls stay readable but soft, accurate colour, fine grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F3F1EC\",\n      \"#9FC3D6\",\n      \"#E2A8BC\",\n      \"#A9C4A2\",\n      \"#54585C\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A bright working atelier: bolts of cloth in pale blue, dusty rose and soft sage stood on end against a chalk-white wall, a long pale worktable behind, a metal rule and scissors resting on it. Softly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          170,\n          90,\n          830,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, turned about 45 degrees with one shoulder nearer the lens, one hand resting flat on the top of a fabric roll, chin level, looking up to the lens with an easy closed-mouth half-smile.\",\n        \"color_palette\": [\n          \"#F3F1EC\",\n          \"#54585C\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          620,\n          300,\n          1000,\n          1500\n        ],\n        \"desc\": \"A cluster of upright fabric bolts in pale blue, dusty rose and soft sage filling the right of the frame, defocused into soft colour bands.\",\n        \"color_palette\": [\n          \"#9FC3D6\",\n          \"#E2A8BC\",\n          \"#A9C4A2\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, fabric or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, labels or brand marks anywhere, including on the fabric and the tools. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7225,7 +7225,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 200,
-   "title": "PROMPT - BACK-VIEW",
+   "title": "PROMPT - SELFIE-CAR",
    "inputs": [],
    "outputs": [
     {
@@ -7253,7 +7253,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body back view, eye-level, head to feet in frame.\nScene: turned away from camera, standing tall and relaxed, arms hanging easily, shoulders open, head level.\nLighting: flat even studio light on plain white, a gentle rim along the shoulders lifting the silhouette off the wall.\nWardrobe: a plain crew-neck t-shirt and dark jeans\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"CLOSE-UP selfie held at arm's length, head and shoulders filling the frame, cropped at the middle of the chest, 24mm front-facing phone camera held slightly above eye level and angled down, giving mild wide-angle perspective with the face nearest the lens. Do NOT show the torso below the chest, the hips, the legs or a full-body view.\",\n  \"high_level_description\": \"A candid phone selfie taken in the passenger seat of a car on a bright day - the person leaning back against the headrest, looking straight into the lens with a relaxed, slightly amused half-expression, daylight pouring in from the window behind. Reads as an unedited photo straight off a phone, not a photoshoot.\",\n  \"style_description\": {\n    \"aesthetics\": \"Candid social-media selfie. Unposed, intimate, everyday. Slightly off-centre framing and a casual tilt, as if taken quickly without checking the result.\",\n    \"fashion\": \"A heather-grey zip-up hoodie worn open with the hood down over a plain white t-shirt, large over-ear headphones resting around the neck rather than on the head, and a thin black cord necklace.\",\n    \"lighting\": \"Bright natural daylight flooding in through the car window behind and to one side, rimming the edge of the face and hair, with soft neutral bounce from the car interior filling the shadow side. Slightly blown highlights outside the window, face still correctly exposed.\",\n    \"photo\": \"Modern smartphone front camera: mild wide-angle perspective, punchy natural colour, gentle HDR, fine digital noise in the shadows, sharp on the face.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#9FC4DE\",\n      \"#C8C5C0\",\n      \"#6E7B6A\",\n      \"#E8E4DE\",\n      \"#2E2E2E\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"The interior of a car seen from the passenger seat - a pale fabric headrest and roof lining, and a side window filling the upper background with bright blown-out daylight, blurred green foliage and sky beyond. Softly out of focus behind the face.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          140,\n          120,\n          900,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, leaning back against the headrest with the head tilted slightly to one side, looking directly into the lens, mouth closed in a soft relaxed half-smile, both eyes open and clearly visible. Face fills the upper-centre of the frame.\",\n        \"color_palette\": [\n          \"#C8C5C0\",\n          \"#E8E4DE\",\n          \"#2E2E2E\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          260,\n          220,\n          900\n        ],\n        \"desc\": \"The near shoulder and upper arm of the selfie-holding arm entering from the lower left edge of the frame, foreshortened toward the camera. It stays clear of the face and does not cross any facial feature.\",\n        \"color_palette\": [\n          \"#C8C5C0\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          430,\n          0,\n          1000,\n          620\n        ],\n        \"desc\": \"A car side window behind the head, bright daylight and softly blurred green foliage visible through it, the frame of the door cutting a clean diagonal across the top corner.\",\n        \"color_palette\": [\n          \"#9FC4DE\",\n          \"#6E7B6A\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, correctly exposed against the bright window, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, no bucket hat, no hood over the head and no headphones on the head - the hairline and hair must stay fully visible. No hand, strap, grain or blown highlight crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, brand marks or graphics anywhere, including on the clothing and the headphones. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7271,7 +7271,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 201,
-   "title": "PROMPT - SIDE-WALK",
+   "title": "PROMPT - STUDIO-PROPS",
    "inputs": [],
    "outputs": [
     {
@@ -7299,7 +7299,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body side view, medium-wide, eye-level, head to feet in frame, a little space ahead to walk into.\nScene: mid-stride in an easy unhurried walk across the frame, arms swinging naturally, gaze forward, caught-in-motion and candid.\nLighting: bright even studio light on a white cyclorama, a touch of motion softness in the trailing foot while the face stays razor sharp.\nWardrobe: an open casual overshirt over a tee, chinos and sneakers\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"Full-body shot, head to shoes entirely in frame, eye-level camera, 50mm, subject seated and turned about 45 degrees to the lens on the left half of the frame with the props to their right. Face clearly visible and turned to camera.\",\n  \"high_level_description\": \"A playful studio campaign frame: the person seated on a plain wooden chair on a seamless cream backdrop, one arm draped over the chair back, one foot propped on a stack of vintage CRT televisions beside them, holding the camera's gaze with dry, deadpan composure. Reads as a styled editorial campaign still.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary studio campaign photography with retro-tech set dressing. Clean seamless backdrop, deliberate prop staging, generous negative space, a knowingly styled and slightly absurd editorial tone.\",\n    \"fashion\": \"An oversized boxy black t-shirt layered over a pale blue-and-white striped long-sleeve shirt with the cuffs showing, cream wide-leg carpenter trousers breaking over the shoes, and chunky black-and-white leather sneakers.\",\n    \"lighting\": \"Large softbox key from camera-left just above eye height with a bounce fill opposite, producing crisp but gentle shadows that fall to the right across the backdrop and a defined contact shadow under the chair. Clean neutral white balance, bright and even.\",\n    \"photo\": \"Medium-format digital, very fine grain, high micro-contrast, true colour, everything sharp front to back.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#EFE9DE\",\n      \"#1C1C1C\",\n      \"#F2EFE6\",\n      \"#A8B8C8\",\n      \"#8A8A8A\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A seamless off-white studio backdrop sweeping smoothly from wall to floor with no visible corner seam, softly graded from light at the top to a slightly cooler tone at the base. Empty apart from the soft cast shadows.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          170,\n          300,\n          720,\n          1420\n        ],\n        \"desc\": \"The person from the reference images, seated on a plain dark wooden chair, body angled about 45 degrees to the lens, knees apart, one forearm resting along the chair back and the other hand loose on the thigh, one foot lifted and planted on the stack of televisions, head turned to camera, chin level, mouth closed, dry deadpan expression.\",\n        \"color_palette\": [\n          \"#1C1C1C\",\n          \"#F2EFE6\",\n          \"#A8B8C8\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          690,\n          620,\n          980,\n          1280\n        ],\n        \"desc\": \"A stack of three vintage boxy CRT televisions of slightly different sizes in grey and off-white plastic, screens dark and blank, one coiled cable trailing loosely onto the floor.\",\n        \"color_palette\": [\n          \"#B9B4AA\",\n          \"#6E6E6E\",\n          \"#2A2A2A\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          120,\n          1180,\n          900,\n          1460\n        ],\n        \"desc\": \"Soft directional shadows cast rightward across the seamless floor by the chair, the subject and the television stack.\",\n        \"color_palette\": [\n          \"#CFC7B9\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, prop or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, brand marks or graphics anywhere - not on the clothing, not on the props, and the television screens stay dark and empty. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7375,7 +7375,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 206,
-   "title": "PROMPT - CLOSE-ANGRY",
+   "title": "PROMPT - LUXURY-CAR",
    "inputs": [],
    "outputs": [
     {
@@ -7403,7 +7403,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: CLOSE-UP, head and shoulders filling the frame, cropped at the upper chest. Do NOT show the full body.\nScene: mid-shout, mouth open, brows drawn hard down, jaw and neck tense, raw and immediate.\nLighting: hard direct key with deep contrast and fast falloff into shadow. High-contrast dramatic grade, sharp specular highlights.\nWardrobe: a plain black t-shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY shot, head to shoes entirely in frame, 35mm from a slightly LOW camera angle looking up, subject standing left of centre beside the car with the vehicle's flank receding to the right. Face clearly visible and turned to the lens.\",\n  \"high_level_description\": \"A clean automotive-luxury frame in bright daylight - the person standing at ease beside a pale silver modern luxury coupe on an empty rooftop deck, one hand resting on the roofline, pale sky and hazy rooftops far behind. Reads as a premium car campaign still: crisp, expensive, understated.\",\n  \"style_description\": {\n    \"aesthetics\": \"High-end automotive campaign photography shot in flat bright daylight. Sculptural reflections on pale paintwork, clean pale concrete, wide staging and generous negative space. Cool, controlled, aspirational.\",\n    \"fashion\": \"A tailored black leather blouson jacket zipped halfway over a fine black merino knit, slim dark charcoal trousers, and polished black leather Chelsea boots. Sharp, minimal, no visible hardware branding.\",\n    \"lighting\": \"Bright flat overcast daylight filling the open deck from above, soft and shadowless, pale concrete bouncing clean fill from every side. Neutral white balance throughout, no coloured spill, face open and evenly lit.\",\n    \"photo\": \"Full-frame digital, cinematic wide, open airy shadows with no crushed detail, clean neutral colour, sharp on the face.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#E8EAEC\",\n      \"#C0C6CC\",\n      \"#9AA4AE\",\n      \"#F4F5F6\",\n      \"#3A3F45\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"An empty open-air rooftop parking deck in daylight, pale dry concrete, a low white parapet, and a distant city skyline softened into a bright hazy band under an overcast white sky. Clean, uncluttered, thrown out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          140,\n          130,\n          620,\n          1470\n        ],\n        \"desc\": \"The person from the reference images, standing tall and at ease with the weight on one leg, the near hand resting lightly on the car's roofline and the other loose at the side, shoulders open, head turned to the lens, chin level, composed and unsmiling, mouth closed.\",\n        \"color_palette\": [\n          \"#3A3F45\",\n          \"#E8EAEC\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          430,\n          620,\n          1000,\n          1300\n        ],\n        \"desc\": \"A pale silver modern luxury coupe seen in three-quarter rear view, low and wide with sharp creased bodywork, its paint reflecting the bright overcast sky in long soft bands. No badges, no emblems, no model lettering, no number plate.\",\n        \"color_palette\": [\n          \"#D6DADD\",\n          \"#9AA4AE\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          980,\n          1000,\n          1500\n        ],\n        \"desc\": \"Pale dry concrete in the foreground with faint tyre marks and a soft even sheen, no strong shadows.\",\n        \"color_palette\": [\n          \"#DDDEDF\",\n          \"#B4B7BA\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, correctly exposed, neutral skin rendering, both eyes visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, lens flare or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, badges, emblems, model names or number plates anywhere - on the car, the clothing or the architecture. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -7599,7 +7599,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 212,
-   "title": "PROMPT - T-POSE",
+   "title": "PROMPT - STREET-CROSSWALK",
    "inputs": [],
    "outputs": [
     {
@@ -7627,7 +7627,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body portrait, head to bare feet fully in frame, eye-level, 50mm, subject centred.\nScene: standing in a relaxed frontal A-pose, arms a little away from the body, feet shoulder-width, weight even, neutral expression, mouth closed, calm eyes to the lens.\nLighting: clean two-light studio setup on a seamless white cyclorama, large softbox key just off-axis with subtle fill and a soft contact shadow at the feet. Neutral white balance, true-to-life skin, crisp edge detail.\nWardrobe: a plain fitted t-shirt and straight jeans, barefoot\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"Full-body shot, head to shoes entirely in frame, subject centred. Camera held well above head height looking down at roughly 30 degrees, 28mm wide lens close to the subject, so the ground fills the frame behind them and the legs foreshorten slightly. The face is tilted up toward the lens, unobstructed and fully visible, occupying the upper quarter of the frame.\",\n  \"high_level_description\": \"A candid street-style frame of the person standing still in the middle of a painted crosswalk, hands in pockets, looking straight up into the lens with an unbothered, self-possessed expression. Reads as a real street-style photograph pulled off someone's feed, not a studio setup.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary Gen-Z street-style photography. Graphic top-down composition using road markings as a hard geometric backdrop. Candid, unposed, confident, effortless.\",\n    \"fashion\": \"Oversized black crew-neck t-shirt with dropped shoulders, baggy light-wash denim jeans pooling over the shoes, chunky off-white low-top sneakers, a thin silver chain necklace and a plain metal wristwatch.\",\n    \"lighting\": \"Bright even overcast daylight, soft shadowless illumination with a faint contact shadow directly beneath the feet, neutral white balance.\",\n    \"photo\": \"35mm colour film, fine natural grain, slightly deep blacks, true-to-life skin, sharp throughout with no background blur.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#1A1A1A\",\n      \"#EDEDED\",\n      \"#8FA8C4\",\n      \"#4A4A4A\",\n      \"#C9C4BC\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"Dark grey asphalt crossed by wide white painted crosswalk stripes running horizontally across the frame, coarse aggregate texture visible, paint slightly worn. The road fills the entire frame - no horizon, no sky, no vehicles.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          250,\n          130,\n          760,\n          1460\n        ],\n        \"desc\": \"The person from the reference images, standing upright and still, both hands pushed into the front pockets of the jeans with elbows out, one foot slightly ahead of the other, shoulders square, chin lifted and face turned directly up to the overhead camera, mouth closed, calm direct gaze.\",\n        \"color_palette\": [\n          \"#1A1A1A\",\n          \"#8FA8C4\",\n          \"#EDEDED\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"Repeating white crosswalk stripes crossing the frame behind and beneath the subject, forming a strong horizontal rhythm against the dark asphalt.\",\n        \"color_palette\": [\n          \"#EDEDED\",\n          \"#4A4A4A\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, no hood, and no hair, hand, prop, grain or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or graphics anywhere, including on the clothing. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -10506,7 +10506,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 248,
-   "title": "PROMPT - HALF-FRONT",
+   "title": "PROMPT - LAUNDROMAT-MINT",
    "inputs": [],
    "outputs": [
     {
@@ -10534,7 +10534,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: WAIST-UP shot, head and torso filling the frame, cropped at the hips, face sharp and clearly visible. Do NOT show the legs or a full-body view.\nScene: holding a takeaway coffee cup in both hands, turned slightly toward camera, relaxed half-smile, steam curling from the cup.\nLighting: big soft window light in a bright cafe, warm wood and plants thrown far out of focus, gentle highlight roll-off. Airy lifestyle-editorial feel.\nWardrobe: a chunky knit jumper with the sleeves pushed up\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"WAIST-UP shot, head and torso filling the frame, cropped at the hips, 50mm at eye level, subject centred against the machines. Do NOT show the legs, the feet or a full-body view.\",\n  \"high_level_description\": \"A pop-colour candid in a bright laundromat - the person leaning back against a bank of mint-green washing machines, arms loosely folded, caught mid-laugh while waiting. Reads as a colourful everyday editorial: cheerful, ordinary and clean.\",\n  \"style_description\": {\n    \"aesthetics\": \"Saturated everyday-Americana editorial. Flat blocks of cool colour, tiled surfaces, fluorescent clarity. Playful and graphic but entirely real.\",\n    \"fashion\": \"A washed pale-blue denim shirt worn open over a plain white t-shirt, with loose ecru cotton trousers.\",\n    \"lighting\": \"Even overhead fluorescent light mixed with cool daylight through a shopfront window, bright and almost shadowless, with a faint sheen on the enamel and tile. Neutral to slightly cool white balance.\",\n    \"photo\": \"Full-frame digital, 50mm, deep clarity, saturated true colour, fine grain, sharp across the frame.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#8FD4C4\",\n      \"#F5F6F4\",\n      \"#E7A8BE\",\n      \"#BFC7CC\",\n      \"#3E4548\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A row of mint-green front-loading washing machines with chrome doors and small pink plastic stools in front, white square wall tile above, a bright shopfront window at the far end. Clean, graphic, softly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          180,\n          80,\n          820,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, leaning back lightly against a machine with arms loosely folded and one shoulder dropped, head tilted a few degrees, caught mid-laugh with an open genuine smile looking to the lens.\",\n        \"color_palette\": [\n          \"#BFC7CC\",\n          \"#F5F6F4\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          400,\n          1000,\n          1500\n        ],\n        \"desc\": \"The bank of mint-green machines with chrome porthole doors running across the lower frame behind the subject, forming a strong horizontal rhythm.\",\n        \"color_palette\": [\n          \"#8FD4C4\",\n          \"#BFC7CC\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible. No sunglasses, no eyeglasses, no hat, and no hair, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, dials with markings, logos or brand marks anywhere, including on the machines. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -10552,7 +10552,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 249,
-   "title": "PROMPT - LOW-ANGLE",
+   "title": "PROMPT - COBALT-STUDIO",
    "inputs": [],
    "outputs": [
     {
@@ -10580,7 +10580,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: FULL-BODY wide shot from a LOW camera angle looking up, whole body in frame.\nScene: lying on one side along a clean modern couch, head propped on a hand, unhurried and comfortable.\nLighting: soft backlight pouring through tall windows behind sheer white curtains, a light haze lifting the shadows. Bright, minimal, interiors-magazine feel.\nWardrobe: soft loungewear, a relaxed sweatshirt and joggers\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 50mm from a slightly LOW camera angle looking up, subject centred and square to the lens.\",\n  \"high_level_description\": \"A bold single-colour studio frame - the person standing square against a saturated cobalt-blue seamless, arms at their sides, holding the lens with quiet confidence. Reads as a contemporary fashion campaign: graphic, minimal and colour-forward.\",\n  \"style_description\": {\n    \"aesthetics\": \"Single-colour studio fashion campaign. One saturated field, no props, clean silhouette, strong graphic simplicity. Modern and assured.\",\n    \"fashion\": \"A crisp white cotton overshirt buttoned to the neck over matching white wide trousers, with plain white leather trainers - a full white look against the blue.\",\n    \"lighting\": \"A large softbox slightly above and left of the lens with a broad fill opposite, giving smooth even light on the face and a soft gradient across the seamless. Clean neutral white balance, bright, shadows fully open.\",\n    \"photo\": \"Digital medium format, 80mm, deep even sharpness, rich accurate colour, very fine grain, real skin texture retained.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#1F4FBF\",\n      \"#F7F8FA\",\n      \"#5C82D6\",\n      \"#12307A\",\n      \"#D9DEE8\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A seamless saturated cobalt-blue studio backdrop sweeping smoothly from wall to floor with no visible corner, carrying a soft tonal gradient from lighter at the upper left to deeper at the lower right. Completely empty.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          230,\n          90,\n          780,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing square to the lens with weight even, arms hanging relaxed at the sides, shoulders open, chin level, composed and direct with a closed mouth.\",\n        \"color_palette\": [\n          \"#F7F8FA\",\n          \"#D9DEE8\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"The cobalt seamless filling the entire frame behind the subject, smooth and free of texture, with a soft contact shadow at the feet.\",\n        \"color_palette\": [\n          \"#1F4FBF\",\n          \"#12307A\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering with no blue colour cast from the backdrop, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -10834,7 +10834,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 268,
-   "title": "PROMPT - CANYON",
+   "title": "PROMPT - SNOW-FIELD",
    "inputs": [],
    "outputs": [
     {
@@ -10862,7 +10862,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body wide BACK view, whole body in frame, subject small against the landscape.\nScene: standing at the lip of a vast canyon seen from behind, both arms raised overhead in triumph, wind pulling at clothes and hair.\nLighting: broad clean daylight over layered red rock receding into atmospheric haze. Expansive, awe-struck, epic scale.\nWardrobe: a hiking fleece, trekking trousers and a small backpack\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY shot from BEHIND at a three-quarter back angle, whole body in frame, 35mm at chest height, the head turned back over the shoulder toward the lens so the face is clearly visible.\",\n  \"high_level_description\": \"A cold, spare winter frame - the person walking away across an open snow field and turning back over one shoulder toward the camera, breath just visible. Reads as a quiet outerwear editorial: white, minimal and still.\",\n  \"style_description\": {\n    \"aesthetics\": \"Minimal winter outerwear editorial. Vast empty white ground, almost no horizon, a single figure. Cold, spare, hushed.\",\n    \"fashion\": \"A cream quilted puffer jacket worn with the hood DOWN, a chunky ecru wool scarf loose at the neck, slate-grey trousers and pale winter boots.\",\n    \"lighting\": \"Flat bright light from a high white overcast sky, soft and shadowless, with the snow bouncing strong clean fill upward into the face. Cool neutral white balance, blue-grey shadows in the snow, brilliant and high-key.\",\n    \"photo\": \"Full-frame digital, 35mm, deep focus, cool true colour, fine grain, high clarity in the snow texture, sharp on the face.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F4F7F9\",\n      \"#D3DEE6\",\n      \"#A9BAC6\",\n      \"#E8E2D6\",\n      \"#4C555C\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"An open field of fresh snow running to a barely visible horizon under a high white overcast sky, a few faint footprints trailing back toward the camera. Almost featureless, white on white.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          300,\n          180,\n          720,\n          1450\n        ],\n        \"desc\": \"The person from the reference images, seen from behind at a three-quarter back angle mid-step, shoulders angled away from the lens, one hand holding the scarf, head turned back over the near shoulder with a soft closed-mouth smile and eyes to the camera.\",\n        \"color_palette\": [\n          \"#E8E2D6\",\n          \"#4C555C\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          180,\n          1150,\n          900,\n          1500\n        ],\n        \"desc\": \"A faint line of footprints in the snow leading from the lower frame toward the subject's feet, with soft blue-grey shadow inside each.\",\n        \"color_palette\": [\n          \"#D3DEE6\",\n          \"#A9BAC6\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"Despite the back angle the face must read clearly: sharp, evenly exposed, neutral skin rendering, both eyes visible and open, the head turned far enough that the face is not lost. No sunglasses, no eyeglasses, no hat, hood or beanie covering the hairline, and no hair, scarf, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -10880,7 +10880,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 273,
-   "title": "PROMPT - CLOSE-FRONT",
+   "title": "PROMPT - LUXE-INTERIOR",
    "inputs": [],
    "outputs": [
     {
@@ -10908,7 +10908,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: EXTREME CLOSE-UP head shot, 85mm, cropped just below the collarbone, head filling almost the entire frame. Do NOT show the torso, hips, legs or a full-body view.\nScene: symmetrical and straight into the lens, neutral relaxed expression, mouth closed, no hands in frame.\nLighting: beauty-dish key slightly above the eyeline with a reflector under the chin, crisp catchlights and gentle falloff, every lash and pore rendered. Plain white background, editorial headshot quality.\nWardrobe: a simple crew-neck knit sweater\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"WAIST-UP shot, cropped at the hips, 35mm at eye level, subject standing slightly left of centre and turned about 20 degrees to the lens, with the room reading clearly behind them. Face sharp and occupying the upper third of the frame. Do NOT show the legs, the feet or a full-body view.\",\n  \"high_level_description\": \"A restrained, expensive portrait in a contemporary English luxury drawing room - the person standing composed and unhurried beside a marble fireplace in soft tailoring, bright even daylight filling the room behind them. Reads as a modern luxury brand campaign, quiet and self-assured rather than showy.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary British luxury editorial. Quiet-luxury restraint, immaculate modern interior architecture, generous space around the subject, nothing ostentatious. Calm, refined, understated wealth.\",\n    \"fashion\": \"A soft-shouldered unstructured navy wool blazer worn open over a fine cream merino roll-neck, tailored charcoal wool trousers, and a single slim brushed-steel watch. Impeccably cut, no visible branding.\",\n    \"lighting\": \"Bright neutral daylight from a tall sash window out of frame to the left, filling the subject and the far wall evenly, with generous bounce off the pale panelling. Low contrast, open lifted shadows, no warm cast.\",\n    \"photo\": \"Medium-format digital, 35mm equivalent, shallow depth of field with the room softly rendered behind, true-to-life colour, fine natural grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#EDEBE6\",\n      \"#B9BFC4\",\n      \"#F5F3EF\",\n      \"#5A6470\",\n      \"#C6CBD0\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A contemporary English drawing room: chalk-white panelled walls with clean modern mouldings, a plain honed-marble fireplace, pale herringbone oak flooring, a low linen sofa and a slim chrome floor lamp, softly out of focus. Strictly present-day interior design - no thrones, no gilt, no baroque ornament, no antique furniture, no chandeliers, no crowns or regalia.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          200,\n          110,\n          800,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing tall and relaxed with the weight on one leg, one hand loose at the side and the other resting lightly in a trouser pocket, shoulders open, chin level, calm and direct gaze to the lens, mouth closed.\",\n        \"color_palette\": [\n          \"#2B3140\",\n          \"#E9E3D8\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          620,\n          380,\n          1000,\n          1180\n        ],\n        \"desc\": \"A plain honed-marble fireplace surround with clean modern lines behind the subject's shoulder, softly defocused.\",\n        \"color_palette\": [\n          \"#E9E3D8\",\n          \"#8A8078\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          40,\n          250,\n          320,\n          1050\n        ],\n        \"desc\": \"A slim chrome floor lamp standing against the pale panelled wall at the left edge, well out of focus.\",\n        \"color_palette\": [\n          \"#C6CBD0\",\n          \"#EDEBE6\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, prop or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos, brand marks, crests or graphics anywhere, including on the clothing. Modern-day setting only - not a historical, royal-court or period scene. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -10926,7 +10926,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 274,
-   "title": "PROMPT - CLOSE-SMILE",
+   "title": "PROMPT - CREATOR-WALL",
    "inputs": [],
    "outputs": [
     {
@@ -10954,7 +10954,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: CLOSE-UP, head and shoulders filling the frame, cropped at the upper chest, shallow depth of field. Do NOT show the full body.\nScene: a real warm open-mouthed smile caught mid-laugh, eyes creasing, completely unposed.\nLighting: late-afternoon sun raking one cheek in an alpine flower meadow, mountains melting into creamy bokeh, warm golden highlights and soft haze. Glowing, joyful, magazine-cover warmth.\nWardrobe: a light short-sleeved summer shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"WAIST-UP shot, cropped at the hips, 50mm at eye level, subject centred and square to the lens against the wall, head high in the frame. Do NOT show the legs or a full-body view.\",\n  \"high_level_description\": \"A punchy creator-portrait: the person standing against a bright white wall densely covered in colourful sticky notes, arms folded loosely, caught in a wide genuine open-mouthed laugh. Bright, energetic and modern - the kind of portrait that fronts a personal brand.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary creator / personal-brand portraiture. Bold flat colour field, dense graphic wall texture, direct and playful, high energy. Clean and poster-like but unmistakably photographic.\",\n    \"fashion\": \"A heavyweight boxy off-white cotton t-shirt with a thick ribbed collar and sleeves ending at the elbow, worn with a fine silver chain.\",\n    \"lighting\": \"Punchy soft frontal studio flash from just above the lens with a large octabox, bright and nearly shadowless on the face, throwing a soft contained shadow onto the wall behind the shoulders. Saturated, crisp, high clarity.\",\n    \"photo\": \"Full-frame digital, vivid saturated colour, high micro-contrast, sharp from the face through to the wall texture, minimal grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F4F4F2\",\n      \"#7FB2E5\",\n      \"#E56A6A\",\n      \"#8FCf9E\",\n      \"#2A2A28\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A flat soft off-white painted wall filling the entire frame, densely tiled with small square sticky notes in pink, blue, green and lilac at slightly irregular angles. Each note carries only loose handwritten pen scribbles and abstract marks - no legible words, letters or numbers. Sharp and evenly lit, treated as pure colour-and-texture field.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          190,\n          90,\n          810,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing square to the lens with arms folded loosely across the chest, shoulders relaxed and slightly raised, head tilted a few degrees, caught mid-laugh with a wide genuine open-mouthed smile and eyes creasing, looking straight into the lens.\",\n        \"color_palette\": [\n          \"#F5F2EA\",\n          \"#2A2A28\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"The grid of colourful sticky notes covering the white wall behind and around the subject, denser toward the upper corners, forming a lively confetti-like texture.\",\n        \"color_palette\": [\n          \"#F4F4F2\",\n          \"#7FB2E5\",\n          \"#E56A6A\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible. No sunglasses, no eyeglasses, no hat, and no hair, hand, sticky note or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No readable text, letters, numbers, words, logos or brand marks anywhere - the sticky notes carry only abstract handwritten scribbles. Absolutely no graphic-design overlay: no headline typography, captions, banners, arrows, stickers or poster layout on top of the image. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11092,7 +11092,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 276,
-   "title": "PROMPT - CLOSE-3Q-RIGHT",
+   "title": "PROMPT - POOL-DECK",
    "inputs": [],
    "outputs": [
     {
@@ -11120,7 +11120,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: CLOSE-UP head shot at a THREE-QUARTER angle turned about 45 degrees to the RIGHT, both eyes visible, head filling most of the frame. Do NOT show the full body.\nScene: a soft closed-mouth smile, gaze just off camera, easy and confident.\nLighting: warm low-angle key from the side with faint bloom in the highlights, plain warm-grey background. Golden, flattering, tactile skin.\nWardrobe: a light-coloured button-down shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY shot, head to feet entirely in frame, 35mm at chest height, subject standing left of centre with the pool running away behind them.\",\n  \"high_level_description\": \"A crisp resort-editorial frame - the person standing barefoot on white tile at the edge of a turquoise pool, hands in pockets, squinting slightly against the bright open sky. Reads as a clean modernist travel editorial: high clarity, cool colour, lots of air.\",\n  \"style_description\": {\n    \"aesthetics\": \"Modernist resort editorial. Flat white tile, saturated turquoise water, hard geometry and deep negative space. Crisp, cool, expensive-looking simplicity.\",\n    \"fashion\": \"A relaxed pale blue cotton camp-collar shirt buttoned halfway over a white tee, with cream drawstring trousers rolled at the ankle. Barefoot.\",\n    \"lighting\": \"Bright open daylight under a high pale sky, water bouncing clean cool light up onto the underside of the jaw, a short hard shadow at the feet. Neutral to slightly cool white balance throughout.\",\n    \"photo\": \"Full-frame digital, 35mm, deep focus, very high clarity, saturated but true colour, minimal grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#3FB8C4\",\n      \"#F4F6F5\",\n      \"#CFE3E4\",\n      \"#A9C6CC\",\n      \"#3A4448\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A rectangular swimming pool of clear turquoise water running away to the right, edged in matt white tile, with a low white wall and a pale sky beyond. Empty, geometric and softly out of focus at distance.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          150,\n          130,\n          620,\n          1470\n        ],\n        \"desc\": \"The person from the reference images, standing easy with weight on one leg and both hands in the trouser pockets, shoulders relaxed, chin level, eyes narrowed slightly against the brightness, a faint closed-mouth smile to the lens.\",\n        \"color_palette\": [\n          \"#A9C6CC\",\n          \"#F4F6F5\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          520,\n          620,\n          1000,\n          1330\n        ],\n        \"desc\": \"The turquoise pool surface behind and to the right, lightly rippled, throwing soft moving reflections onto the white tile edge.\",\n        \"color_palette\": [\n          \"#3FB8C4\",\n          \"#CFE3E4\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand or hard shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame, fully dressed as described. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11138,7 +11138,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 277,
-   "title": "PROMPT - PARK-SMOKE",
+   "title": "PROMPT - SEASIDE-BACKLIT",
    "inputs": [],
    "outputs": [
     {
@@ -11166,7 +11166,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: wide shot, full body in frame, eye-level.\nScene: sitting easy on a park bench with a sandwich in hand, mid-thought, a pigeon strutting nearby.\nLighting: soft dappled light through the trees, warm greens washing the background out of focus. Relaxed, candid, everyday-golden.\nWardrobe: a denim jacket over a striped tee\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"MEDIUM CLOSE-UP at a NEAR-PROFILE angle, head turned about 70 degrees away from the lens so the far eye is only just visible, head and upper chest filling the frame. Do NOT show the waist, hips, legs or a full-body view.\",\n  \"high_level_description\": \"A high-key coastal frame - the person turned toward a blown-out white sea with a hard white sun directly behind rimming the hair in silver, the face held open by a big bounce. Reads as a luminous summer editorial, all air and light.\",\n  \"style_description\": {\n    \"aesthetics\": \"High-key coastal editorial. Silver rim light, blown horizon, salt haze, wind. Weightless and bright, with no colour cast at all.\",\n    \"fashion\": \"A soft washed white cotton-gauze shirt, collar loose and lifting in the wind.\",\n    \"lighting\": \"A high white sun directly behind the head throwing a clean silver rim along the hair and shoulder, with a large white bounce just off the lens filling the face so it stays fully and evenly exposed. Neutral white balance, highlights allowed to blow behind but never across the face.\",\n    \"photo\": \"Full-frame digital, 105mm, shallow depth of field, gentle veiling haze from shooting into the light, fine grain, sharp on the near eye.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F7F9FA\",\n      \"#DCE6EA\",\n      \"#B7C8D0\",\n      \"#EDE7DC\",\n      \"#4A5257\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A blown-out white sea and pale sand horizon thrown far out of focus, the sky burning to clean white behind the head, salt haze softening everything. No detail, no horizon line hard enough to read.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          150,\n          80,\n          900,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, head turned about 70 degrees away from the lens with the chin slightly lifted, eyes looking off toward the horizon, mouth closed, calm and open, hair lifting in the wind.\",\n        \"color_palette\": [\n          \"#F7F9FA\",\n          \"#EDE7DC\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          700\n        ],\n        \"desc\": \"The blown white sky filling the upper frame behind the head, with a soft silver flare bleeding around the silhouette.\",\n        \"color_palette\": [\n          \"#F7F9FA\",\n          \"#DCE6EA\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame and must stay fully and evenly exposed against the bright background, never silhouetted: sharp, neutral skin rendering, the near eye clearly visible and open. No sunglasses, no eyeglasses, no hat or hood covering the hairline, and no hair, hand, flare or blown highlight crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garment drapes to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11184,7 +11184,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 278,
-   "title": "PROMPT - NIGHTCLUB",
+   "title": "PROMPT - RAIN-GLASS",
    "inputs": [],
    "outputs": [
     {
@@ -11212,7 +11212,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: candid WAIST-UP shot at a THREE-QUARTER angle, cropped around the waist.\nScene: standing outside a club at night, a bottle of beer loosely in hand, mid-conversation, alive and unposed.\nLighting: deep darkness cut by coloured neon spill, magenta and cyan raking across face and shoulders, wet pavement bouncing light back. Moody, saturated, night-street cinematic.\nWardrobe: a dark satin going-out shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 50mm at chest height, subject standing just behind a rain-streaked window pane that fills the frame.\",\n  \"high_level_description\": \"A quiet frame shot through glass - the person standing just inside a rain-streaked window, one hand resting flat against the pane, looking out through it toward the lens. Reads as a still, contemplative editorial: cool, textural and softly abstracted.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemplative shot-through-glass editorial. Water beading and running on the pane, soft abstraction over parts of the body, the face left clear. Cool, still, textural.\",\n    \"fashion\": \"A soft slate-grey lambswool crew-neck jumper over a plain white collared shirt with the collar showing, and dark navy trousers.\",\n    \"lighting\": \"Flat bright light from an overcast rainy sky outside, coming over the camera's shoulder through the glass, cool and even with no direct sun. Open lifted shadows, neutral to slightly cool white balance.\",\n    \"photo\": \"Full-frame digital, 50mm, focus held on the face just behind the glass while the water on the pane sits slightly soft, cool true colour, fine grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#C6D0D6\",\n      \"#8A98A2\",\n      \"#F2F4F5\",\n      \"#43505A\",\n      \"#A9B4A8\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A dim but clearly lit interior behind the person - a pale wall and the soft edge of a doorway, thrown well out of focus and staying open grey rather than black.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          190,\n          110,\n          810,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, standing just behind the glass with one palm resting flat against it at chest height, shoulders square, head slightly tilted, looking out through the pane directly to the lens, mouth closed and expression still.\",\n        \"color_palette\": [\n          \"#8A98A2\",\n          \"#F2F4F5\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"The rain-streaked window pane filling the whole frame between camera and subject, beads and running rivulets catching cool light, denser at the edges and thinning across the face so the features stay clear.\",\n        \"color_palette\": [\n          \"#C6D0D6\",\n          \"#F2F4F5\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame and must read clearly through the glass: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, heavy water streak, reflection or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere, including reflected in the glass. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11230,7 +11230,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 279,
-   "title": "PROMPT - FULL-3Q",
+   "title": "PROMPT - MARBLE-PLAZA",
    "inputs": [],
    "outputs": [
     {
@@ -11258,7 +11258,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: FULL-BODY shot at a THREE-QUARTER angle, body turned about 45 degrees to camera, head to feet in frame.\nScene: standing easy with weight on one leg, arms loose, chin level, looking to the lens.\nLighting: even studio light on a plain light-grey seamless with a soft contact shadow at the feet. Neutral, clean, catalogue-grade clarity.\nWardrobe: a fitted t-shirt, straight jeans and trainers\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"FULL-BODY shot at a THREE-QUARTER angle, body turned about 45 degrees to camera, head to feet in frame, 35mm at chest height, subject small-ish against the architecture.\",\n  \"high_level_description\": \"A graphic architectural frame - the person standing on a white marble civic plaza in hard high sun, a long crisp shadow running off across the stone, chin level and unhurried. Reads as a modernist fashion editorial: stark, bright and geometric.\",\n  \"style_description\": {\n    \"aesthetics\": \"Modernist architectural fashion editorial. Vast pale stone, hard-edged shadows, strong diagonals, extreme negative space. Stark and confident.\",\n    \"fashion\": \"A stone-grey oversized linen shirt worn open over a white ribbed tank, with wide-leg off-white trousers and flat white leather sandals.\",\n    \"lighting\": \"Hard high sun almost overhead, throwing a crisp dark shadow across the marble and a short one under the jaw, with the stone bouncing strong clean fill back up so the face stays open and readable. Neutral white balance, brilliant and high-key.\",\n    \"photo\": \"Full-frame digital, 35mm, deep focus, very high micro-contrast on the stone, true neutral colour, minimal grain.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F2F1ED\",\n      \"#D8D5CE\",\n      \"#A8A69F\",\n      \"#5E5C58\",\n      \"#BFC5C9\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A wide empty civic plaza of white marble slabs, a low pale wall and a plain modernist facade of vertical stone fins far behind, under a bleached pale sky. Empty of people and objects.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          300,\n          210,\n          700,\n          1420\n        ],\n        \"desc\": \"The person from the reference images, standing turned about 45 degrees with weight on the back leg, arms loose at the sides, shoulders square, chin level, calm and direct gaze to the lens.\",\n        \"color_palette\": [\n          \"#D8D5CE\",\n          \"#F2F1ED\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          80,\n          1180,\n          720,\n          1500\n        ],\n        \"desc\": \"A long hard-edged shadow cast by the subject running diagonally across the marble toward the lower left corner.\",\n        \"color_palette\": [\n          \"#A8A69F\",\n          \"#5E5C58\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          240,\n          1000,\n          760\n        ],\n        \"desc\": \"A plain modernist facade of vertical pale stone fins running across the background, softly out of focus.\",\n        \"color_palette\": [\n          \"#D8D5CE\",\n          \"#BFC5C9\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, correctly exposed and lifted by bounce so it never falls into hard shadow, neutral skin rendering, both eyes visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand or hard shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, signage, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11357,7 +11357,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 280,
-   "title": "PROMPT - DECKCHAIR",
+   "title": "PROMPT - PASTEL-BEAUTY",
    "inputs": [],
    "outputs": [
     {
@@ -11385,7 +11385,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: FULL-BODY wide shot from a THREE-QUARTER angle, eye-level, whole body in frame.\nScene: reclining easily in a deck chair, smiling, one arm draped over the back, thoroughly at home.\nLighting: hard midday sun through a tall window carving crisp geometric shadows across a warm wooden floor. High-contrast, sun-drenched, architectural.\nWardrobe: an open linen shirt and tailored shorts\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"CLOSE-UP true 90-degree side PROFILE, head and shoulders filling the frame, cropped at the upper chest, open space ahead of the face. Do NOT show the torso below the chest, the hips, the legs or a full-body view.\",\n  \"high_level_description\": \"A candy-clean beauty campaign frame - the person held in exact side profile against a smooth pastel gradient, the profile line reading crisp and bright against the colour. Reads as a modern skincare campaign: glossy, fresh and weightless.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary beauty-campaign portraiture. Smooth pastel colour field, immaculate light, sculptural simplicity, generous space ahead of the face.\",\n    \"fashion\": \"A pale lilac silk-satin shirt with a soft unstructured collar, sitting flat across the shoulder.\",\n    \"lighting\": \"A large softbox ahead of the person on the profile axis, feathered so the brightest edge rakes along the brow, nose and lips, with a bounce behind lifting the back of the head. Even, bright, no shadow drops out.\",\n    \"photo\": \"Digital medium format, very fine grain, smooth clean colour, critical focus on the eye and the profile edge, real skin texture left intact.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#F2D9E2\",\n      \"#DCD0EC\",\n      \"#CDB6D8\",\n      \"#F7F4F8\",\n      \"#4A4048\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A smooth seamless gradient sweeping from pale rose at the lower edge to soft lilac at the top, perfectly even and free of texture, held a shade deeper than the lit profile edge so the outline separates cleanly.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          230,\n          90,\n          900,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, head turned to an exact 90-degree profile facing frame left so only one side of the face is visible, chin level, neck long, shoulders square, lips softly closed, gaze straight ahead and calm.\",\n        \"color_palette\": [\n          \"#DCD0EC\",\n          \"#F7F4F8\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"The pastel rose-to-lilac gradient field filling the frame behind the profile, entirely smooth and defocused.\",\n        \"color_palette\": [\n          \"#F2D9E2\",\n          \"#CDB6D8\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The visible side of the face is the priority of the frame: sharp, evenly exposed, the near eye clearly visible and open. No sunglasses, no eyeglasses, no hat, hood or band covering the hairline, and no hair, hand, collar or shadow crossing the profile line or the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garment drapes to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11581,7 +11581,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 281,
-   "title": "PROMPT - BEACH",
+   "title": "PROMPT - GREENHOUSE",
    "inputs": [],
    "outputs": [
     {
@@ -11609,7 +11609,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body wide shot, whole body in frame.\nScene: sitting on a dark wet rock at the shoreline in swimwear, skin and hair soaked, salt spray in the air, waves breaking just behind.\nLighting: bright open coastal daylight, hard reflections skittering off the water, droplets catching the sun. Crisp high-clarity cool blue-green grade.\nWardrobe: swimwear\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"CLOSE-UP head shot at a THREE-QUARTER angle, head turned about 45 degrees so both eyes stay visible, head filling most of the frame. Do NOT show the torso below the chest, the hips, the legs or a full-body view.\",\n  \"high_level_description\": \"A fresh botanical portrait inside a bright Victorian glasshouse - the person among dense green foliage, diffuse white light pouring through old glass, a soft closed-mouth smile to the lens. Reads as a light, verdant magazine portrait.\",\n  \"style_description\": {\n    \"aesthetics\": \"Botanical editorial portraiture. Living green depth, humid clarity, white light through glass, foliage framing the face without touching it.\",\n    \"fashion\": \"A crisp white cotton poplin shirt, collar open and slightly rumpled from wear.\",\n    \"lighting\": \"Broad diffuse daylight through the glasshouse roof and walls, soft and wrapping, filling every shadow. Clean neutral white balance, bright and open.\",\n    \"photo\": \"Full-frame digital, 85mm, shallow depth of field so the foliage dissolves into soft green shapes, true colour, fine grain, sharp on the eyes.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#5E8C61\",\n      \"#AECBB0\",\n      \"#F6F7F4\",\n      \"#8FB6C4\",\n      \"#37452F\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"The interior of a Victorian glasshouse: dense palm fronds and broad green leaves thrown far out of focus, slim white glazing bars and misted panes beyond them, cool daylight diffusing through. Fresh cool green throughout.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          120,\n          60,\n          900,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, head turned about 45 degrees with both eyes on the lens, chin level, shoulders relaxed and dropped, a soft closed-mouth smile.\",\n        \"color_palette\": [\n          \"#F6F7F4\",\n          \"#37452F\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          340,\n          1100\n        ],\n        \"desc\": \"A large defocused palm frond entering from the left edge, well clear of the face, framing without overlapping it.\",\n        \"color_palette\": [\n          \"#5E8C61\",\n          \"#AECBB0\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat or hood covering the hairline, and no leaf, frond, hair, hand or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garment drapes to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -11627,7 +11627,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 282,
-   "title": "PROMPT - BACKLIT",
+   "title": "PROMPT - MUSIC-STUDIO",
    "inputs": [],
    "outputs": [
     {
@@ -11655,7 +11655,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: MEDIUM CLOSE-UP, head and upper chest filling the frame. Do NOT show the full body.\nScene: sitting still and meditating, eyes closed, face open and calm, shoulders dropped.\nLighting: hard low sun directly behind, face falling into soft shadow while a bright rim burns along hair and shoulders, dust catching the beam and a gentle flare across one corner. Serene and cinematic.\nWardrobe: a loose unbuttoned linen shirt\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"THREE-QUARTER LENGTH shot, cropped at mid-thigh, 35mm at chest height, subject seated on a stool slightly right of centre and angled about 30 degrees to the lens, instruments filling the space around them. Face sharp, clear of the instrument, and occupying the upper third of the frame.\",\n  \"high_level_description\": \"A warm, lived-in music-room portrait - the person seated on a wooden stool with an acoustic guitar resting across the lap, a grand piano and amplifiers behind them, caught in a quiet pause between playing. Reads as an intimate musician profile shot for a magazine.\",\n  \"style_description\": {\n    \"aesthetics\": \"Bright airy music-room editorial. Pale wood, white walls and worn instruments, lived-in but light-filled and uncluttered. Intimate and unhurried, clean and neutral rather than dark.\",\n    \"fashion\": \"An open charcoal flannel overshirt worn over a plain white cotton t-shirt, dark straight-leg jeans, and scuffed brown leather boots. Sleeves rolled to the forearm.\",\n    \"lighting\": \"Broad soft daylight pouring through tall windows to the left as the main key, filling the whole room evenly, with a single small lamp as a faint accent only. Open lifted shadows, bright clean walls, a soft sheen along the instrument bodies.\",\n    \"photo\": \"35mm colour film, clean neutral cast, visible fine grain, shallow depth of field with the far side of the room soft, sharp on the face and hands.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#EFEAE0\",\n      \"#C79A5B\",\n      \"#F6F4EF\",\n      \"#A8977F\",\n      \"#4A4A4A\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"A bright white-walled rehearsal room with pale oak floorboards: the open lid of a light-toned grand piano filling the left background, a small valve amplifier and a second guitar on a stand to the right, a pale flat-weave rug, and tall windows flooding the room with daylight. Softly out of focus.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          250,\n          100,\n          820,\n          1500\n        ],\n        \"desc\": \"The person from the reference images, seated on a wooden stool with the back straight and shoulders relaxed, one forearm resting over the upper bout of the guitar and the other hand loose on the thigh, head turned to the lens, chin level, calm half-smile, mouth closed.\",\n        \"color_palette\": [\n          \"#4A4A4A\",\n          \"#E0E0DC\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          300,\n          780,\n          900,\n          1420\n        ],\n        \"desc\": \"A worn honey-coloured acoustic guitar resting across the lap, body on the thigh and neck angled down and away to the lower right, kept well below the shoulders so it never crosses the face.\",\n        \"color_palette\": [\n          \"#C79A5B\",\n          \"#3A2A1A\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          240,\n          380,\n          1180\n        ],\n        \"desc\": \"The raised lid and pale satin-finished body of a grand piano occupying the left of the frame, catching a long soft highlight along its edge.\",\n        \"color_palette\": [\n          \"#D8D2C6\",\n          \"#C9A15E\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, warmly but correctly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, and no hair, hand, guitar neck, microphone or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or brand marks anywhere - including instrument headstocks, amplifier panels and clothing. Hands anatomically correct with five fingers each. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -12124,7 +12124,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Al1n4_02"
+    "MyCharacter"
    ]
   },
   {
@@ -12484,7 +12484,7 @@
     "Node name for S&R": "StringConstantMultiline"
    },
    "widgets_values": [
-    "Subject: the SAME person shown in the reference images.\n\nReference roles:\nImage 1: face and hair identity anchor - use it for the exact likeness.\nImage 2: a wider view of the same person - use it for skin tone, build and hair length.\nDo NOT copy the clothing from the references: each shot states its own Wardrobe below.\n\nUse the references ONLY for the person's identity and appearance. Do NOT copy their crop,\ncamera distance, pose or background - the Framing, Scene and Lighting lines above define\nthis shot and always override the references.\n\nPreserve exactly: face geometry, facial features, eye colour, eyebrows, hairline, hair\ntexture and colour, skin tone, distinguishing marks, and - wherever the body is visible -\nthe same body proportions. Do not change the face, skin tone or identity in any way. It\nmust be unmistakably the same person.",
+    "Subject: the SAME person shown in the reference images.\n\nReference roles:\nImage 1: face and hair identity anchor - use it for the exact likeness.\nImage 2: a wider view of the same person - use it for skin tone, build and hair length.\nDo NOT copy the clothing from the references: each shot states its own Wardrobe below.\n\nUse the references ONLY for the person's identity and appearance. Do NOT copy their crop,\ncamera distance, pose or background - the Framing, Scene and Lighting lines above define\nthis shot and always override the references.\n\nPreserve exactly: face geometry, facial features, eye colour, eyebrows, hairline, hair\ntexture and colour, skin tone, distinguishing marks, and - wherever the body is visible -\nthe same body proportions. Do not change the face, skin tone or identity in any way. It\nmust be unmistakably the same person.\n\nMatch the reference's ACTUAL build: the same weight, the same width of face, neck,\nshoulders and torso. Do not slim down, broaden, bulk up, lengthen, idealise or otherwise\nflatter the body or the face. Do not make the jaw stronger, the neck thicker or the frame\nlarger than the reference shows.",
     false
    ]
   },
@@ -12528,7 +12528,7 @@
     "Node name for S&R": "StringConstantMultiline"
    },
    "widgets_values": [
-    "Exclude: text, captions, watermarks, logos, borders, collage or split frames,\nadditional people, duplicated or malformed hands and limbs, plastic or over-smoothed skin,\nheavy beauty retouching.\nOutput: a single photorealistic photograph.",
+    "Exclude: text, captions, watermarks, logos, borders, collage or split frames,\nadditional people, duplicated or malformed hands and limbs, plastic or over-smoothed skin,\nheavy beauty retouching.\n\nContent safety - applies to EVERY shot regardless of its styling: no weapons of any kind,\nfirearms, knives or ammunition; no alcohol, bottles, cans, glasses or drinking; no\ncigarettes, cigars, vaping, smoke or drugs; no blood, injury, violence, threatening poses\nor aggressive gestures; no hand signs or gestures that could read as offensive; no nudity,\nunderwear, swimwear or revealing clothing. The subject is always a clothed adult, and any\nperiod or genre styling is expressed only through wardrobe, set and lighting.\n\nRendering - applies to EVERY shot: this must look like a real photograph taken on real\nequipment, not a digital render. Keep natural skin texture with visible pores, fine lines,\nuneven tone and small blemishes; natural facial asymmetry; stray flyaway hairs; fabric\nthat creases and hangs under its own weight; slightly uneven ambient light; gentle lens\nvignetting and a natural softening toward the corners.\nAvoid: airbrushed, waxy or plastic skin; flawless symmetry; a glowing rim-light traced\naround every edge; over-sharpened micro-contrast; HDR halos; exaggerated specular\nhighlights; showroom-clean CGI surfaces; and the glossy over-produced look of an AI image.\n\nOverall grade - applies to EVERY shot: bright, light and airy. Favour a clean whitish\nbase - lifted open shadows, soft neutral highlights, restrained saturation, plenty of\nlight and air in the frame. Even a night or interior scene stays bright and clearly lit.\nNever crush the image into heavy blacks, deep vignettes or a muddy, weighty grade.\n\nWhite balance - applies to EVERY shot: keep it NEUTRAL to very slightly cool. No yellow,\namber, golden, orange or sepia cast anywhere - not on skin, not on walls, not in the\nhighlights. Light sources read as clean white daylight or neutral studio light, never as\nwarm tungsten or candlelight. Whites stay white, skin stays its true tone.\nOutput: a single photorealistic photograph.",
     false
    ]
   },
@@ -13612,7 +13612,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - T-POSE",
+   "title": "GPT-Image-2 - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -13723,7 +13723,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - T-POSE",
+   "title": "SHOT SELECTOR - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -13798,7 +13798,8 @@
     0,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -13840,7 +13841,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "t-pose_image_001"
+    "street-crosswalk_image_001"
    ]
   },
   {
@@ -13935,7 +13936,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - T-POSE",
+   "title": "SAVE - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -14073,7 +14074,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body, standing in a frontal A-pose, arms slightly away from the body, neutral expression, wearing a plain fitted t-shirt and straight jeans, barefoot, plain white studio background"
+    "full body from a high angle, standing on a painted crosswalk with both hands in the jeans pockets, calm direct expression looking up at the camera, wearing an oversized black t-shirt, baggy light-wash jeans and off-white sneakers, silver chain necklace, dark asphalt with white painted stripes, flat overcast daylight"
    ]
   },
   {
@@ -14167,7 +14168,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - T-POSE",
+   "title": "CAPTION - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -14269,7 +14270,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - T-POSE",
+   "title": "PREVIEW - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -14814,7 +14815,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - SIDE-WALK",
+   "title": "GPT-Image-2 - STUDIO-PROPS",
    "inputs": [
     {
      "dir": null,
@@ -14925,7 +14926,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - SIDE-WALK",
+   "title": "SHOT SELECTOR - STUDIO-PROPS",
    "inputs": [
     {
      "dir": null,
@@ -15000,7 +15001,8 @@
     1,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -15042,7 +15044,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "side-walk_image_002"
+    "studio-props_image_002"
    ]
   },
   {
@@ -15137,7 +15139,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - SIDE-WALK",
+   "title": "SAVE - STUDIO-PROPS",
    "inputs": [
     {
      "dir": null,
@@ -15275,7 +15277,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body side view, walking in a relaxed stride, wearing an open overshirt over a tee, chinos and sneakers, plain white studio background"
+    "full body at a three-quarter angle, seated on a wooden chair with one arm over the chair back and one foot propped on a stack of old televisions, deadpan expression, wearing an oversized black t-shirt over a striped long-sleeve shirt with cream wide-leg trousers and chunky sneakers, seamless cream studio backdrop, soft directional studio light"
    ]
   },
   {
@@ -15369,7 +15371,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - SIDE-WALK",
+   "title": "CAPTION - STUDIO-PROPS",
    "inputs": [
     {
      "dir": null,
@@ -15471,7 +15473,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - SIDE-WALK",
+   "title": "PREVIEW - STUDIO-PROPS",
    "inputs": [
     {
      "dir": null,
@@ -16016,7 +16018,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - BACK-VIEW",
+   "title": "GPT-Image-2 - SELFIE-CAR",
    "inputs": [
     {
      "dir": null,
@@ -16127,7 +16129,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - BACK-VIEW",
+   "title": "SHOT SELECTOR - SELFIE-CAR",
    "inputs": [
     {
      "dir": null,
@@ -16202,7 +16204,8 @@
     2,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -16244,7 +16247,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "back-view_image_003"
+    "selfie-car_image_003"
    ]
   },
   {
@@ -16339,7 +16342,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - BACK-VIEW",
+   "title": "SAVE - SELFIE-CAR",
    "inputs": [
     {
      "dir": null,
@@ -16477,7 +16480,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body from behind, standing with arms relaxed, wearing a plain crew-neck t-shirt and dark jeans, plain white studio background"
+    "close-up selfie held at arm's length, head tilted slightly, relaxed half-smile looking into the phone camera, wearing an open heather-grey zip-up hoodie with the hood down over a white t-shirt and over-ear headphones around the neck, seated in a car with a bright daylight window behind, natural light"
    ]
   },
   {
@@ -16571,7 +16574,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - BACK-VIEW",
+   "title": "CAPTION - SELFIE-CAR",
    "inputs": [
     {
      "dir": null,
@@ -16673,7 +16676,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - BACK-VIEW",
+   "title": "PREVIEW - SELFIE-CAR",
    "inputs": [
     {
      "dir": null,
@@ -17218,7 +17221,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-FRONT",
+   "title": "GPT-Image-2 - LUXE-INTERIOR",
    "inputs": [
     {
      "dir": null,
@@ -17329,7 +17332,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-FRONT",
+   "title": "SHOT SELECTOR - LUXE-INTERIOR",
    "inputs": [
     {
      "dir": null,
@@ -17404,7 +17407,8 @@
     3,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -17446,7 +17450,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-front_image_004"
+    "luxe-interior_image_004"
    ]
   },
   {
@@ -17541,7 +17545,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-FRONT",
+   "title": "SAVE - LUXE-INTERIOR",
    "inputs": [
     {
      "dir": null,
@@ -17679,7 +17683,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "extreme close-up portrait, frontal, neutral expression, mouth closed, wearing a crew-neck knit sweater, plain white background"
+    "waist-up portrait, standing relaxed with one hand in a trouser pocket, calm direct expression, wearing an unstructured navy blazer over a cream roll-neck with charcoal tailored trousers, contemporary green-panelled drawing room with a marble fireplace, soft afternoon window light"
    ]
   },
   {
@@ -17773,7 +17777,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-FRONT",
+   "title": "CAPTION - LUXE-INTERIOR",
    "inputs": [
     {
      "dir": null,
@@ -17875,7 +17879,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-FRONT",
+   "title": "PREVIEW - LUXE-INTERIOR",
    "inputs": [
     {
      "dir": null,
@@ -18420,7 +18424,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-PROFILE",
+   "title": "GPT-Image-2 - ETHNIC-FESTIVE",
    "inputs": [
     {
      "dir": null,
@@ -18531,7 +18535,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-PROFILE",
+   "title": "SHOT SELECTOR - ETHNIC-FESTIVE",
    "inputs": [
     {
      "dir": null,
@@ -18606,7 +18610,8 @@
     4,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -18648,7 +18653,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-profile_image_005"
+    "ethnic-festive_image_005"
    ]
   },
   {
@@ -18743,7 +18748,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-PROFILE",
+   "title": "SAVE - ETHNIC-FESTIVE",
    "inputs": [
     {
      "dir": null,
@@ -18881,7 +18886,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "extreme close-up side profile portrait, neutral expression, wearing a collared cotton shirt, plain white background"
+    "full body, standing tall and centred facing the camera, composed confident expression, wearing ivory gold-embroidered Indian festive formalwear with a mandarin collar, cream churidar and an embroidered stole, bright pale palatial archways behind, clean daylight"
    ]
   },
   {
@@ -18975,7 +18980,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-PROFILE",
+   "title": "CAPTION - ETHNIC-FESTIVE",
    "inputs": [
     {
      "dir": null,
@@ -19077,7 +19082,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-PROFILE",
+   "title": "PREVIEW - ETHNIC-FESTIVE",
    "inputs": [
     {
      "dir": null,
@@ -19622,7 +19627,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - BACKLIT",
+   "title": "GPT-Image-2 - MUSIC-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -19733,7 +19738,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - BACKLIT",
+   "title": "SHOT SELECTOR - MUSIC-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -19808,7 +19813,8 @@
     5,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -19850,7 +19856,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "backlit_image_006"
+    "music-studio_image_006"
    ]
   },
   {
@@ -19945,7 +19951,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - BACKLIT",
+   "title": "SAVE - MUSIC-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -20083,7 +20089,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "medium close-up, meditating with eyes closed, calm expression, wearing a loose linen shirt, strong backlight with rim light on the hair, face in shadow"
+    "three-quarter length portrait, seated on a stool with an acoustic guitar resting across the lap, calm half-smile, wearing an open charcoal flannel overshirt over a white t-shirt with dark jeans and brown boots, bright white-walled rehearsal room with a grand piano and amplifier, daylight through tall windows"
    ]
   },
   {
@@ -20177,7 +20183,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - BACKLIT",
+   "title": "CAPTION - MUSIC-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -20279,7 +20285,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - BACKLIT",
+   "title": "PREVIEW - MUSIC-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -20824,7 +20830,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-ANGRY",
+   "title": "GPT-Image-2 - LUXURY-CAR",
    "inputs": [
     {
      "dir": null,
@@ -20935,7 +20941,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-ANGRY",
+   "title": "SHOT SELECTOR - LUXURY-CAR",
    "inputs": [
     {
      "dir": null,
@@ -21010,7 +21016,8 @@
     6,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -21052,7 +21059,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-angry_image_007"
+    "luxury-car_image_007"
    ]
   },
   {
@@ -21147,7 +21154,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-ANGRY",
+   "title": "SAVE - LUXURY-CAR",
    "inputs": [
     {
      "dir": null,
@@ -21285,7 +21292,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-up portrait, furious shouting expression with open mouth, wearing a plain black t-shirt, plain white background, hard frontal light"
+    "full body from a low angle, standing beside a pale silver luxury coupe with one hand resting on the roofline, composed expression, wearing a black leather blouson jacket over a fine black knit with charcoal trousers and black Chelsea boots, open rooftop parking deck, bright overcast daylight"
    ]
   },
   {
@@ -21379,7 +21386,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-ANGRY",
+   "title": "CAPTION - LUXURY-CAR",
    "inputs": [
     {
      "dir": null,
@@ -21481,7 +21488,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-ANGRY",
+   "title": "PREVIEW - LUXURY-CAR",
    "inputs": [
     {
      "dir": null,
@@ -22026,7 +22033,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-SAD",
+   "title": "GPT-Image-2 - WESTERN-FUNK",
    "inputs": [
     {
      "dir": null,
@@ -22137,7 +22144,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-SAD",
+   "title": "SHOT SELECTOR - WESTERN-FUNK",
    "inputs": [
     {
      "dir": null,
@@ -22212,7 +22219,8 @@
     7,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -22254,7 +22262,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-sad_image_008"
+    "western-funk_image_008"
    ]
   },
   {
@@ -22349,7 +22357,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-SAD",
+   "title": "SAVE - WESTERN-FUNK",
    "inputs": [
     {
      "dir": null,
@@ -22487,7 +22495,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-up portrait, downcast sad expression, mouth closed, wearing a dark hooded sweatshirt, rain-soaked city street background, cool overcast light"
+    "three-quarter length portrait, standing with one hand resting on a billiard table rail and the other in a pocket, confident closed-mouth smile, wearing a wide-lapel off-white corduroy suit over a pale blue open-collar shirt with flared trousers and white boots, whitewashed 1970s games room, bright daylight"
    ]
   },
   {
@@ -22581,7 +22589,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-SAD",
+   "title": "CAPTION - WESTERN-FUNK",
    "inputs": [
     {
      "dir": null,
@@ -22683,7 +22691,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-SAD",
+   "title": "PREVIEW - WESTERN-FUNK",
    "inputs": [
     {
      "dir": null,
@@ -23228,7 +23236,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-SMILE",
+   "title": "GPT-Image-2 - CREATOR-WALL",
    "inputs": [
     {
      "dir": null,
@@ -23339,7 +23347,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-SMILE",
+   "title": "SHOT SELECTOR - CREATOR-WALL",
    "inputs": [
     {
      "dir": null,
@@ -23414,7 +23422,8 @@
     8,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -23456,7 +23465,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-smile_image_009"
+    "creator-wall_image_009"
    ]
   },
   {
@@ -23551,7 +23560,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-SMILE",
+   "title": "SAVE - CREATOR-WALL",
    "inputs": [
     {
      "dir": null,
@@ -23689,7 +23698,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-up portrait, warm open-mouthed smile, wearing a light summer shirt, sunny alpine flower meadow background, strong side sunlight"
+    "waist-up portrait, standing square to the camera with arms folded, wide open-mouthed laugh, wearing a boxy off-white heavyweight t-shirt and a fine silver chain, white wall covered in colourful sticky notes, bright frontal flash"
    ]
   },
   {
@@ -23783,7 +23792,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-SMILE",
+   "title": "CAPTION - CREATOR-WALL",
    "inputs": [
     {
      "dir": null,
@@ -23885,7 +23894,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-SMILE",
+   "title": "PREVIEW - CREATOR-WALL",
    "inputs": [
     {
      "dir": null,
@@ -24430,7 +24439,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - FOREST",
+   "title": "GPT-Image-2 - MONO-EDITORIAL",
    "inputs": [
     {
      "dir": null,
@@ -24541,7 +24550,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - FOREST",
+   "title": "SHOT SELECTOR - MONO-EDITORIAL",
    "inputs": [
     {
      "dir": null,
@@ -24616,7 +24625,8 @@
     9,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -24658,7 +24668,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "forest_image_010"
+    "mono-editorial_image_010"
    ]
   },
   {
@@ -24753,7 +24763,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - FOREST",
+   "title": "SAVE - MONO-EDITORIAL",
    "inputs": [
     {
      "dir": null,
@@ -24891,7 +24901,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body, squatting and touching a tree trunk, looking down, wearing an outdoor jacket, cargo trousers and hiking boots, forest at golden hour, long shadows"
+    "extreme close-up portrait, squared to the camera, quiet neutral expression with mouth closed and eyes to the lens, wearing a plain black fine-gauge knit, raw pale concrete wall behind, black and white, hard side daylight with bright bounce fill"
    ]
   },
   {
@@ -24985,7 +24995,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - FOREST",
+   "title": "CAPTION - MONO-EDITORIAL",
    "inputs": [
     {
      "dir": null,
@@ -25087,7 +25097,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - FOREST",
+   "title": "PREVIEW - MONO-EDITORIAL",
    "inputs": [
     {
      "dir": null,
@@ -25632,7 +25642,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - DECKCHAIR",
+   "title": "GPT-Image-2 - PASTEL-BEAUTY",
    "inputs": [
     {
      "dir": null,
@@ -25743,7 +25753,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - DECKCHAIR",
+   "title": "SHOT SELECTOR - PASTEL-BEAUTY",
    "inputs": [
     {
      "dir": null,
@@ -25818,7 +25828,8 @@
     10,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -25860,7 +25871,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "deckchair_image_011"
+    "pastel-beauty_image_011"
    ]
   },
   {
@@ -25955,7 +25966,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - DECKCHAIR",
+   "title": "SAVE - PASTEL-BEAUTY",
    "inputs": [
     {
      "dir": null,
@@ -26093,7 +26104,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body at a three-quarter angle, reclining on a deck chair, smiling, wearing an open linen shirt and tailored shorts, modern apartment with a wooden floor, hard sunlight"
+    "close-up ninety-degree side profile, chin level and shoulders square, calm expression with lips closed and gaze straight ahead, wearing a pale lilac silk-satin shirt, smooth pastel rose-to-lilac gradient backdrop, soft bright key along the profile edge"
    ]
   },
   {
@@ -26187,7 +26198,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - DECKCHAIR",
+   "title": "CAPTION - PASTEL-BEAUTY",
    "inputs": [
     {
      "dir": null,
@@ -26289,7 +26300,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - DECKCHAIR",
+   "title": "PREVIEW - PASTEL-BEAUTY",
    "inputs": [
     {
      "dir": null,
@@ -26834,7 +26845,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - BEACH",
+   "title": "GPT-Image-2 - GREENHOUSE",
    "inputs": [
     {
      "dir": null,
@@ -26945,7 +26956,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - BEACH",
+   "title": "SHOT SELECTOR - GREENHOUSE",
    "inputs": [
     {
      "dir": null,
@@ -27020,7 +27031,8 @@
     11,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -27062,7 +27074,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "beach_image_012"
+    "greenhouse_image_012"
    ]
   },
   {
@@ -27157,7 +27169,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - BEACH",
+   "title": "SAVE - GREENHOUSE",
    "inputs": [
     {
      "dir": null,
@@ -27295,7 +27307,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body, sitting on a rock at the shoreline, soaking wet, wearing swimwear, waves breaking behind, bright daylight"
+    "close-up portrait at a three-quarter angle, soft closed-mouth smile looking to the lens, wearing a crisp white cotton poplin shirt with the collar open, Victorian glasshouse with defocused green foliage, diffuse daylight through glass"
    ]
   },
   {
@@ -27389,7 +27401,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - BEACH",
+   "title": "CAPTION - GREENHOUSE",
    "inputs": [
     {
      "dir": null,
@@ -27491,7 +27503,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - BEACH",
+   "title": "PREVIEW - GREENHOUSE",
    "inputs": [
     {
      "dir": null,
@@ -28036,7 +28048,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - PARK-SMOKE",
+   "title": "GPT-Image-2 - SEASIDE-BACKLIT",
    "inputs": [
     {
      "dir": null,
@@ -28147,7 +28159,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - PARK-SMOKE",
+   "title": "SHOT SELECTOR - SEASIDE-BACKLIT",
    "inputs": [
     {
      "dir": null,
@@ -28222,7 +28234,8 @@
     12,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -28264,7 +28277,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "park-smoke_image_013"
+    "seaside-backlit_image_013"
    ]
   },
   {
@@ -28359,7 +28372,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - PARK-SMOKE",
+   "title": "SAVE - SEASIDE-BACKLIT",
    "inputs": [
     {
      "dir": null,
@@ -28497,7 +28510,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body, sitting on a park bench holding a sandwich, wearing a denim jacket over a striped tee, green park background, soft daylight"
+    "medium close-up at a near-profile angle, chin lifted and eyes looking off toward the horizon, calm open expression, wearing a washed white cotton-gauze shirt, blown-out white sea and pale sand behind, backlit with silver rim light and bounce fill"
    ]
   },
   {
@@ -28591,7 +28604,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - PARK-SMOKE",
+   "title": "CAPTION - SEASIDE-BACKLIT",
    "inputs": [
     {
      "dir": null,
@@ -28693,7 +28706,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - PARK-SMOKE",
+   "title": "PREVIEW - SEASIDE-BACKLIT",
    "inputs": [
     {
      "dir": null,
@@ -29238,7 +29251,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - OFFICE",
+   "title": "GPT-Image-2 - GLASS-LOBBY",
    "inputs": [
     {
      "dir": null,
@@ -29349,7 +29362,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - OFFICE",
+   "title": "SHOT SELECTOR - GLASS-LOBBY",
    "inputs": [
     {
      "dir": null,
@@ -29424,7 +29437,8 @@
     13,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -29466,7 +29480,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "office_image_014"
+    "glass-lobby_image_014"
    ]
   },
   {
@@ -29561,7 +29575,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - OFFICE",
+   "title": "SAVE - GLASS-LOBBY",
    "inputs": [
     {
      "dir": null,
@@ -29699,7 +29713,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "waist-up at a three-quarter angle, sitting on an office chair glancing at a wristwatch, wearing a tailored blazer over a crisp shirt, meeting room with a city skyline through the window, flat midday light"
+    "three-quarter length portrait, standing squared with one hand in a jacket pocket, composed unsmiling expression with a direct gaze, wearing sharp light-grey tailoring over a fine white shirt, bright glass-and-steel office lobby with polished stone floor, cool daylight"
    ]
   },
   {
@@ -29793,7 +29807,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - OFFICE",
+   "title": "CAPTION - GLASS-LOBBY",
    "inputs": [
     {
      "dir": null,
@@ -29895,7 +29909,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - OFFICE",
+   "title": "PREVIEW - GLASS-LOBBY",
    "inputs": [
     {
      "dir": null,
@@ -30440,7 +30454,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - HALF-FRONT",
+   "title": "GPT-Image-2 - LAUNDROMAT-MINT",
    "inputs": [
     {
      "dir": null,
@@ -30551,7 +30565,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - HALF-FRONT",
+   "title": "SHOT SELECTOR - LAUNDROMAT-MINT",
    "inputs": [
     {
      "dir": null,
@@ -30626,7 +30640,8 @@
     14,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -30668,7 +30683,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "half-front_image_015"
+    "laundromat-mint_image_015"
    ]
   },
   {
@@ -30763,7 +30778,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - HALF-FRONT",
+   "title": "SAVE - LAUNDROMAT-MINT",
    "inputs": [
     {
      "dir": null,
@@ -30901,7 +30916,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "waist-up shot, holding a takeaway coffee cup in both hands, relaxed half-smile, wearing a chunky knit jumper, bright cafe interior, soft window light"
+    "waist-up portrait, leaning back against a bank of washing machines with arms loosely folded, open genuine laugh, wearing a pale blue denim shirt over a white t-shirt with ecru trousers, mint-green laundromat with white tiled walls, bright even fluorescent and daylight"
    ]
   },
   {
@@ -30995,7 +31010,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - HALF-FRONT",
+   "title": "CAPTION - LAUNDROMAT-MINT",
    "inputs": [
     {
      "dir": null,
@@ -31097,7 +31112,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - HALF-FRONT",
+   "title": "PREVIEW - LAUNDROMAT-MINT",
    "inputs": [
     {
      "dir": null,
@@ -31642,7 +31657,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - FULL-3Q",
+   "title": "GPT-Image-2 - MARBLE-PLAZA",
    "inputs": [
     {
      "dir": null,
@@ -31753,7 +31768,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - FULL-3Q",
+   "title": "SHOT SELECTOR - MARBLE-PLAZA",
    "inputs": [
     {
      "dir": null,
@@ -31828,7 +31843,8 @@
     15,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -31870,7 +31886,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full-3q_image_016"
+    "marble-plaza_image_016"
    ]
   },
   {
@@ -31965,7 +31981,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - FULL-3Q",
+   "title": "SAVE - MARBLE-PLAZA",
    "inputs": [
     {
      "dir": null,
@@ -32103,7 +32119,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body at a three-quarter angle, standing relaxed with weight on one leg, wearing a fitted t-shirt, straight jeans and trainers, plain light-grey studio background"
+    "full body at a three-quarter angle, standing with weight on the back leg and arms loose, calm direct expression, wearing an open stone-grey linen shirt over a white tank with wide off-white trousers and flat sandals, empty white marble plaza, hard high sun casting a long shadow"
    ]
   },
   {
@@ -32197,7 +32213,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - FULL-3Q",
+   "title": "CAPTION - MARBLE-PLAZA",
    "inputs": [
     {
      "dir": null,
@@ -32299,7 +32315,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - FULL-3Q",
+   "title": "PREVIEW - MARBLE-PLAZA",
    "inputs": [
     {
      "dir": null,
@@ -32844,7 +32860,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-3Q-LEFT",
+   "title": "GPT-Image-2 - ATELIER-FABRIC",
    "inputs": [
     {
      "dir": null,
@@ -32955,7 +32971,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-3Q-LEFT",
+   "title": "SHOT SELECTOR - ATELIER-FABRIC",
    "inputs": [
     {
      "dir": null,
@@ -33030,7 +33046,8 @@
     16,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -33072,7 +33089,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-3q-left_image_017"
+    "atelier-fabric_image_017"
    ]
   },
   {
@@ -33167,7 +33184,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-3Q-LEFT",
+   "title": "SAVE - ATELIER-FABRIC",
    "inputs": [
     {
      "dir": null,
@@ -33305,7 +33322,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-up portrait at a three-quarter angle turned left, neutral expression, wearing a plain dark crew-neck top, plain mid-grey background"
+    "waist-up portrait at a three-quarter angle, one hand resting on a roll of fabric, easy closed-mouth half-smile, wearing an open chalk-white cotton work coat over a grey marl t-shirt, design atelier with bolts of pastel cloth, soft north window light"
    ]
   },
   {
@@ -33399,7 +33416,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-3Q-LEFT",
+   "title": "CAPTION - ATELIER-FABRIC",
    "inputs": [
     {
      "dir": null,
@@ -33501,7 +33518,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-3Q-LEFT",
+   "title": "PREVIEW - ATELIER-FABRIC",
    "inputs": [
     {
      "dir": null,
@@ -34046,7 +34063,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - LOW-ANGLE",
+   "title": "GPT-Image-2 - COBALT-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -34157,7 +34174,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - LOW-ANGLE",
+   "title": "SHOT SELECTOR - COBALT-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -34232,7 +34249,8 @@
     17,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -34274,7 +34292,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "low-angle_image_018"
+    "cobalt-studio_image_018"
    ]
   },
   {
@@ -34369,7 +34387,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - LOW-ANGLE",
+   "title": "SAVE - COBALT-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -34507,7 +34525,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body from a low angle, lying on the side on a couch with the head resting on one hand, wearing loungewear, soft backlight through white curtains, gentle haze"
+    "three-quarter length portrait from a slightly low angle, standing square with arms relaxed at the sides, composed direct expression, wearing a white cotton overshirt buttoned to the neck with white wide trousers and white trainers, saturated cobalt blue seamless backdrop, soft even studio light"
    ]
   },
   {
@@ -34601,7 +34619,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - LOW-ANGLE",
+   "title": "CAPTION - COBALT-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -34703,7 +34721,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - LOW-ANGLE",
+   "title": "PREVIEW - COBALT-STUDIO",
    "inputs": [
     {
      "dir": null,
@@ -35248,7 +35266,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - HIGH-ANGLE",
+   "title": "GPT-Image-2 - OVERHEAD-PETALS",
    "inputs": [
     {
      "dir": null,
@@ -35359,7 +35377,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - HIGH-ANGLE",
+   "title": "SHOT SELECTOR - OVERHEAD-PETALS",
    "inputs": [
     {
      "dir": null,
@@ -35434,7 +35452,8 @@
     18,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -35476,7 +35495,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "high-angle_image_019"
+    "overhead-petals_image_019"
    ]
   },
   {
@@ -35571,7 +35590,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - HIGH-ANGLE",
+   "title": "SAVE - OVERHEAD-PETALS",
    "inputs": [
     {
      "dir": null,
@@ -35709,7 +35728,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "wide shot from a high angle looking down, surprised expression with an open mouth, wearing a patterned short-sleeved shirt, natural daylight"
+    "full body from directly overhead looking down, lying on the back with arms and legs in a relaxed open shape, calm expression looking up into the camera, wearing a white heavyweight t-shirt and pale blue-grey wide-leg jeans, barefoot, pale seamless floor scattered with white and pink petals, flat even overhead light"
    ]
   },
   {
@@ -35803,7 +35822,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - HIGH-ANGLE",
+   "title": "CAPTION - OVERHEAD-PETALS",
    "inputs": [
     {
      "dir": null,
@@ -35905,7 +35924,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - HIGH-ANGLE",
+   "title": "PREVIEW - OVERHEAD-PETALS",
    "inputs": [
     {
      "dir": null,
@@ -36450,7 +36469,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - HALF-3Q",
+   "title": "GPT-Image-2 - FLASH-NIGHT",
    "inputs": [
     {
      "dir": null,
@@ -36561,7 +36580,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - HALF-3Q",
+   "title": "SHOT SELECTOR - FLASH-NIGHT",
    "inputs": [
     {
      "dir": null,
@@ -36636,7 +36655,8 @@
     19,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -36678,7 +36698,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "half-3q_image_020"
+    "flash-night_image_020"
    ]
   },
   {
@@ -36773,7 +36793,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - HALF-3Q",
+   "title": "SAVE - FLASH-NIGHT",
    "inputs": [
     {
      "dir": null,
@@ -36911,7 +36931,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "waist-up shot at a three-quarter angle, hands in pockets, calm confident expression, wearing a long dark overcoat over a polo neck, city street, overcast daylight"
+    "waist-up candid at a three-quarter angle, caught mid-turn with one hand half-raised in an open gesture, laughing, wearing a black nylon bomber over a white t-shirt with dark grey trousers, pale wall outside a venue at night, hard direct flash"
    ]
   },
   {
@@ -37005,7 +37025,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - HALF-3Q",
+   "title": "CAPTION - FLASH-NIGHT",
    "inputs": [
     {
      "dir": null,
@@ -37107,7 +37127,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - HALF-3Q",
+   "title": "PREVIEW - FLASH-NIGHT",
    "inputs": [
     {
      "dir": null,
@@ -37652,7 +37672,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - NIGHTCLUB",
+   "title": "GPT-Image-2 - RAIN-GLASS",
    "inputs": [
     {
      "dir": null,
@@ -37763,7 +37783,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - NIGHTCLUB",
+   "title": "SHOT SELECTOR - RAIN-GLASS",
    "inputs": [
     {
      "dir": null,
@@ -37838,7 +37858,8 @@
     20,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -37880,7 +37901,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "nightclub_image_021"
+    "rain-glass_image_021"
    ]
   },
   {
@@ -37975,7 +37996,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - NIGHTCLUB",
+   "title": "SAVE - RAIN-GLASS",
    "inputs": [
     {
      "dir": null,
@@ -38113,7 +38134,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "waist-up at a three-quarter angle, holding a bottle of beer, wearing a dark satin shirt, outside a night club, coloured light spill in the dark"
+    "three-quarter length portrait shot through a rain-streaked window, standing with one palm flat against the glass, still expression looking out to the camera, wearing a slate-grey lambswool jumper over a white collared shirt with navy trousers, water beading on the pane, flat cool light from an overcast rainy sky"
    ]
   },
   {
@@ -38207,7 +38228,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - NIGHTCLUB",
+   "title": "CAPTION - RAIN-GLASS",
    "inputs": [
     {
      "dir": null,
@@ -38309,7 +38330,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - NIGHTCLUB",
+   "title": "PREVIEW - RAIN-GLASS",
    "inputs": [
     {
      "dir": null,
@@ -38854,7 +38875,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - RUNNING",
+   "title": "GPT-Image-2 - TRACK-ATHLETIC",
    "inputs": [
     {
      "dir": null,
@@ -38965,7 +38986,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - RUNNING",
+   "title": "SHOT SELECTOR - TRACK-ATHLETIC",
    "inputs": [
     {
      "dir": null,
@@ -39040,7 +39061,8 @@
     21,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -39082,7 +39104,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "running_image_022"
+    "track-athletic_image_022"
    ]
   },
   {
@@ -39177,7 +39199,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - RUNNING",
+   "title": "SAVE - TRACK-ATHLETIC",
    "inputs": [
     {
      "dir": null,
@@ -39315,7 +39337,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "medium close-up with motion, running in a dynamic stressed stride, wearing technical running gear, abandoned industrial site after sunset, last red glow on the horizon"
+    "three-quarter length portrait, standing between efforts with both hands on the hips and chin up, level direct gaze with the mouth slightly parted, wearing a technical white running top and navy shorts, blue-grey running track with white lane lines behind, flat bright overcast daylight"
    ]
   },
   {
@@ -39409,7 +39431,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - RUNNING",
+   "title": "CAPTION - TRACK-ATHLETIC",
    "inputs": [
     {
      "dir": null,
@@ -39511,7 +39533,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - RUNNING",
+   "title": "PREVIEW - TRACK-ATHLETIC",
    "inputs": [
     {
      "dir": null,
@@ -40056,7 +40078,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CLOSE-3Q-RIGHT",
+   "title": "GPT-Image-2 - POOL-DECK",
    "inputs": [
     {
      "dir": null,
@@ -40167,7 +40189,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CLOSE-3Q-RIGHT",
+   "title": "SHOT SELECTOR - POOL-DECK",
    "inputs": [
     {
      "dir": null,
@@ -40242,7 +40264,8 @@
     22,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -40284,7 +40307,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-3q-right_image_023"
+    "pool-deck_image_023"
    ]
   },
   {
@@ -40379,7 +40402,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CLOSE-3Q-RIGHT",
+   "title": "SAVE - POOL-DECK",
    "inputs": [
     {
      "dir": null,
@@ -40517,7 +40540,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "close-up portrait at a three-quarter angle turned right, soft closed-mouth smile, wearing a light button-down shirt, plain warm-grey background"
+    "full body, standing barefoot on white tile with both hands in pockets, faint closed-mouth smile with eyes narrowed against the light, wearing a pale blue camp-collar shirt over a white tee with rolled cream trousers, turquoise swimming pool and white tiled deck, bright open daylight"
    ]
   },
   {
@@ -40611,7 +40634,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CLOSE-3Q-RIGHT",
+   "title": "CAPTION - POOL-DECK",
    "inputs": [
     {
      "dir": null,
@@ -40713,7 +40736,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CLOSE-3Q-RIGHT",
+   "title": "PREVIEW - POOL-DECK",
    "inputs": [
     {
      "dir": null,
@@ -41258,7 +41281,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - CANYON",
+   "title": "GPT-Image-2 - SNOW-FIELD",
    "inputs": [
     {
      "dir": null,
@@ -41369,7 +41392,7 @@
    "type": "ArkShotSelector",
    "flags": {},
    "order": 0,
-   "title": "SHOT SELECTOR - CANYON",
+   "title": "SHOT SELECTOR - SNOW-FIELD",
    "inputs": [
     {
      "dir": null,
@@ -41444,7 +41467,8 @@
     23,
     24,
     24,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -41486,7 +41510,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "canyon_image_024"
+    "snow-field_image_024"
    ]
   },
   {
@@ -41581,7 +41605,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - CANYON",
+   "title": "SAVE - SNOW-FIELD",
    "inputs": [
     {
      "dir": null,
@@ -41719,7 +41743,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body from behind, standing with both arms raised above the head, wearing a hiking fleece, trekking trousers and a backpack, overlooking a canyon, bright daylight"
+    "full body from behind at a three-quarter back angle mid-step, head turned back over the shoulder with a soft closed-mouth smile to the camera, wearing a cream quilted puffer jacket with the hood down, an ecru wool scarf, slate trousers and pale boots, open snow field under a white overcast sky, flat bright light"
    ]
   },
   {
@@ -41813,7 +41837,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - CANYON",
+   "title": "CAPTION - SNOW-FIELD",
    "inputs": [
     {
      "dir": null,
@@ -41915,7 +41939,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - CANYON",
+   "title": "PREVIEW - SNOW-FIELD",
    "inputs": [
     {
      "dir": null,
@@ -42304,7 +42328,7 @@
    "id": 78,
    "color": "#7341ff",
    "flags": {},
-   "title": "T-POSE",
+   "title": "STREET-CROSSWALK",
    "bounding": [
     2710,
     3260,
@@ -42316,7 +42340,7 @@
    "id": 79,
    "color": "#7341ff",
    "flags": {},
-   "title": "SIDE-WALK",
+   "title": "STUDIO-PROPS",
    "bounding": [
     3640,
     3260,
@@ -42328,7 +42352,7 @@
    "id": 80,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-FRONT",
+   "title": "LUXE-INTERIOR",
    "bounding": [
     5500,
     3260,
@@ -42340,7 +42364,7 @@
    "id": 81,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-PROFILE",
+   "title": "ETHNIC-FESTIVE",
    "bounding": [
     6430,
     3260,
@@ -42352,7 +42376,7 @@
    "id": 82,
    "color": "#7341ff",
    "flags": {},
-   "title": "BACK-VIEW",
+   "title": "SELFIE-CAR",
    "bounding": [
     4570,
     3260,
@@ -42364,7 +42388,7 @@
    "id": 83,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-SMILE",
+   "title": "CREATOR-WALL",
    "bounding": [
     10150,
     3260,
@@ -42376,7 +42400,7 @@
    "id": 84,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-SAD",
+   "title": "WESTERN-FUNK",
    "bounding": [
     9220,
     3260,
@@ -42388,7 +42412,7 @@
    "id": 85,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-ANGRY",
+   "title": "LUXURY-CAR",
    "bounding": [
     8290,
     3260,
@@ -42400,7 +42424,7 @@
    "id": 86,
    "color": "#7341ff",
    "flags": {},
-   "title": "HALF-FRONT",
+   "title": "LAUNDROMAT-MINT",
    "bounding": [
     4570,
     5400,
@@ -42412,7 +42436,7 @@
    "id": 87,
    "color": "#7341ff",
    "flags": {},
-   "title": "LOW-ANGLE",
+   "title": "COBALT-STUDIO",
    "bounding": [
     7360,
     5400,
@@ -42424,7 +42448,7 @@
    "id": 88,
    "color": "#7341ff",
    "flags": {},
-   "title": "HIGH-ANGLE",
+   "title": "OVERHEAD-PETALS",
    "bounding": [
     8290,
     5400,
@@ -42436,7 +42460,7 @@
    "id": 89,
    "color": "#7341ff",
    "flags": {},
-   "title": "HALF-3Q",
+   "title": "FLASH-NIGHT",
    "bounding": [
     9220,
     5400,
@@ -42448,7 +42472,7 @@
    "id": 90,
    "color": "#7341ff",
    "flags": {},
-   "title": "BACKLIT",
+   "title": "MUSIC-STUDIO",
    "bounding": [
     7360,
     3260,
@@ -42460,7 +42484,7 @@
    "id": 91,
    "color": "#7341ff",
    "flags": {},
-   "title": "FOREST",
+   "title": "MONO-EDITORIAL",
    "bounding": [
     11080,
     3260,
@@ -42472,7 +42496,7 @@
    "id": 92,
    "color": "#7341ff",
    "flags": {},
-   "title": "DECKCHAIR",
+   "title": "PASTEL-BEAUTY",
    "bounding": [
     12010,
     3260,
@@ -42484,7 +42508,7 @@
    "id": 93,
    "color": "#7341ff",
    "flags": {},
-   "title": "FULL-3Q",
+   "title": "MARBLE-PLAZA",
    "bounding": [
     5500,
     5400,
@@ -42496,7 +42520,7 @@
    "id": 94,
    "color": "#7341ff",
    "flags": {},
-   "title": "NIGHTCLUB",
+   "title": "RAIN-GLASS",
    "bounding": [
     10150,
     5400,
@@ -42508,7 +42532,7 @@
    "id": 95,
    "color": "#7341ff",
    "flags": {},
-   "title": "PARK-SMOKE",
+   "title": "SEASIDE-BACKLIT",
    "bounding": [
     2710,
     5400,
@@ -42520,7 +42544,7 @@
    "id": 96,
    "color": "#7341ff",
    "flags": {},
-   "title": "OFFICE",
+   "title": "GLASS-LOBBY",
    "bounding": [
     3640,
     5400,
@@ -42532,7 +42556,7 @@
    "id": 97,
    "color": "#7341ff",
    "flags": {},
-   "title": "RUNNING",
+   "title": "TRACK-ATHLETIC",
    "bounding": [
     11080,
     5400,
@@ -42544,7 +42568,7 @@
    "id": 98,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-3Q-LEFT",
+   "title": "ATELIER-FABRIC",
    "bounding": [
     6430,
     5400,
@@ -42556,7 +42580,7 @@
    "id": 99,
    "color": "#7341ff",
    "flags": {},
-   "title": "CLOSE-3Q-RIGHT",
+   "title": "POOL-DECK",
    "bounding": [
     12010,
     5400,
@@ -42568,7 +42592,7 @@
    "id": 102,
    "color": "#7341ff",
    "flags": {},
-   "title": "BEACH",
+   "title": "GREENHOUSE",
    "bounding": [
     12940,
     3260,
@@ -42580,7 +42604,7 @@
    "id": 103,
    "color": "#7341ff",
    "flags": {},
-   "title": "CANYON",
+   "title": "SNOW-FIELD",
    "bounding": [
     12940,
     5400,

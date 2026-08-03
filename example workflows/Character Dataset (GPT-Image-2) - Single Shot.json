@@ -889,7 +889,7 @@
    "type": "StringConstantMultiline",
    "flags": {},
    "order": 212,
-   "title": "PROMPT - T-POSE",
+   "title": "PROMPT - STREET-CROSSWALK",
    "inputs": [],
    "outputs": [
     {
@@ -917,7 +917,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Framing: full-body portrait, head to bare feet fully in frame, eye-level, 50mm, subject centred.\nScene: standing in a relaxed frontal A-pose, arms a little away from the body, feet shoulder-width, weight even, neutral expression, mouth closed, calm eyes to the lens.\nLighting: clean two-light studio setup on a seamless white cyclorama, large softbox key just off-axis with subtle fill and a soft contact shadow at the feet. Neutral white balance, true-to-life skin, crisp edge detail.\nWardrobe: a plain fitted t-shirt and straight jeans, barefoot\nShot on a full-frame camera with a fast prime, natural depth of field, true-to-life skin texture and colour, high dynamic range, sharp where it matters. Photorealistic editorial photography, not an illustration or render.",
+    "{\n  \"framing\": \"Full-body shot, head to shoes entirely in frame, subject centred. Camera held well above head height looking down at roughly 30 degrees, 28mm wide lens close to the subject, so the ground fills the frame behind them and the legs foreshorten slightly. The face is tilted up toward the lens, unobstructed and fully visible, occupying the upper quarter of the frame.\",\n  \"high_level_description\": \"A candid street-style frame of the person standing still in the middle of a painted crosswalk, hands in pockets, looking straight up into the lens with an unbothered, self-possessed expression. Reads as a real street-style photograph pulled off someone's feed, not a studio setup.\",\n  \"style_description\": {\n    \"aesthetics\": \"Contemporary Gen-Z street-style photography. Graphic top-down composition using road markings as a hard geometric backdrop. Candid, unposed, confident, effortless.\",\n    \"fashion\": \"Oversized black crew-neck t-shirt with dropped shoulders, baggy light-wash denim jeans pooling over the shoes, chunky off-white low-top sneakers, a thin silver chain necklace and a plain metal wristwatch.\",\n    \"lighting\": \"Bright even overcast daylight, soft shadowless illumination with a faint contact shadow directly beneath the feet, neutral white balance.\",\n    \"photo\": \"35mm colour film, fine natural grain, slightly deep blacks, true-to-life skin, sharp throughout with no background blur.\",\n    \"medium\": \"Photograph\",\n    \"color_palette\": [\n      \"#1A1A1A\",\n      \"#EDEDED\",\n      \"#8FA8C4\",\n      \"#4A4A4A\",\n      \"#C9C4BC\"\n    ]\n  },\n  \"compositional_deconstruction\": {\n    \"canvas\": [\n      1000,\n      1500\n    ],\n    \"background\": \"Dark grey asphalt crossed by wide white painted crosswalk stripes running horizontally across the frame, coarse aggregate texture visible, paint slightly worn. The road fills the entire frame - no horizon, no sky, no vehicles.\",\n    \"elements\": [\n      {\n        \"type\": \"subject\",\n        \"bbox\": [\n          250,\n          130,\n          760,\n          1460\n        ],\n        \"desc\": \"The person from the reference images, standing upright and still, both hands pushed into the front pockets of the jeans with elbows out, one foot slightly ahead of the other, shoulders square, chin lifted and face turned directly up to the overhead camera, mouth closed, calm direct gaze.\",\n        \"color_palette\": [\n          \"#1A1A1A\",\n          \"#8FA8C4\",\n          \"#EDEDED\"\n        ]\n      },\n      {\n        \"type\": \"obj\",\n        \"bbox\": [\n          0,\n          0,\n          1000,\n          1500\n        ],\n        \"desc\": \"Repeating white crosswalk stripes crossing the frame behind and beneath the subject, forming a strong horizontal rhythm against the dark asphalt.\",\n        \"color_palette\": [\n          \"#EDEDED\",\n          \"#4A4A4A\"\n        ]\n      }\n    ]\n  },\n  \"constraints\": {\n    \"identity\": \"The face is the priority of the frame: sharp, evenly exposed, neutral skin rendering, both eyes clearly visible and open. No sunglasses, no eyeglasses, no hat, no hood, and no hair, hand, prop, grain or shadow crossing the facial features.\",\n    \"adaptive\": \"This specification describes the photograph, not the person. Face, hair, skin and build come entirely from the reference images; the garments listed above drape to whatever build the reference shows.\",\n    \"output\": \"Exactly one person in the frame. No text, lettering, numbers, logos or graphics anywhere, including on the clothing. A single photorealistic photograph - not an illustration, render or collage.\"\n  }\n}",
     false
    ]
   },
@@ -2428,7 +2428,7 @@
    },
    "showAdvanced": null,
    "widgets_values": [
-    "Al1n4_02"
+    "MyCharacter"
    ]
   },
   {
@@ -2548,7 +2548,7 @@
     "Node name for S&R": "StringConstantMultiline"
    },
    "widgets_values": [
-    "Subject: the SAME person shown in the reference images.\n\nReference roles:\nImage 1: face and hair identity anchor - use it for the exact likeness.\nImage 2: a wider view of the same person - use it for skin tone, build and hair length.\nDo NOT copy the clothing from the references: each shot states its own Wardrobe below.\n\nUse the references ONLY for the person's identity and appearance. Do NOT copy their crop,\ncamera distance, pose or background - the Framing, Scene and Lighting lines above define\nthis shot and always override the references.\n\nPreserve exactly: face geometry, facial features, eye colour, eyebrows, hairline, hair\ntexture and colour, skin tone, distinguishing marks, and - wherever the body is visible -\nthe same body proportions. Do not change the face, skin tone or identity in any way. It\nmust be unmistakably the same person.",
+    "Subject: the SAME person shown in the reference images.\n\nReference roles:\nImage 1: face and hair identity anchor - use it for the exact likeness.\nImage 2: a wider view of the same person - use it for skin tone, build and hair length.\nDo NOT copy the clothing from the references: each shot states its own Wardrobe below.\n\nUse the references ONLY for the person's identity and appearance. Do NOT copy their crop,\ncamera distance, pose or background - the Framing, Scene and Lighting lines above define\nthis shot and always override the references.\n\nPreserve exactly: face geometry, facial features, eye colour, eyebrows, hairline, hair\ntexture and colour, skin tone, distinguishing marks, and - wherever the body is visible -\nthe same body proportions. Do not change the face, skin tone or identity in any way. It\nmust be unmistakably the same person.\n\nMatch the reference's ACTUAL build: the same weight, the same width of face, neck,\nshoulders and torso. Do not slim down, broaden, bulk up, lengthen, idealise or otherwise\nflatter the body or the face. Do not make the jaw stronger, the neck thicker or the frame\nlarger than the reference shows.",
     false
    ]
   },
@@ -2592,7 +2592,7 @@
     "Node name for S&R": "StringConstantMultiline"
    },
    "widgets_values": [
-    "Exclude: text, captions, watermarks, logos, borders, collage or split frames,\nadditional people, duplicated or malformed hands and limbs, plastic or over-smoothed skin,\nheavy beauty retouching.\nOutput: a single photorealistic photograph.",
+    "Exclude: text, captions, watermarks, logos, borders, collage or split frames,\nadditional people, duplicated or malformed hands and limbs, plastic or over-smoothed skin,\nheavy beauty retouching.\n\nContent safety - applies to EVERY shot regardless of its styling: no weapons of any kind,\nfirearms, knives or ammunition; no alcohol, bottles, cans, glasses or drinking; no\ncigarettes, cigars, vaping, smoke or drugs; no blood, injury, violence, threatening poses\nor aggressive gestures; no hand signs or gestures that could read as offensive; no nudity,\nunderwear, swimwear or revealing clothing. The subject is always a clothed adult, and any\nperiod or genre styling is expressed only through wardrobe, set and lighting.\n\nRendering - applies to EVERY shot: this must look like a real photograph taken on real\nequipment, not a digital render. Keep natural skin texture with visible pores, fine lines,\nuneven tone and small blemishes; natural facial asymmetry; stray flyaway hairs; fabric\nthat creases and hangs under its own weight; slightly uneven ambient light; gentle lens\nvignetting and a natural softening toward the corners.\nAvoid: airbrushed, waxy or plastic skin; flawless symmetry; a glowing rim-light traced\naround every edge; over-sharpened micro-contrast; HDR halos; exaggerated specular\nhighlights; showroom-clean CGI surfaces; and the glossy over-produced look of an AI image.\n\nOverall grade - applies to EVERY shot: bright, light and airy. Favour a clean whitish\nbase - lifted open shadows, soft neutral highlights, restrained saturation, plenty of\nlight and air in the frame. Even a night or interior scene stays bright and clearly lit.\nNever crush the image into heavy blacks, deep vignettes or a muddy, weighty grade.\n\nWhite balance - applies to EVERY shot: keep it NEUTRAL to very slightly cool. No yellow,\namber, golden, orange or sepia cast anywhere - not on skin, not on walls, not in the\nhighlights. Light sources read as clean white daylight or neutral studio light, never as\nwarm tungsten or candlelight. Whites stay white, skin stays its true tone.\nOutput: a single photorealistic photograph.",
     false
    ]
   },
@@ -3675,7 +3675,7 @@
    "type": "ReplicateOpenAIGPTImage2",
    "flags": {},
    "order": 0,
-   "title": "GPT-Image-2 - T-POSE",
+   "title": "GPT-Image-2 - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -3861,7 +3861,8 @@
     0,
     1,
     1,
-    0
+    0,
+    "first N in order"
    ]
   },
   {
@@ -3903,7 +3904,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "t-pose_image_001"
+    "street-crosswalk_image_001"
    ]
   },
   {
@@ -3998,7 +3999,7 @@
    "type": "Image Save",
    "flags": {},
    "order": 0,
-   "title": "SAVE - T-POSE",
+   "title": "SAVE - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -4136,7 +4137,7 @@
     "Node name for S&R": "PrimitiveString"
    },
    "widgets_values": [
-    "full body, standing in a frontal A-pose, arms slightly away from the body, neutral expression, wearing a plain fitted t-shirt and straight jeans, barefoot, plain white studio background"
+    "full body from a high angle, standing on a painted crosswalk with both hands in the jeans pockets, calm direct expression looking up at the camera, wearing an oversized black t-shirt, baggy light-wash jeans and off-white sneakers, silver chain necklace, dark asphalt with white painted stripes, flat overcast daylight"
    ]
   },
   {
@@ -4230,7 +4231,7 @@
    "type": "ArkTextFileSave",
    "flags": {},
    "order": 0,
-   "title": "CAPTION - T-POSE",
+   "title": "CAPTION - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
@@ -4332,7 +4333,7 @@
    "type": "PreviewImage",
    "flags": {},
    "order": 0,
-   "title": "PREVIEW - T-POSE",
+   "title": "PREVIEW - STREET-CROSSWALK",
    "inputs": [
     {
      "dir": null,
