@@ -1,5 +1,5 @@
 [project]
-name = "comfyui_arkennemasis"
+name = "comfyui-arkennemasis"
 description = "One pack, many AI use cases: OpenAI GPT-5 text/vision and gpt-image-2 through Replicate, the same image model through your ChatGPT (Codex CLI) login with no API key, plus utility nodes for batch generation - shared image settings, run-N-of-M shot selection that never bills skipped branches, auto-numbered run folders, caption sidecars and reusable system prompts."
 version = "1.2.0"
 license = { file = "LICENSE" }

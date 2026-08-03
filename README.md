@@ -15,6 +15,7 @@ so nothing breaks anything else.
 | arkennemasis/**Utility** | arkennemasis Codex Login Status | which ChatGPT account this machine will use, and when its token expires | `STRING` |
 | arkennemasis/**Utility** | arkennemasis System Instructions | reusable system prompt for any LLM node | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Shot Selector (run N of M) | run only N of M expensive branches — the **first N in order**, or a random sample from a seed. Unselected branches **never execute**, so a paid API node upstream is never called | `IMAGE` |
+| arkennemasis/**Utility** | arkennemasis Subject Line (gender + notes) | one `Subject: …` line from a gender choice plus free-text notes, wired into every prompt — so the prompts themselves stay gender-neutral and the subject is stated once | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Text File Save (caption sidecar) | writes `<folder>/<filename>.txt` next to a saved image — the image/caption pairing training toolkits expect | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Run Folder (auto-numbered) | `<parent_dir>/<folder_name>_001`, `_002`, … — one fresh output folder per run | `STRING`, `INT` |
 
@@ -281,6 +282,7 @@ comfyui-arkennemasis/
 │   ├── throttle.py             serial_lock(), concurrency_gate(), with_retry()
 │   ├── system_instructions.py  the System Instructions node
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
+│   ├── subject_line.py         the Subject Line node (gender stated once, not per prompt)
 │   ├── text_file_save.py       the Text File Save node (caption sidecars)
 │   └── run_folder.py           the Run Folder node (auto-numbered per run)
 │
