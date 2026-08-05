@@ -22,6 +22,13 @@ does internally.
 
 import os
 
+# LOCKED. Hailuo MiniMax H3 generates a frame COUNT at 24 fps — the length maths, the
+# audio it produces and the subtitle timings all assume it. Muxing at anything else
+# plays the picture at the wrong speed against its own soundtrack and desyncs the lips.
+# Deliberately not a widget: a value that must never change should not be a box that can
+# be emptied.
+FPS = 24.0
+
 
 def _first(result):
     """Unwrap a v3 io.NodeOutput (or a plain tuple) to its first value."""
@@ -65,14 +72,16 @@ class ArkHailuoScene:
                 "width": ("INT", {"default": 1280, "min": 32, "max": 16384, "step": 32}),
                 "height": ("INT", {"default": 736, "min": 32, "max": 16384, "step": 32}),
                 "length": ("INT", {
-                    "default": 243, "min": 5, "max": 2048,
-                    "tooltip": "Frames for THIS scene. Wire the per-scene length so "
-                               "each clip can run its own duration.",
+                    "default": 243, "min": 5, "max": 2048, "forceInput": True,
+                    "tooltip": "Frames for THIS scene, wired from Scene List so each "
+                               "clip runs its own duration. forceInput on purpose: a "
+                               "widget carrying a link occupies a widgets_values slot "
+                               "and any disagreement about slot counts shifts every "
+                               "later value.",
                 }),
                 "seed": ("INT", {"default": 1000, "min": 0, "max": 0xffffffffffffffff}),
-                "fps": ("FLOAT", {"default": 24.0, "min": 1.0, "max": 120.0}),
                 "filename_prefix": ("STRING", {
-                    "default": "R40_local/scene",
+                    "default": "R40_local/scene", "forceInput": True,
                     "tooltip": "Relative to ComfyUI's output dir. Each call appends the "
                                "next counter, so clips land in scene order.",
                 }),
@@ -80,7 +89,8 @@ class ArkHailuoScene:
         }
 
     def run(self, model, clip, vae, audio_vae, sampler, sigmas, image, prompt,
-            width, height, length, seed, fps, filename_prefix):
+            width, height, length, seed, filename_prefix):
+        fps = FPS
         import torch
         import folder_paths
         import comfy.model_management as mm

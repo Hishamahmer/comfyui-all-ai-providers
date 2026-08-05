@@ -23,6 +23,11 @@ import json
 
 WORDS_PER_SECOND = 2.3          # unhurried narration; 2.0-2.6 is the usual band
 
+# LOCKED, and must match ArkHailuoScene.FPS. Hailuo works in frames at 24 fps; this is
+# what converts a scene's requested seconds into a frame count. Not a widget, because a
+# value that must never change should not be a box that can be emptied.
+FPS = 24.0
+
 
 def snap_length(seconds, fps=24):
     """Frames on MiniMax H3's 17k+5 grid. The node snaps internally too, but doing it
@@ -61,7 +66,6 @@ class ArkSceneList:
                     "tooltip": "Ceiling. MiniMax H3 is trained to about 15s (362 "
                                "frames); beyond that quality falls off.",
                 }),
-                "fps": ("FLOAT", {"default": 24.0, "min": 1.0, "max": 60.0}),
                 "limit": ("INT", {
                     "default": 0, "min": 0, "max": 200,
                     "tooltip": "Render only the first N scenes. 0 = all of them. This "
@@ -72,7 +76,8 @@ class ArkSceneList:
             },
         }
 
-    def run(self, scenes_json, min_seconds=10.0, max_seconds=15.0, fps=24.0, limit=0):
+    def run(self, scenes_json, min_seconds=10.0, max_seconds=15.0, limit=0):
+        fps = FPS
         raw = str(scenes_json).strip()
         try:
             scenes = json.loads(raw) if raw else []

@@ -127,9 +127,14 @@ class ArkCodexLLM:
                     "tooltip": "Raw model id, used INSTEAD of the dropdown when not "
                                "blank. For models newer than this node.",
                 }),
-                "reasoning_effort": ([DEFAULT, "low", "medium", "high"], {
-                    "tooltip": "How hard the model thinks before answering. 'high' for "
-                               "planning/structured output; 'default' omits the field.",
+                "reasoning_effort": ([DEFAULT, "low", "medium", "high", "xhigh",
+                                     "ultra", "max"], {
+                    "tooltip": "How hard the model thinks before answering. Levels above "
+                               "'high' are what the Codex CLI itself uses on this "
+                               "machine - 'ultra' is its workhorse, 'xhigh' and 'max' "
+                               "are rarer. Use 'ultra' for story planning, where one "
+                               "call decides the quality of everything downstream. "
+                               "'default' omits the field entirely.",
                 }),
                 "json_only": ("BOOLEAN", {
                     "default": False,

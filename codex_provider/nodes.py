@@ -267,6 +267,16 @@ class ArkCodexImageGen:
                                "arkennemasis API calls may be in flight together. "
                                "0 = no cap. 2 is a safe default for a 24-shot batch.",
                 }),
+                "on_failure": (["fail the run", "use the reference image"], {
+                    "tooltip": "What to do when the backend definitively returns no "
+                               "image after every retry - usually a moderation refusal. "
+                               "'fail the run' is right for a single image. Inside a "
+                               "multi-scene loop it is catastrophic: one refusal on the "
+                               "23rd image threw away 22 finished images and 36 minutes "
+                               "of work. 'use the reference image' substitutes the input "
+                               "image for that scene so the run completes, and says so "
+                               "loudly in the log so you can re-render just that scene.",
+                }),
                 "settings": (SETTINGS_TYPE, {
                     "tooltip": "Optional: the shared 'Image Gen Settings' node, so this "
                                "and the Replicate nodes follow one place. Codex uses "
@@ -286,7 +296,7 @@ class ArkCodexImageGen:
                   aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   codex_home="", allow_refresh=True, timeout_seconds=300,
                   force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None,
-                  max_concurrent=2):
+                  max_concurrent=2, on_failure="fail the run"):
         import asyncio
 
         if settings:                       # a wired Settings node overrides the widgets
@@ -301,7 +311,7 @@ class ArkCodexImageGen:
             return await asyncio.to_thread(
                 self._blocking, prompt, image_1, image_2, image_3, image_4,
                 aspect_ratio, quality, background, codex_home, allow_refresh,
-                timeout_seconds,
+                timeout_seconds, on_failure,
             )
 
         # 'all at once' still respects max_concurrent; 'one at a time' is always 1.
@@ -311,7 +321,8 @@ class ArkCodexImageGen:
             return await go()
 
     def _blocking(self, prompt, image_1, image_2, image_3, image_4, aspect_ratio,
-                  quality, background, codex_home, allow_refresh, timeout_seconds):
+                  quality, background, codex_home, allow_refresh, timeout_seconds,
+                  on_failure="fail the run"):
         import httpx
 
         token = codex_auth.get_access_token(codex_home, allow_refresh=allow_refresh)
@@ -399,9 +410,18 @@ class ArkCodexImageGen:
         print("[arkennemasis] %s via Codex login as %s" % (IMAGE_MODEL, account))
         image_b64 = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))
         if not image_b64:
+            # Definitive, not transient: with_retry has already exhausted its attempts.
+            # Raising here inside a loop discards every scene rendered so far, so allow
+            # substituting the reference rather than losing the whole run.
+            if on_failure == "use the reference image" and image_1 is not None:
+                print("[arkennemasis] *** NO IMAGE RETURNED for this scene (likely a "
+                      "moderation refusal). Substituting the REFERENCE IMAGE so the run "
+                      "survives - re-render this scene on its own afterwards. ***")
+                return (image_1, account)
             raise RuntimeError(
                 "Codex returned no image. The account may not have the image tool, or "
-                "the prompt was refused by moderation.")
+                "the prompt was refused by moderation. Set on_failure to 'use the "
+                "reference image' to keep a multi-scene run alive.")
         return (bytes_list_to_image_tensor(output_to_bytes_list(image_b64)), account)
 
 
