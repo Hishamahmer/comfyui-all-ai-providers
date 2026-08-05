@@ -1,11 +1,11 @@
 """The idea form — one labelled box per field, assembled into a story-agent prompt.
 
-This is the node equivalent of the spreadsheet row an n8n storyboard pipeline reads:
+This is the node equivalent of the spreadsheet row a storyboard pipeline reads:
 one column per creative decision, filled in by a person, then handed to the LLM. Putting
 them in ONE node keeps the canvas readable while still giving each field its own box, so
 nobody has to edit a pre-formatted blob of text and risk breaking the template.
 
-Fields mirror the R40 sheet: title, caption, story_idea, channel_description, character,
+The fields: title, caption, story_idea, channel_description, character,
 visual_style, colors, special_request, scenes. The three sheet columns that are NOT here
 live where they actually belong — `image_reference` is the Load Image node,
 `background_music` is the assembler's music_path, and `aspect_ratio` is the video

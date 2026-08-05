@@ -3,7 +3,7 @@
 The aggregate end of the loop. ``ArkSceneList`` fans the plan out so the scene chain
 runs once per scene; this node declares ``INPUT_IS_LIST`` so ComfyUI hands it the WHOLE
 collection of finished clips in a single call, in iteration order, however many there
-are. That is the n8n Aggregate step, and it is what lets one canvas serve 5 or 50 scenes.
+are. That is what lets one canvas serve 5 scenes or 50.
 
 Because INPUT_IS_LIST makes *every* input arrive as a list, the scalar settings come in
 wrapped too and are unwrapped with `_one`.
@@ -17,6 +17,10 @@ levelling the finished cut sounds nearly mute.
 Subtitles are timed from the SAME plan that generated the video and each clip's real
 duration, so cue N starts exactly where clips 1..N-1 ended. Strictly better than
 transcribing the finished audio and hoping the words line up.
+
+Wire a ``Caption Style`` node into `caption_style` to choose the font and one of the
+five subtitle styles; the cues then go out as ASS instead of SRT. Leave it unconnected
+and you get the plain white captions this node has always burned.
 """
 
 import json
@@ -24,6 +28,8 @@ import os
 import shutil
 import subprocess
 import tempfile
+
+from . import ass_captions as ass
 
 
 def _one(value, default=None):
@@ -45,12 +51,49 @@ def find_ffmpeg():
         return None
 
 
+def find_ffprobe():
+    exe = shutil.which("ffprobe")
+    if exe:
+        return exe
+    ffmpeg = find_ffmpeg()          # ffprobe normally sits in the same bin directory
+    if ffmpeg:
+        guess = os.path.join(os.path.dirname(ffmpeg),
+                             "ffprobe.exe" if os.name == "nt" else "ffprobe")
+        if os.path.exists(guess):
+            return guess
+    return None
+
+
+def probe_size(path, default=(1280, 720)):
+    """(width, height) of a video, for PlayResX/Y and the auto font size."""
+    probe = find_ffprobe()
+    if probe:
+        try:
+            out = subprocess.run(
+                [probe, "-v", "error", "-select_streams", "v:0", "-show_entries",
+                 "stream=width,height", "-of", "csv=p=0:s=x", path],
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=30)
+            w, h = out.stdout.decode().strip().split("x")[:2]
+            return int(w), int(h)
+        except Exception:
+            pass
+    print("[arkennemasis] could not probe %s — assuming %dx%d for subtitle sizing"
+          % (os.path.basename(path), default[0], default[1]))
+    return default
+
+
 # The subtitles filter parses its own argument string, so a Windows drive colon reads as
 # an option separator: ffmpeg took `C:/…/subs.srt` as filename `C` plus an option
 # `original_size=/…/subs.srt` and refused it. Escaping the colon is fragile across ffmpeg
 # versions and shells, so instead we run ffmpeg WITH ITS CWD SET to the work directory
 # and name the file bare — no colon, no separators, nothing to escape.
 SUBS_NAME = "subs.srt"
+SUBS_ASS = "subs.ass"
+
+# Speech rarely fills a generated clip end to end, so the estimated word timings are
+# spread across an inset window rather than the whole shot. Measured against MiniMax H3
+# output: roughly a quarter-second of lead-in and a longer tail as the shot holds.
+LEAD_IN, TAIL = 0.25, 0.35
 
 
 def _srt_time(seconds):
@@ -133,7 +176,16 @@ class ArkVideoAssemble:
                                "finished cut sounds nearly mute.",
                 }),
                 "burn_subtitles": ("BOOLEAN", {"default": True}),
-                "subtitle_size": ("INT", {"default": 24, "min": 8, "max": 200}),
+                "caption_style": ("ARK_CAPTION_STYLE", {
+                    "tooltip": "Wire a Caption Style node here to choose the font and "
+                               "one of the five subtitle styles. Leave it unconnected "
+                               "for plain white captions at subtitle_size.",
+                }),
+                "subtitle_size": ("INT", {
+                    "default": 24, "min": 8, "max": 200,
+                    "tooltip": "Only used when caption_style is NOT connected — the "
+                               "style node carries its own font size.",
+                }),
                 "crf": ("INT", {
                     "default": 18, "min": 0, "max": 51,
                     "tooltip": "x264 quality; lower is better. 18 is visually lossless.",
@@ -147,7 +199,7 @@ class ArkVideoAssemble:
 
     def run(self, videos, output_dir, filename, scenes_json=None, music_path=None,
             music_volume=None, normalize_speech=None, burn_subtitles=None,
-            subtitle_size=None, crf=None):
+            caption_style=None, subtitle_size=None, crf=None):
         ffmpeg = find_ffmpeg()
         if not ffmpeg:
             raise RuntimeError(
@@ -167,6 +219,11 @@ class ArkVideoAssemble:
         level = _one(normalize_speech, True)
         subs_on = _one(burn_subtitles, True)
         subs_size = int(_one(subtitle_size, 24))
+        style = _one(caption_style, None)
+        if style is not None and not style.get("enabled", True):
+            # The Caption Style node's own off switch. Kept separate from
+            # `burn_subtitles` so either one can silence captions on its own.
+            subs_on, style = False, None
         quality = int(_one(crf, 18))
 
         folder = str(out_dir).strip()
@@ -221,7 +278,11 @@ class ArkVideoAssemble:
                   "-c:v", "libx264", "-crf", str(quality), "-preset", "medium",
                   "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", joined])
 
-            srt = self._write_srt(work, plan, durations) if (subs_on and plan) else None
+            subs = None
+            if subs_on and plan:
+                subs = (self._write_ass(work, plan, durations, style,
+                                        probe_size(joined))
+                        if style else self._write_srt(work, plan, durations))
 
             final = os.path.join(folder, "%s.mp4" % name)
             cmd = [ffmpeg, "-y", "-i", joined]
@@ -232,16 +293,22 @@ class ArkVideoAssemble:
                     "[1:a]volume=%s[bed];"
                     "[0:a][bed]amix=inputs=2:duration=first:dropout_transition=0[aout]"
                     % volume)
-                maps = ["-map", "0:v" if not srt else "[vout]", "-map", "[aout]"]
+                maps = ["-map", "0:v" if not subs else "[vout]", "-map", "[aout]"]
             elif music:
                 print("[arkennemasis] music file not found, skipping bed: %s" % music)
 
-            if srt:
+            if subs:
                 # Bare filename only — see SUBS_NAME above. ffmpeg runs with cwd=work.
-                filters.append(
-                    "[0:v]subtitles=%s:force_style='FontSize=%d,PrimaryColour=&Hffffff,"
-                    "OutlineColour=&H80000000,BorderStyle=3,Outline=1,Shadow=0,"
-                    "Alignment=2,MarginV=28'[vout]" % (SUBS_NAME, subs_size))
+                if style:
+                    # The ASS carries the whole look in its own [V4+ Styles] block, so
+                    # force_style must NOT be set here — it would override the lot.
+                    spec = "subtitles=%s%s" % (SUBS_ASS, ass.fontsdir_arg(style))
+                else:
+                    spec = ("subtitles=%s:force_style='FontSize=%d,"
+                            "PrimaryColour=&Hffffff,OutlineColour=&H80000000,"
+                            "BorderStyle=3,Outline=1,Shadow=0,Alignment=2,MarginV=28'"
+                            % (SUBS_NAME, subs_size))
+                filters.append("[0:v]%s[vout]" % spec)
                 if not maps:
                     maps = ["-map", "[vout]", "-map", "0:a?"]
 
@@ -277,7 +344,8 @@ class ArkVideoAssemble:
             pass
         return result
 
-    def _write_srt(self, work, scenes_json, durations):
+    @staticmethod
+    def _scenes(scenes_json):
         try:
             scenes = json.loads(scenes_json)
         except ValueError:
@@ -285,7 +353,43 @@ class ArkVideoAssemble:
             return None
         if isinstance(scenes, dict):
             scenes = scenes.get("scenes") or scenes.get("output") or []
-        if not isinstance(scenes, list) or not scenes:
+        return scenes if isinstance(scenes, list) and scenes else None
+
+    def _write_ass(self, work, scenes_json, durations, style, resolution):
+        """Subtitles as ASS, so the Caption Style node's choices actually reach libass."""
+        scenes = self._scenes(scenes_json)
+        if not scenes:
+            return None
+
+        needs_words = style.get("style") in ass.NEEDS_WORD_TIMING
+        cues, clock = [], 0.0
+        for scene, duration in zip(scenes, durations):
+            text = scene.get("voiceText", "") if isinstance(scene, dict) else ""
+            if text and duration > 0:
+                cue = {"text": text, "start": clock, "end": clock + duration}
+                if needs_words:
+                    # Inset the speech window, but never let it collapse on a short clip.
+                    lead = min(LEAD_IN, duration * 0.15)
+                    tail = min(TAIL, duration * 0.2)
+                    cue["words"] = ass.estimate_words(text, clock + lead,
+                                                      clock + duration - tail)
+                cues.append(cue)
+            clock += duration
+        if not cues:
+            return None
+
+        path = os.path.join(work, SUBS_ASS)
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(ass.build(cues, style, resolution))
+        print("[arkennemasis] %d subtitle cues as ASS — %s in %s at %dx%d%s"
+              % (len(cues), style.get("style"), style.get("font"),
+                 resolution[0], resolution[1],
+                 ", word timings estimated from the script" if needs_words else ""))
+        return path
+
+    def _write_srt(self, work, scenes_json, durations):
+        scenes = self._scenes(scenes_json)
+        if not scenes:
             return None
 
         lines, clock, cue = [], 0.0, 1

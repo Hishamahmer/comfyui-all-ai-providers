@@ -81,7 +81,7 @@ class ArkHailuoScene:
                 }),
                 "seed": ("INT", {"default": 1000, "min": 0, "max": 0xffffffffffffffff}),
                 "filename_prefix": ("STRING", {
-                    "default": "R40_local/scene", "forceInput": True,
+                    "default": "nemasis/scene", "forceInput": True,
                     "tooltip": "Relative to ComfyUI's output dir. Each call appends the "
                                "next counter, so clips land in scene order.",
                 }),

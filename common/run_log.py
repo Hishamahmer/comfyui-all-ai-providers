@@ -1,6 +1,6 @@
 """A local run log — the state layer, without a spreadsheet.
 
-Pipelines ported from n8n usually carry a Google Sheet as their memory: one row per
+Storyboard pipelines often carry a spreadsheet as their memory: one row per
 scene, columns filled in as each stage completes, and a status column that says what
 still needs doing. That works, but it puts an OAuth login and a network round trip in
 the middle of a local render, and it leaks the whole project into someone's Drive.

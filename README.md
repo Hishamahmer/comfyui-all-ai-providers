@@ -52,6 +52,34 @@ needed; every generation is an API call.
 | arkennemasis/**Utility** | arkennemasis Subject Line (gender + notes) | one `Subject: …` line from a gender choice plus free-text notes, wired into every prompt — so the prompts themselves stay gender-neutral and the subject is stated once | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Text File Save (caption sidecar) | writes `<folder>/<filename>.txt` next to a saved image — the image/caption pairing training toolkits expect | `STRING` |
 | arkennemasis/**Utility** | arkennemasis Run Folder (auto-numbered) | `<parent_dir>/<folder_name>_001`, `_002`, … — one fresh output folder per run | `STRING`, `INT` |
+| arkennemasis/**Utility** | arkennemasis Story Brief / Run Log / Contact Sheet | the brief form, a JSON run log that needs no spreadsheet, and every still of a run on one sheet | `STRING`, `IMAGE` |
+| arkennemasis/**Video** | arkennemasis Scene List (the loop) | fans a scene plan out so one chain runs once per scene — 5 or 50, same canvas | lists |
+| arkennemasis/**Video** | arkennemasis Hailuo Scene | one scene start to finish: condition → sample → decode video **and** audio → mux → save → free | `VIDEO` |
+| arkennemasis/**Video** | arkennemasis Caption Style (font + subtitle style) | one of five subtitle styles, any installed font, colours, outline, box, size, 3×3 position — and an on/off switch | `ARK_CAPTION_STYLE` |
+| arkennemasis/**Video** | arkennemasis Video Assemble (clips + music + subs) | joins every clip, levels each one's speech, ducks a music bed, burns the captions | `STRING`, `VIDEO` |
+
+### Captions
+
+**Caption Style** feeds **Video Assemble**. Five styles:
+
+| Style | On screen |
+|---|---|
+| `classic` | the whole line at once |
+| `karaoke` | the fill sweeps across the line as it is spoken |
+| `highlight` | the spoken word changes colour |
+| `underline` | the spoken word is underlined |
+| `word_by_word` | one word at a time, nothing else |
+
+Everything but `classic` marks individual words, so it needs to know when each word is
+spoken. A video model gives no word timestamps, so they are **estimated** from the script
+and the clip's real duration, weighted by word length and by trailing punctuation. That
+tracks speech closely; it is not frame-accurate, and it drifts if the model ad-libs.
+
+Fonts come from [`fonts/`](fonts/) (bundled, listed first) and from the machine's own
+installed fonts. See that folder's README for what ships and how to add more.
+
+Toggle `enabled` off on the node for a video with no subtitles at all — every other
+setting stays put.
 
 ## Install
 
@@ -318,7 +346,12 @@ comfyui-arkennemasis/
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
 │   ├── subject_line.py         the Subject Line node (gender stated once, not per prompt)
 │   ├── text_file_save.py       the Text File Save node (caption sidecars)
-│   └── run_folder.py           the Run Folder node (auto-numbered per run)
+│   ├── run_folder.py           the Run Folder node (auto-numbered per run)
+│   ├── scene_list.py           the loop: OUTPUT_IS_LIST fans a scene plan out
+│   ├── hailuo_scene.py         one scene start to finish, freed before the next
+│   ├── ass_captions.py         font discovery + the five subtitle styles as ASS
+│   ├── caption_style.py        the Caption Style node
+│   └── video_assemble.py       the aggregate end: join, level, duck, burn
 │
 ├── codex_provider/          ChatGPT/Codex OAuth — no API key
 │   ├── auth.py                 reads `codex login` creds, refreshes + persists them
@@ -327,6 +360,8 @@ comfyui-arkennemasis/
 ├── replicate_provider/      ONE PROVIDER = ONE FOLDER
 │   ├── nodes.py                Replicate LLM + Image Gen nodes
 │   └── settings.py             the shared Image Gen Settings node
+│
+├── fonts/                   CAPTION FONTS — 13 OFL/Apache families, see fonts/README.md
 │
 ├── example workflows/       canvas .json exports demonstrating the nodes
 │

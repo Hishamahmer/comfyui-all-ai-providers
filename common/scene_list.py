@@ -6,7 +6,7 @@ and any scalar input alongside it is reused each time (``execution.py`` slices i
 with ``v[i if len(v) > i else -1]``). One Codex node, one Hailuo chain and one save node
 therefore cover N scenes without a single duplicated branch.
 
-That is the same shape as the n8n original — Split Out, a sub-workflow per item, then
+Split the plan, run the chain once per item, then
 Aggregate — except the iteration is native instead of hand-copied. The scene count comes
 from the plan at run time, so 5, 20 or 50 scenes all use the same canvas.
 

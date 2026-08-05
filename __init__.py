@@ -1,6 +1,6 @@
 """arkennemasis — ComfyUI nodes for many AI use cases, under one brand.
 
-Menu layout:  arkennemasis/LLM  ·  arkennemasis/Image Gen  ·  arkennemasis/Utility
+Menu layout:  arkennemasis/LLM  ·  /Image Gen  ·  /Utility  ·  /Video
 
 Currently bundled:
   * Replicate  — OpenAI GPT-5 LLM (text + vision) and gpt-image-2, via an API key.
@@ -8,6 +8,8 @@ Currently bundled:
                  Requires a paid ChatGPT plan and `codex login` already run in a terminal.
   * Utility    — System Instructions, Shot Selector, Run Folder, Text File Save,
                  Subject Line, Codex Login Status, and the shared Image Gen Settings.
+  * Video      — Scene List (the loop), Hailuo Scene, Caption Style and Video Assemble:
+                 a scene plan in, one narrated and subtitled video out.
 More providers/use cases (Ollama, Fal, Excalidraw, ...) drop in as sibling packages.
 
 Each module is loaded independently, so a missing optional dependency only disables
@@ -104,6 +106,13 @@ def _scene_list():
     return c, d
 
 
+def _caption_style():
+    from .common.caption_style import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _video_assemble():
     from .common.video_assemble import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -141,6 +150,7 @@ _load("contact sheet", _contact_sheet)
 _load("scene split", _scene_split)
 _load("scene list", _scene_list)
 _load("hailuo scene", _hailuo_scene)
+_load("caption style", _caption_style)
 _load("video assemble", _video_assemble)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)

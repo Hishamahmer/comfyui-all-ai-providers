@@ -3,7 +3,7 @@
 This is the node that lets a whole storyboard pipeline live in ONE ComfyUI workflow.
 
 An LLM planning step returns a JSON array — one object per scene, each carrying the
-prompts for that scene. n8n handles the fan-out with a `Split Out` node feeding a
+prompts for that scene. A no-code tool would fan out with a split node feeding a
 sub-workflow that runs once per item. ComfyUI has no loop and no per-item execution, so
 the equivalent is N copies of the scene branch, each with one of these pulling out its
 own index. Wire the SAME `scenes_json` into every copy and give each a different
@@ -15,7 +15,7 @@ rest dark. Without that, asking for fewer scenes than the canvas has slots would
 whole prompt — which is exactly the case when you follow the advice to try 1-2 scenes
 before committing to a long render.
 
-Field names follow the R40 storyboard schema
+Field names follow the storyboard schema
 (``scene`` / ``voiceText`` / ``image_prompt`` / ``video_prompt``) but each is
 configurable, so any array-of-objects plan works.
 """
