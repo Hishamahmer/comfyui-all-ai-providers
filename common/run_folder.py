@@ -38,8 +38,8 @@ def next_run_folder(parent_dir, folder_name, padding=3, start=1):
 class ArkRunFolder:
     CATEGORY = "arkennemasis/Utility"
     FUNCTION = "run"
-    RETURN_TYPES = ("STRING", "INT")
-    RETURN_NAMES = ("folder_path", "run_number")
+    RETURN_TYPES = ("STRING", "INT", "STRING")
+    RETURN_NAMES = ("folder_path", "run_number", "save_prefix")
     DESCRIPTION = ("Resolve a fresh numbered output folder for this run: "
                    "<parent_dir>/<folder_name>_001, _002, ... Wire folder_path into every "
                    "save node so all of them write into the same run folder.")
@@ -87,8 +87,23 @@ class ArkRunFolder:
         path, number = next_run_folder(parent, folder_name, padding)
         if create_now:
             os.makedirs(path, exist_ok=True)
+
+        # `save_prefix` is the same folder expressed the way SaveImage/SaveVideo want it:
+        # relative to ComfyUI's output dir, forward slashes. Those nodes build their own
+        # path from filename_prefix and mangle an absolute one, so wiring folder_path
+        # into them does not work — this output is what they take.
+        # (Appending an OUTPUT is safe for saved workflows; appending a WIDGET is not.)
+        prefix = ""
+        try:
+            import folder_paths
+            rel = os.path.relpath(path, folder_paths.get_output_directory())
+            if not rel.startswith(".."):
+                prefix = rel.replace("\\", "/")
+        except Exception:
+            pass
+
         print("[arkennemasis] run folder: %s" % path)
-        return (path, number)
+        return (path, number, prefix)
 
 
 NODE_CLASS_MAPPINGS = {

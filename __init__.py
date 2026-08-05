@@ -62,8 +62,64 @@ def _run_folder():
     return c, d
 
 
+def _run_log():
+    from .common.run_log import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _contact_sheet():
+    from .common.contact_sheet import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _story_brief():
+    from .common.story_brief import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _scene_split():
+    from .common.scene_split import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _hailuo_scene():
+    from .common.hailuo_scene import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _scene_list():
+    from .common.scene_list import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _video_assemble():
+    from .common.video_assemble import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _codex():
     from .codex_provider.nodes import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _codex_llm():
+    from .codex_provider.llm import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
     )
     return c, d
@@ -79,10 +135,18 @@ def _replicate():
 _load("common nodes", _common)
 _load("shot selector", _shot_selector)
 _load("run folder", _run_folder)
+_load("run log", _run_log)
+_load("story brief", _story_brief)
+_load("contact sheet", _contact_sheet)
+_load("scene split", _scene_split)
+_load("scene list", _scene_list)
+_load("hailuo scene", _hailuo_scene)
+_load("video assemble", _video_assemble)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
+_load("codex llm", _codex_llm)
 # Add future providers here, e.g.:
 # _load("ollama provider", _ollama)
 # _load("fal provider", _fal)

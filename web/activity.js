@@ -16,6 +16,7 @@ const ANIMATED_NODES = new Set([
   "ReplicateOpenAILLM",
   "ReplicateOpenAIGPTImage2",
   "ArkCodexImageGen",
+  "ArkCodexLLM",
 ]);
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
