@@ -106,6 +106,13 @@ def _scene_list():
     return c, d
 
 
+def _purge_vram():
+    from .common.purge_vram import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _caption_style():
     from .common.caption_style import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -150,6 +157,7 @@ _load("contact sheet", _contact_sheet)
 _load("scene split", _scene_split)
 _load("scene list", _scene_list)
 _load("hailuo scene", _hailuo_scene)
+_load("purge vram", _purge_vram)
 _load("caption style", _caption_style)
 _load("video assemble", _video_assemble)
 _load("subject line", _subject_line)

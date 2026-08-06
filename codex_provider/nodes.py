@@ -14,6 +14,7 @@ readable error rather than a raw HTTP dump.
 """
 
 import json
+import time
 
 from ..common.image_utils import (
     collect_images_to_data_uris,
@@ -25,6 +26,7 @@ from ..common.throttle import (
 )
 from ..replicate_provider.settings import SETTINGS_TYPE
 from . import auth as codex_auth
+from . import stream as codex_stream
 
 DEFAULT = "default"
 RUN_ONE_AT_A_TIME = "one at a time"
@@ -361,15 +363,19 @@ class ArkCodexImageGen:
             "stream": True,
         }
 
-        read = float(timeout_seconds) if timeout_seconds else None
-        timeout = httpx.Timeout(read, connect=30.0, read=read, write=30.0, pool=30.0)
+        # Idle budget, not total — see codex_provider/stream.py. The old setting held a
+        # dead connection for the whole timeout_seconds.
+        timeout = codex_stream.timeouts()
         headers = codex_auth.request_headers(token)
+        attempt = {"n": 0}
 
         def call():
-            final_b64 = partial_b64 = None
-            finished = False
+            attempt["n"] += 1
+            stats = codex_stream.StreamStats("codex-image attempt %d" % attempt["n"])
+            images = {}
             with httpx.Client(timeout=timeout, headers=headers) as http:
                 with http.stream("POST", BASE_URL + "/responses", json=payload) as resp:
+                    stats.headers_at = time.time()
                     if resp.status_code >= 400:
                         resp.read()
                         body = resp.text
@@ -385,27 +391,37 @@ class ArkCodexImageGen:
                         # 429/5xx are "try again"; 4xx is our request being wrong.
                         err.retryable = resp.status_code in (429, 500, 502, 503, 504)
                         raise err
-                    for event in _iter_sse(resp):
-                        if isinstance(event, dict) and event.get("type") in _TERMINAL_EVENTS:
-                            finished = True
+                    def collect(event):
                         found, is_final = _find_image_b64(event)
                         if found:
                             if is_final:
-                                final_b64 = found
+                                images["final"] = found
                             else:
-                                partial_b64 = found
+                                images["partial"] = found
+
+                    try:
+                        codex_stream.consume(
+                            _iter_sse(resp), stats, collect,
+                            should_stop=codex_stream.interrupted)
+                    except Exception:
+                        print("[arkennemasis] %s" % stats.line("FAILED"))
+                        raise
+                    # Stops at the terminal event instead of reading to EOF.
+
+            final_b64 = images.get("final")
+            print("[arkennemasis] %s" % stats.line(
+                "ok" if final_b64 else "no final image"))
             if final_b64:
                 return final_b64
-            # A stream that stops early usually raises inside iter_lines (that is the
-            # RemoteProtocolError case), but it can also just end. Both retry.
-            if not finished:
+            # A partial_images preview is a HALF-RENDERED frame. It used to be returned
+            # as the result, which is how a low-detail render reached the video stage
+            # looking like a finished still. Retry for the real one instead.
+            if images.get("partial"):
                 raise CodexStreamTruncated(
-                    "Codex closed the stream before the image finished (no completion "
-                    "event).")
-            if partial_b64:
-                print("[arkennemasis] warning: only a partial_images preview came back; "
-                      "using it, quality may be lower than requested")
-            return partial_b64
+                    "Codex completed the response but only sent a partial_images "
+                    "preview, never the final image. Retrying.")
+            raise CodexStreamTruncated(
+                "Codex completed the response without sending an image.")
 
         print("[arkennemasis] %s via Codex login as %s" % (IMAGE_MODEL, account))
         image_b64 = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))

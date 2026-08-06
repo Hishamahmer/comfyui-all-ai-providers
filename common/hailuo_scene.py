@@ -79,7 +79,20 @@ class ArkHailuoScene:
                                "and any disagreement about slot counts shifts every "
                                "later value.",
                 }),
-                "seed": ("INT", {"default": 1000, "min": 0, "max": 0xffffffffffffffff}),
+                "seed": ("INT", {
+                    "default": 1000, "min": 0, "max": 0xffffffffffffffff,
+                    "tooltip": "Base seed. It is mixed with THIS scene's prompt, so "
+                               "every scene of a run samples differently instead of all "
+                               "of them sharing one noise pattern.",
+                }),
+                "reseed_each_run": ("BOOLEAN", {
+                    "default": True,
+                    "tooltip": "Draw fresh noise on every run. With this off, re-running "
+                               "an unchanged scene reproduces the SAME clip down to the "
+                               "audio - including the same garbled speech, which looks "
+                               "like the scene is locked. Turn it off only when you want "
+                               "to reproduce a specific take exactly.",
+                }),
                 "filename_prefix": ("STRING", {
                     "default": "nemasis/scene", "forceInput": True,
                     "tooltip": "Relative to ComfyUI's output dir. Each call appends the "
@@ -89,7 +102,8 @@ class ArkHailuoScene:
         }
 
     def run(self, model, clip, vae, audio_vae, sampler, sigmas, image, prompt,
-            width, height, length, seed, filename_prefix):
+            width, height, length, seed, filename_prefix,
+            reseed_each_run=True):
         fps = FPS
         import torch
         import folder_paths
@@ -117,7 +131,21 @@ class ArkHailuoScene:
 
         # --- sample --------------------------------------------------------
         guider = _first(BasicGuider.execute(model=model, conditioning=cond))
-        noise = _first(RandomNoise.execute(noise_seed=int(seed)))
+        # One fixed seed for every scene AND every run meant two things: all N clips
+        # sampled from identical noise, and re-rendering reproduced a bad take exactly —
+        # same garbled speech every time, which reads as "the scene is locked".
+        # Mixing the prompt in makes scenes differ from each other deterministically;
+        # reseed_each_run makes a re-run a genuinely new take.
+        import hashlib
+        mixed = int(hashlib.sha256(
+            ("%d|%s" % (int(seed), prompt)).encode("utf-8")).hexdigest()[:15], 16)
+        if reseed_each_run:
+            import random
+            mixed ^= random.getrandbits(48)
+        mixed &= 0xffffffffffffffff
+        print("[arkennemasis] scene seed %d (base %d%s)"
+              % (mixed, int(seed), ", reseeded" if reseed_each_run else ", fixed"))
+        noise = _first(RandomNoise.execute(noise_seed=mixed))
         samples = _first(SamplerCustomAdvanced.execute(
             noise=noise, guider=guider, sampler=sampler, sigmas=sigmas,
             latent_image=latent))

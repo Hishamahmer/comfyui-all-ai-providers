@@ -17,9 +17,12 @@ newer than this file.
 
 import json
 
+import time
+
 from ..common.image_utils import collect_images_to_data_uris
 from ..common.throttle import concurrency_gate, serial_lock, with_retry
 from . import auth as codex_auth
+from . import stream as codex_stream
 from .nodes import (
     BASE_URL,
     CodexStreamTruncated,
@@ -171,6 +174,26 @@ class ArkCodexLLM:
                                "arkennemasis API calls may be in flight together. "
                                "0 = no cap.",
                 }),
+                # APPENDED at the end on purpose: ComfyUI maps widgets_values
+                # positionally, so a new widget anywhere else would shift every later
+                # value in workflows already saved.
+                "batch_total": ("INT", {
+                    "default": 0, "min": 0, "max": 500,
+                    "tooltip": "How many items the answer must contain in total (scene "
+                               "count). 0 = ask for everything in one call, the old "
+                               "behaviour.\n\nSet this WITH batch_size to split a long "
+                               "JSON answer across several short calls. A 16-scene plan "
+                               "is ~12,000 output tokens in one response, which is slow, "
+                               "goes silent long enough for the connection to be cut, "
+                               "and can hit the output cap and come back truncated.",
+                }),
+                "batch_size": ("INT", {
+                    "default": 5, "min": 1, "max": 100,
+                    "tooltip": "Items per call when batch_total is set. 5 keeps each "
+                               "call to a few thousand tokens, so it answers in well "
+                               "under a minute and cannot be truncated. Earlier items "
+                               "are passed forward so the story still joins up.",
+                }),
             },
         }
 
@@ -183,10 +206,18 @@ class ArkCodexLLM:
                   image_3=None, image_4=None, model=MODELS[0], model_override="",
                   reasoning_effort=DEFAULT, json_only=False, codex_home="",
                   allow_refresh=True, timeout_seconds=600, force_rerun=False,
-                  run_mode=RUN_ONE_AT_A_TIME, max_concurrent=2):
+                  run_mode=RUN_ONE_AT_A_TIME, max_concurrent=2,
+                  batch_total=0, batch_size=5):
         import asyncio
 
         async def go():
+            if batch_total and batch_size and json_only:
+                return await asyncio.to_thread(
+                    self._batched, prompt, system_instructions, image_1, image_2,
+                    image_3, image_4, model, model_override, reasoning_effort,
+                    codex_home, allow_refresh, timeout_seconds,
+                    int(batch_total), int(batch_size),
+                )
             return await asyncio.to_thread(
                 self._blocking, prompt, system_instructions, image_1, image_2, image_3,
                 image_4, model, model_override, reasoning_effort, json_only, codex_home,
@@ -198,6 +229,84 @@ class ArkCodexLLM:
                 else serial_lock())
         async with gate:
             return await go()
+
+    def _batched(self, prompt, system_instructions, image_1, image_2, image_3, image_4,
+                 model, model_override, reasoning_effort, codex_home, allow_refresh,
+                 timeout_seconds, batch_total, batch_size):
+        """Build a long JSON array over several short calls instead of one huge one.
+
+        A 16-scene plan is roughly 12,000 output tokens in a single response. That is
+        slow, it stays silent long enough for the connection to be cut upstream, and it
+        can hit the output cap and come back as `response.incomplete` — a truncated
+        array. Asking for five scenes at a time makes each call a few thousand tokens:
+        fast, and structurally unable to be truncated.
+
+        This does NOT reduce what is produced. Every scene is still written in full, to
+        the same instructions. Earlier scenes are passed forward so continuity holds,
+        and the scene numbers are re-stamped at the end so the array is always 1..N in
+        order however the model numbered its own batch.
+        """
+        collected = []
+        batch = 0
+        account = ""
+        while len(collected) < batch_total:
+            first = len(collected) + 1
+            last = min(first + batch_size - 1, batch_total)
+            batch += 1
+            wanted = last - first + 1
+
+            story_so_far = ""
+            if collected:
+                # Enough for continuity, not so much that it bloats every later call.
+                previous = "\n".join(
+                    "%s. %s" % (item.get("scene", index + 1),
+                                str(item.get("voiceText", ""))[:200])
+                    for index, item in enumerate(collected))
+                story_so_far = (
+                    "\n\nSCENES ALREADY WRITTEN (do not repeat them, continue straight "
+                    "on from the last one):\n" + previous)
+
+            slice_rule = (
+                "\n\nYou are writing this story in parts. Produce ONLY scenes %d to %d "
+                "of %d. Return a JSON array of EXACTLY %d objects and nothing else. "
+                "Keep every rule above, and keep the character, wardrobe, style and "
+                "colour identical to the scenes already written.%s"
+                % (first, last, batch_total, wanted, story_so_far))
+
+            print("[arkennemasis] codex-llm batch %d: scenes %d-%d of %d"
+                  % (batch, first, last, batch_total))
+            text, account = self._blocking(
+                prompt + slice_rule, system_instructions, image_1, image_2, image_3,
+                image_4, model, model_override, reasoning_effort, True, codex_home,
+                allow_refresh, timeout_seconds)
+
+            try:
+                part = json.loads(text)
+            except ValueError as exc:
+                raise RuntimeError("batch %d returned invalid JSON: %s" % (batch, exc))
+            if isinstance(part, dict):                 # tolerate {"scenes": [...]}
+                for key in ("scenes", "output", "items"):
+                    if isinstance(part.get(key), list):
+                        part = part[key]
+                        break
+            if not isinstance(part, list) or not part:
+                raise RuntimeError(
+                    "batch %d did not return a JSON array of scenes." % batch)
+
+            collected.extend(part[:wanted])            # never overshoot the total
+            if len(part) < wanted:
+                print("[arkennemasis] batch %d returned %d of %d asked for; continuing"
+                      % (batch, len(part), wanted))
+
+        # Re-stamp the numbering: each batch numbers from its own viewpoint, and
+        # ArkSceneList needs a clean 1..N.
+        for index, item in enumerate(collected[:batch_total], start=1):
+            if isinstance(item, dict):
+                item["scene"] = index
+        result = json.dumps(collected[:batch_total], ensure_ascii=False)
+        print("[arkennemasis] codex-llm assembled %d scenes from %d batches (%d chars)"
+              % (len(collected[:batch_total]), batch, len(result)))
+        return (result, account)
 
     def _blocking(self, prompt, system_instructions, image_1, image_2, image_3, image_4,
                   model, model_override, reasoning_effort, json_only, codex_home,
@@ -228,16 +337,23 @@ class ArkCodexLLM:
         if reasoning_effort != DEFAULT:
             payload["reasoning"] = {"effort": reasoning_effort}
 
-        read = float(timeout_seconds) if timeout_seconds else None
-        timeout = httpx.Timeout(read, connect=30.0, read=read, write=30.0, pool=30.0)
+        # The read timeout is the IDLE budget, not the total. It used to be the total
+        # (600 s), which is why a response that never sent a body byte held the node for
+        # ten minutes — and why one that heartbeated held it forever. A healthy stream is
+        # unaffected; only silence is punished.
+        total_budget = float(timeout_seconds) if timeout_seconds else None
+        timeout = codex_stream.timeouts()
         headers = codex_auth.request_headers(token)
+        attempt = {"n": 0}
 
         def call():
+            attempt["n"] += 1
+            stats = codex_stream.StreamStats("codex-llm attempt %d" % attempt["n"])
             deltas = []
             final = []
-            finished = False
             with httpx.Client(timeout=timeout, headers=headers) as http:
                 with http.stream("POST", BASE_URL + "/responses", json=payload) as resp:
+                    stats.headers_at = time.time()
                     if resp.status_code >= 400:
                         resp.read()
                         body = resp.text
@@ -256,47 +372,63 @@ class ArkCodexLLM:
                         # 429/5xx are "try again"; other 4xx is our request being wrong.
                         err.retryable = resp.status_code in (429, 500, 502, 503, 504)
                         raise err
-                    for event in _iter_sse(resp):
-                        if not isinstance(event, dict):
-                            continue
+                    def collect(event):
                         kind = event.get("type")
-                        if kind in _TERMINAL_EVENTS:
-                            finished = True
-                            final.extend(_find_output_text(event))
-                        elif kind == "response.output_text.delta":
+                        if kind == "response.output_text.delta":
                             piece = event.get("delta")
                             if isinstance(piece, str):
                                 deltas.append(piece)
+                                stats.deltas += 1
+                                stats.chars += len(piece)
                         elif kind == "response.output_text.done":
                             piece = event.get("text")
                             if isinstance(piece, str) and piece:
                                 final.append(piece)
 
-            # A stream cut short must never look like a short answer — same trap the
-            # image node hit, where a truncated render passed as a finished image.
-            if not finished:
-                raise CodexStreamTruncated(
-                    "Codex closed the stream before the answer finished (no completion "
-                    "event).")
+                    try:
+                        done = codex_stream.consume(
+                            _iter_sse(resp), stats, collect,
+                            total_timeout=total_budget,
+                            should_stop=codex_stream.interrupted)
+                    except Exception:
+                        print("[arkennemasis] %s" % stats.line("FAILED"))
+                        raise
+                    # Stop reading here. The old loop ran to EOF, so a server that kept
+                    # the connection open after `response.completed` hung the node.
+                    final.extend(_find_output_text(done))
+
+            print("[arkennemasis] %s" % stats.line("ok"))
             # Prefer the completed payload; deltas are the fallback for event shapes
             # this file has not seen.
-            return "".join(final) if final else "".join(deltas)
+            text = "".join(final) if final else "".join(deltas)
+            if not text or not text.strip():
+                raise CodexStreamTruncated(
+                    "Codex completed the response but sent no text.")
+
+            # Validation belongs INSIDE the retry. It used to sit after `with_retry`, so
+            # a truncated answer ended the whole run instead of causing a fresh attempt —
+            # that is what turned a bad stream into "invalid JSON at column 2911" after
+            # thirteen minutes.
+            if json_only:
+                text = _strip_fences(text)
+                try:
+                    json.loads(text)
+                except ValueError as exc:
+                    raise CodexStreamTruncated(
+                        "json_only is on but the answer is not valid JSON (%s). "
+                        "Retrying with a fresh request. First 300 chars: %s"
+                        % (exc, text[:300]))
+            return text
 
         print("[arkennemasis] %s via Codex login as %s" % (chosen, account))
+        started = time.time()
         text = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))
+        print("[arkennemasis] codex-llm done in %.1fs over %d attempt(s), %d chars"
+              % (time.time() - started, attempt["n"], len(text)))
         if not text or not text.strip():
             raise RuntimeError(
                 "Codex returned no text. The account may not have access to '%s', or "
                 "the prompt was refused." % chosen)
-
-        if json_only:
-            text = _strip_fences(text)
-            try:                              # fail here, not three nodes downstream
-                json.loads(text)
-            except ValueError as exc:
-                raise RuntimeError(
-                    "json_only is on but the answer is not valid JSON (%s). First 300 "
-                    "chars: %s" % (exc, text[:300]))
         return (text, account)
 
 
