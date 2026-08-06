@@ -26,6 +26,35 @@ WHERE TO PUT IT
 import gc
 
 
+def _free_ram_gb():
+    """Free SYSTEM RAM. The number that actually matters for staged models."""
+    try:
+        import ctypes
+
+        class Status(ctypes.Structure):
+            _fields_ = [("dwLength", ctypes.c_ulong),
+                        ("dwMemoryLoad", ctypes.c_ulong),
+                        ("ullTotalPhys", ctypes.c_ulonglong),
+                        ("ullAvailPhys", ctypes.c_ulonglong),
+                        ("ullTotalPageFile", ctypes.c_ulonglong),
+                        ("ullAvailPageFile", ctypes.c_ulonglong),
+                        ("ullTotalVirtual", ctypes.c_ulonglong),
+                        ("ullAvailVirtual", ctypes.c_ulonglong),
+                        ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+        s = Status()
+        s.dwLength = ctypes.sizeof(Status)
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(s)):
+            return s.ullAvailPhys / 1e9
+    except Exception:
+        pass
+    try:
+        import psutil
+        return psutil.virtual_memory().available / 1e9
+    except Exception:
+        return None
+
+
 def _free_gb():
     try:
         import torch
@@ -97,6 +126,7 @@ class ArkPurgeVRAM:
     def run(self, unload_models, empty_cache, collect_garbage, images=None,
             anything=None):
         before = _free_gb()
+        before_ram = _free_ram_gb()
 
         if collect_garbage:
             gc.collect()
@@ -104,6 +134,29 @@ class ArkPurgeVRAM:
             try:
                 import comfy.model_management as mm
                 mm.unload_all_models()
+                # unload_all_models frees VRAM but leaves the PINNED HOST BUFFERS that
+                # dynamic loading staged the weights into. On a 1280x736 MiniMax H3
+                # scene that is ~94 GB of system RAM (63 GB model + 26 GB text encoder
+                # + 5 GB VAE) which never comes back, so scene 2 or 3 dies with
+                # "HostBuffer.read_file_slice failed" and a misleading CUDA OOM — while
+                # the GPU sits nearly empty. These are the calls that actually release
+                # it; each is optional across ComfyUI versions, so none may fail hard.
+                for name in ("cleanup_models_gc", "cleanup_models",
+                             "reset_cast_buffers"):
+                    fn = getattr(mm, name, None)
+                    if callable(fn):
+                        try:
+                            fn()
+                        except Exception as exc:
+                            print("[arkennemasis] purge: %s skipped (%s)"
+                                  % (name, str(exc)[:80]))
+                try:
+                    import comfy_aimdo.host_buffer as hb
+                    cleanup = getattr(hb, "cleanup_file_reader", None)
+                    if callable(cleanup):
+                        cleanup()
+                except Exception:
+                    pass
             except Exception as exc:
                 print("[arkennemasis] purge: unload_all_models failed (%s)" % exc)
         if empty_cache:
@@ -121,11 +174,15 @@ class ArkPurgeVRAM:
                 pass
 
         after = _free_gb()
-        if before is None or after is None:
-            report = "purged (no CUDA device to measure)"
-        else:
-            report = ("VRAM free %.1f -> %.1f GB (+%.1f)"
-                      % (before, after, after - before))
+        after_ram = _free_ram_gb()
+        parts = []
+        if before is not None and after is not None:
+            parts.append("VRAM %.1f -> %.1f GB (+%.1f)"
+                         % (before, after, after - before))
+        if before_ram is not None and after_ram is not None:
+            parts.append("RAM %.1f -> %.1f GB (+%.1f)"
+                         % (before_ram, after_ram, after_ram - before_ram))
+        report = " | ".join(parts) or "purged (nothing measurable)"
         print("[arkennemasis] purge: %s" % report)
         return (images, anything, report)
 

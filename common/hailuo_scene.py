@@ -45,6 +45,31 @@ def _both(result):
     return result[0], result[1]
 
 
+
+def _free_ram_gb():
+    """Free system RAM. The number that actually decides whether the next scene runs."""
+    try:
+        import ctypes
+
+        class Status(ctypes.Structure):
+            _fields_ = [("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                        ("ullTotalPhys", ctypes.c_ulonglong),
+                        ("ullAvailPhys", ctypes.c_ulonglong),
+                        ("ullTotalPageFile", ctypes.c_ulonglong),
+                        ("ullAvailPageFile", ctypes.c_ulonglong),
+                        ("ullTotalVirtual", ctypes.c_ulonglong),
+                        ("ullAvailVirtual", ctypes.c_ulonglong),
+                        ("ullAvailExtendedVirtual", ctypes.c_ulonglong)]
+
+        s = Status()
+        s.dwLength = ctypes.sizeof(Status)
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(s)):
+            return s.ullAvailPhys / 1e9
+    except Exception:
+        pass
+    return None
+
+
 class ArkHailuoScene:
     CATEGORY = "arkennemasis/Video"
     FUNCTION = "run"
@@ -178,9 +203,35 @@ class ArkHailuoScene:
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
 
+        # VRAM was never the thing that ran out. ComfyUI's dynamic loading stages model
+        # weights into PINNED HOST buffers and keeps them: at 1280x736 that is ~94 GB of
+        # system RAM (63 GB model + 26 GB text encoder + 5 GB VAE). Freeing only VRAM let
+        # that grow across scenes until scene 2 or 3 died with
+        # "HostBuffer.read_file_slice failed" and a CUDA OOM raised while the GPU was
+        # nearly empty (CUDA OOMs: 0, PyTorch holding 1.2 GB). These calls release the
+        # host side. Each is optional across ComfyUI versions, so none may fail hard.
+        import gc
+        gc.collect()
+        for name in ("cleanup_models_gc", "cleanup_models", "reset_cast_buffers"):
+            fn = getattr(mm, name, None)
+            if callable(fn):
+                try:
+                    fn()
+                except Exception as exc:
+                    print("[arkennemasis] %s skipped (%s)" % (name, str(exc)[:70]))
+        try:
+            import comfy_aimdo.host_buffer as hb
+            cleanup = getattr(hb, "cleanup_file_reader", None)
+            if callable(cleanup):
+                cleanup()
+        except Exception:
+            pass
+
         free = mm.get_free_memory(mm.get_torch_device()) / 1e9
-        print("[arkennemasis] scene saved -> %s  (%.1f GB VRAM free after cleanup)"
-              % (filename, free))
+        ram = _free_ram_gb()
+        print("[arkennemasis] scene saved -> %s  (%.1f GB VRAM free%s)"
+              % (filename, free,
+                 "" if ram is None else ", %.1f GB RAM free" % ram))
 
         return {"ui": {"images": [{"filename": filename, "subfolder": subfolder,
                                    "type": "output"}]},
