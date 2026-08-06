@@ -438,7 +438,7 @@
         "Node name for S&R": "UNETLoader"
       },
       "widgets_values": [
-        "minimax_h3_fl2va_int8_convrot.safetensors",
+        "minimax_h3_fl2va_bf16.safetensors",
         "default"
       ],
       "title": "Hailuo MiniMax H3 (34 GB)"
