@@ -5,3 +5,13 @@ __pycache__/
 
 # never commit real API keys
 .env
+
+# local-only workflows — kept on disk, deliberately not published.
+# Only these ship: Character Dataset (GPT-Image-2) - Codex, nemasis-courage,
+# nemasis-hyperconsistent-flux2.
+example workflows/nemasis-bean.json
+example workflows/nemasis-cartoon.json
+example workflows/nemasis-hyperconsistent.json
+example workflows/nemasis-maldives.json
+example workflows/nemasis-pitch.json
+example workflows/nemasis-space.json
