@@ -127,6 +127,15 @@ def _video_assemble():
     return c, d
 
 
+def _realestate():
+    # Private, git-ignored sub-package. A clone of this repo has no realestate/ folder,
+    # so this import fails there and _load just reports it — nothing else breaks.
+    from .realestate import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _codex():
     from .codex_provider.nodes import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -162,6 +171,13 @@ _load("caption style", _caption_style)
 _load("video assemble", _video_assemble)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
+# Optional private sub-packages: present on the author's machine, absent from a clone.
+# Loaded only when the folder is actually there, so a normal install stays quiet instead
+# of reporting an import failure for something it was never meant to have.
+import os as _os
+
+if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "realestate")):
+    _load("real estate", _realestate)
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
 _load("codex llm", _codex_llm)

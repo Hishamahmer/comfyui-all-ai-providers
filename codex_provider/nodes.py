@@ -32,6 +32,16 @@ DEFAULT = "default"
 RUN_ONE_AT_A_TIME = "one at a time"
 RUN_ALL_AT_ONCE = "all at once"
 
+# The Codex CLI's Speed setting, which travels as `service_tier` on the request. Its own
+# UI calls these "Standard - default speed" and "Fast - 1.5x speed, increased usage".
+# Probed against the live backend 2026-08-09: "priority" and "default" are accepted;
+# "fast" and "flex" both come back 400 `Unsupported service_tier`. So the wire value is
+# "priority" — do not "correct" it to match the label. Shared with the LLM node, which
+# imports these from here.
+SPEED_STANDARD = "standard"
+SPEED_FAST = "fast (1.5x, uses more quota)"
+SERVICE_TIER = {SPEED_STANDARD: "default", SPEED_FAST: "priority"}
+
 BASE_URL = "https://chatgpt.com/backend-api/codex"
 IMAGE_MODEL = "gpt-image-2"
 # The chat model is only the host that invokes the tool; it makes no pixels itself.
@@ -286,6 +296,17 @@ class ArkCodexImageGen:
                                "timeout_seconds; output_format, moderation and api_token "
                                "do not apply and are ignored.",
                 }),
+                # APPENDED last: widgets_values is positional, so anywhere else would
+                # shift every later value in workflows already saved.
+                "speed": ([SPEED_STANDARD, SPEED_FAST], {
+                    "tooltip": "The Codex CLI's Speed setting. 'fast' sends "
+                               "service_tier=priority (its '1.5x speed, increased "
+                               "usage' option). Worth far less here than on the text "
+                               "step: an image is dominated by generation time, not by "
+                               "queueing, so this mostly just spends plan quota faster. "
+                               "Leave it on standard unless you are waiting on a single "
+                               "hero image.",
+                }),
             },
         }
 
@@ -298,7 +319,8 @@ class ArkCodexImageGen:
                   aspect_ratio=DEFAULT, quality=DEFAULT, background=DEFAULT,
                   codex_home="", allow_refresh=True, timeout_seconds=300,
                   force_rerun=False, run_mode=RUN_ONE_AT_A_TIME, settings=None,
-                  max_concurrent=2, on_failure="fail the run"):
+                  max_concurrent=2, on_failure="fail the run",
+                  speed=SPEED_STANDARD):
         import asyncio
 
         if settings:                       # a wired Settings node overrides the widgets
@@ -313,7 +335,7 @@ class ArkCodexImageGen:
             return await asyncio.to_thread(
                 self._blocking, prompt, image_1, image_2, image_3, image_4,
                 aspect_ratio, quality, background, codex_home, allow_refresh,
-                timeout_seconds, on_failure,
+                timeout_seconds, on_failure, speed,
             )
 
         # 'all at once' still respects max_concurrent; 'one at a time' is always 1.
@@ -324,7 +346,7 @@ class ArkCodexImageGen:
 
     def _blocking(self, prompt, image_1, image_2, image_3, image_4, aspect_ratio,
                   quality, background, codex_home, allow_refresh, timeout_seconds,
-                  on_failure="fail the run"):
+                  on_failure="fail the run", speed=SPEED_STANDARD):
         import httpx
 
         token = codex_auth.get_access_token(codex_home, allow_refresh=allow_refresh)
@@ -362,6 +384,11 @@ class ArkCodexImageGen:
                             "tools": [{"type": "image_generation"}]},
             "stream": True,
         }
+        tier = SERVICE_TIER.get(speed)
+        if tier:
+            payload["service_tier"] = tier
+        if speed == SPEED_FAST:
+            print("[arkennemasis] codex-image speed: fast (service_tier=priority)")
 
         # Idle budget, not total — see codex_provider/stream.py. The old setting held a
         # dead connection for the whole timeout_seconds.

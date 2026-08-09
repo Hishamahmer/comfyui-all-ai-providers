@@ -30,6 +30,9 @@ from .nodes import (
     _TERMINAL_EVENTS,
     RUN_ALL_AT_ONCE,
     RUN_ONE_AT_A_TIME,
+    SERVICE_TIER,
+    SPEED_FAST,
+    SPEED_STANDARD,
 )
 
 DEFAULT = "default"
@@ -194,6 +197,16 @@ class ArkCodexLLM:
                                "under a minute and cannot be truncated. Earlier items "
                                "are passed forward so the story still joins up.",
                 }),
+                # APPENDED at the end, same reason as batch_total above.
+                "speed": ([SPEED_STANDARD, SPEED_FAST], {
+                    "tooltip": "The Codex CLI's own Speed setting. 'fast' is its "
+                               "'1.5x speed, increased usage' option and sends "
+                               "service_tier=priority; 'standard' sends the default "
+                               "tier. Measured on this account: first token 0.75 s vs "
+                               "1.00 s, whole short answer 1.7 s vs 3.2 s. It spends "
+                               "your plan's quota faster, so leave it on standard for "
+                               "long batch runs.",
+                }),
             },
         }
 
@@ -207,7 +220,7 @@ class ArkCodexLLM:
                   reasoning_effort=DEFAULT, json_only=False, codex_home="",
                   allow_refresh=True, timeout_seconds=600, force_rerun=False,
                   run_mode=RUN_ONE_AT_A_TIME, max_concurrent=2,
-                  batch_total=0, batch_size=5):
+                  batch_total=0, batch_size=5, speed=SPEED_STANDARD):
         import asyncio
 
         async def go():
@@ -216,12 +229,12 @@ class ArkCodexLLM:
                     self._batched, prompt, system_instructions, image_1, image_2,
                     image_3, image_4, model, model_override, reasoning_effort,
                     codex_home, allow_refresh, timeout_seconds,
-                    int(batch_total), int(batch_size),
+                    int(batch_total), int(batch_size), speed,
                 )
             return await asyncio.to_thread(
                 self._blocking, prompt, system_instructions, image_1, image_2, image_3,
                 image_4, model, model_override, reasoning_effort, json_only, codex_home,
-                allow_refresh, timeout_seconds,
+                allow_refresh, timeout_seconds, speed,
             )
 
         # 'all at once' still respects max_concurrent; 'one at a time' is always 1.
@@ -232,7 +245,7 @@ class ArkCodexLLM:
 
     def _batched(self, prompt, system_instructions, image_1, image_2, image_3, image_4,
                  model, model_override, reasoning_effort, codex_home, allow_refresh,
-                 timeout_seconds, batch_total, batch_size):
+                 timeout_seconds, batch_total, batch_size, speed=SPEED_STANDARD):
         """Build a long JSON array over several short calls instead of one huge one.
 
         A 16-scene plan is roughly 12,000 output tokens in a single response. That is
@@ -278,7 +291,7 @@ class ArkCodexLLM:
             text, account = self._blocking(
                 prompt + slice_rule, system_instructions, image_1, image_2, image_3,
                 image_4, model, model_override, reasoning_effort, True, codex_home,
-                allow_refresh, timeout_seconds)
+                allow_refresh, timeout_seconds, speed)
 
             try:
                 part = json.loads(text)
@@ -310,7 +323,7 @@ class ArkCodexLLM:
 
     def _blocking(self, prompt, system_instructions, image_1, image_2, image_3, image_4,
                   model, model_override, reasoning_effort, json_only, codex_home,
-                  allow_refresh, timeout_seconds):
+                  allow_refresh, timeout_seconds, speed=SPEED_STANDARD):
         import httpx
 
         token = codex_auth.get_access_token(codex_home, allow_refresh=allow_refresh)
@@ -336,6 +349,11 @@ class ArkCodexLLM:
             payload["instructions"] = instructions
         if reasoning_effort != DEFAULT:
             payload["reasoning"] = {"effort": reasoning_effort}
+        tier = SERVICE_TIER.get(speed)
+        if tier:
+            payload["service_tier"] = tier
+        if speed == SPEED_FAST:
+            print("[arkennemasis] codex-llm speed: fast (service_tier=priority)")
 
         # The read timeout is the IDLE budget, not the total. It used to be the total
         # (600 s), which is why a response that never sent a body byte held the node for

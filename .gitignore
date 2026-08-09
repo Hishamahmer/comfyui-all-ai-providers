@@ -6,6 +6,13 @@ __pycache__/
 # never commit real API keys
 .env
 
+# PRIVATE — the real-estate design nodes and their catalog. Local to this machine and
+# deliberately never published: the catalog carries a design platform's system
+# instructions. The pack loader tolerates the folder being absent, so a clone of this
+# repo works normally without it.
+realestate/
+web/realestate.js
+
 # local-only workflows — kept on disk, deliberately not published.
 # Only these ship: Character Dataset (GPT-Image-2) - Codex, nemasis-courage,
 # nemasis-hyperconsistent-flux2.
