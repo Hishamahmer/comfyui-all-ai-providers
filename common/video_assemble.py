@@ -72,7 +72,8 @@ def probe_size(path, default=(1280, 720)):
             out = subprocess.run(
                 [probe, "-v", "error", "-select_streams", "v:0", "-show_entries",
                  "stream=width,height", "-of", "csv=p=0:s=x", path],
-                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=30)
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                stdin=subprocess.DEVNULL, timeout=30)   # never inherit the console
             w, h = out.stdout.decode().strip().split("x")[:2]
             return int(w), int(h)
         except Exception:
@@ -117,9 +118,29 @@ def _wrap(text, width=42):
     return "\n".join(lines[:2])          # two lines max; more covers the frame
 
 
-def _run(cmd, cwd=None):
-    proc = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE,
-                          stderr=subprocess.STDOUT)
+def _run(cmd, cwd=None, timeout=1800):
+    """Run ffmpeg and raise on failure.
+
+    `stdin=DEVNULL` is not tidiness, it is the fix for a hang that cost most of an hour.
+    ffmpeg polls stdin for its interactive keys ('q' to quit). Launched from a node it
+    inherits ComfyUI's console handle, and on Windows that poll can spin forever: the
+    encode finishes, the output file is left a few KB short, and the process sits at
+    ~20% of a core with nothing to read. Eleven clips went through in nine seconds and
+    the twelfth hung for ten minutes; the identical command run by hand took 2.8 s.
+
+    The timeout is the backstop. `subprocess.run` with no timeout waits for a stuck
+    child forever, and a wedged ffmpeg then wedges the whole ComfyUI queue with no error
+    and nothing in the log — which is exactly how the hang above presented.
+    """
+    try:
+        proc = subprocess.run(cmd, cwd=cwd, stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                              timeout=timeout)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(
+            "ffmpeg did not finish within %ds and was killed: %s\n"
+            "Check for another process holding the file, or run the command by hand."
+            % (timeout, " ".join(str(c) for c in cmd[:6]) + " ..."))
     if proc.returncode != 0:
         # ffmpeg prints its whole build config before the error, so show the TAIL —
         # the first 2000 chars are always the same --enable-lib... wall.

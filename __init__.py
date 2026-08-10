@@ -120,6 +120,13 @@ def _caption_style():
     return c, d
 
 
+def _load_clips():
+    from .common.load_clips import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _video_assemble():
     from .common.video_assemble import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -169,6 +176,7 @@ _load("hailuo scene", _hailuo_scene)
 _load("purge vram", _purge_vram)
 _load("caption style", _caption_style)
 _load("video assemble", _video_assemble)
+_load("load clips", _load_clips)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
 # Optional private sub-packages: present on the author's machine, absent from a clone.
