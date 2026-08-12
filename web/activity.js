@@ -17,6 +17,15 @@ const ANIMATED_NODES = new Set([
   "ReplicateOpenAIGPTImage2",
   "ArkCodexImageGen",
   "ArkCodexLLM",
+  // Local, but far from instant: each call starts a subprocess that loads ~2.5 GB of
+  // weights before it says anything, and `capture_output` keeps the worker silent for
+  // the whole shot. Without a badge the canvas looks frozen for half a minute.
+  "ArkQwenTTS",
+  // One H3 shot is ~3 minutes at the smallest size, and it stages ~60 GB first.
+  "ArkHailuoScene",
+  // Shells out to ffmpeg per clip.
+  "ArkVideoDub",
+  "ArkVideoAssemble",
 ]);
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];

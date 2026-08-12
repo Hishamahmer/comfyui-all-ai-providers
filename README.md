@@ -55,9 +55,37 @@ needed; every generation is an API call.
 | arkennemasis/**Utility** | arkennemasis Story Brief / Run Log / Contact Sheet | the brief form, a JSON run log that needs no spreadsheet, and every still of a run on one sheet | `STRING`, `IMAGE` |
 | arkennemasis/**Video** | arkennemasis Scene List (the loop) | fans a scene plan out so one chain runs once per scene — 5 or 50, same canvas | lists |
 | arkennemasis/**Video** | arkennemasis Hailuo Scene | one scene start to finish: condition → sample → decode video **and** audio → mux → save → free | `VIDEO` |
+| arkennemasis/**Audio** | arkennemasis Qwen3-TTS (voice clone) | local Qwen3-TTS. Text in, speech out; give it 5–30 s of someone speaking and it clones that voice. Runs in a subprocess — see below | `AUDIO`, `STRING` |
+| arkennemasis/**Video** | arkennemasis Video Dub (narration over a clip) | swaps a clip's own soundtrack for a narration track, per clip. MiniMax H3 always generates audio and cannot be asked for silence, so the voice has to *replace* it | `VIDEO`, `STRING` |
+| arkennemasis/**Video** | arkennemasis Narration Length (fit the shot to the voice) | measures a rendered narration and returns the shot length that covers it, snapped to H3's frame grid. Wire between the TTS node and the scene node and every shot outlasts its own voice-over | `INT`, `FLOAT`, `STRING` |
 | arkennemasis/**Video** | arkennemasis Caption Style (font + subtitle style) | one of five subtitle styles, any installed font, colours, outline, box, size, 3×3 position — and an on/off switch | `ARK_CAPTION_STYLE` |
 | arkennemasis/**Video** | arkennemasis Video Assemble (clips + music + subs) | joins every clip, levels each one's speech, ducks a music bed, burns the captions | `STRING`, `VIDEO` |
 | arkennemasis/**Video** | arkennemasis Load Clips (finished clips from disk) | reads a run's finished clips back as a VIDEO list — join a film whose render was interrupted, without re-rendering | `VIDEO` list |
+
+### Qwen3-TTS — why it needs a one-off setup
+
+**Qwen3-TTS runs in a subprocess, and that is deliberate.** It is written against
+`transformers==4.57.3`; a normal ComfyUI install is on 5.x, and a dozen other node packs
+depend on that. Every published wrapper for this model tells you to downgrade — **don't**.
+The pin is also self-contradictory: `qwen-tts` 0.1.1 hardcodes 4.57.3 while its own
+tokenizer imports `check_model_inputs`, which only exists in 5.x.
+
+So the node keeps a private dependency tree in `vendor/tts_env` and puts it first on
+`sys.path` in a **child process** — same interpreter, same torch, same CUDA, only the one
+conflicting package differs, and only there. `vendor/` is **not** committed (114 MB, and
+redistributing someone else's package is a deliberate decision, not a `git add .`), so a
+fresh clone has to create it once. The command is in
+[`common/qwen_tts_node.py`](common/qwen_tts_node.py)'s docstring.
+
+Models go in `ComfyUI/models/qwen-tts/<model folder>`. A ***Base*** model is **clone-only**
+— it has no preset voices, so `reference_audio` must be connected or the node stops
+immediately and says so. For preset voices, use a *CustomVoice* model.
+
+Generation is retried up to three times with fresh seeds: the model occasionally never
+emits end-of-speech and generates until something stops it, which is a property of the
+sampled path, so re-running the same seed reproduces it exactly. The node also rejects a
+result far longer than the text can account for. It refuses to fall back to CPU — that
+still produces correct audio, roughly 40× slower, which reads exactly like a hang.
 
 ### Captions
 

@@ -113,6 +113,27 @@ def _purge_vram():
     return c, d
 
 
+def _video_dub():
+    from .common.video_dub import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _qwen_tts():
+    from .common.qwen_tts_node import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _narration_length():
+    from .common.narration_length import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _caption_style():
     from .common.caption_style import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -175,6 +196,9 @@ _load("scene list", _scene_list)
 _load("hailuo scene", _hailuo_scene)
 _load("purge vram", _purge_vram)
 _load("caption style", _caption_style)
+_load("qwen tts", _qwen_tts)
+_load("narration length", _narration_length)
+_load("video dub", _video_dub)
 _load("video assemble", _video_assemble)
 _load("load clips", _load_clips)
 _load("subject line", _subject_line)

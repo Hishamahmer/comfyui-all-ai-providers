@@ -97,6 +97,17 @@ SUBS_ASS = "subs.ass"
 LEAD_IN, TAIL = 0.25, 0.35
 
 
+def _voice_text(scene):
+    """This shot's narration, under either spelling.
+
+    Matches ``ArkSceneList``: a brief written consistently in snake_case still lands,
+    instead of producing silent clips with no subtitles and no error.
+    """
+    if not isinstance(scene, dict):
+        return ""
+    return scene.get("voiceText") or scene.get("voice_text") or ""
+
+
 def _srt_time(seconds):
     ms = int(round(seconds * 1000))
     h, ms = divmod(ms, 3600000)
@@ -105,7 +116,31 @@ def _srt_time(seconds):
     return "%02d:%02d:%02d,%03d" % (h, m, s, ms)
 
 
-def _wrap(text, width=42):
+def auto_font_size(height):
+    """Caption size as a fraction of frame height, not a fixed number of points.
+
+    libass measures FontSize against the video's own pixel height, so one fixed value
+    cannot serve every resolution: 24 is unobtrusive on 1080p and enormous on the 352-line
+    preview renders — there it was 7% of the frame per line, and two lines buried the
+    house behind the words. Broadcast captions sit near 4% of frame height, which is
+    legible at every size this pipeline produces.
+    """
+    return max(10, int(round(height * 0.042)))
+
+
+def wrap_width(width, font_size):
+    """Characters per line that fill about 88% of the frame at this font size.
+
+    Wrapping at a fixed 42 characters is the other half of the same bug: with the font
+    scaled down, 42 characters no longer reach the edge, and with it scaled up they run
+    past it. A sans-serif glyph averages close to half its point size in width.
+    """
+    usable = width * 0.88
+    return max(20, min(60, int(usable / max(font_size * 0.5, 1))))
+
+
+def _lines(text, width=42):
+    """Word-wrap to `width`, returning every line — nothing dropped."""
     words, lines, line = str(text).split(), [], ""
     for word in words:
         if line and len(line) + 1 + len(word) > width:
@@ -115,7 +150,35 @@ def _wrap(text, width=42):
             line = (line + " " + word).strip()
     if line:
         lines.append(line)
-    return "\n".join(lines[:2])          # two lines max; more covers the frame
+    return lines
+
+
+def _cue_texts(text, width=42, per_cue=2):
+    """Split narration into successive cues of at most `per_cue` lines each.
+
+    Three lines of text would cover the frame, so a cue shows two — but the rest must
+    become the NEXT cue, not disappear. Capping at two lines and discarding the overflow
+    silently truncated every sentence the model wrote: a 30-word line of narration was
+    subtitled as "...the broad frontage and crisp" and simply stopped, while the voice
+    track carried on saying the whole thing.
+    """
+    lines = _lines(text, width)
+    if not lines:
+        return []
+    return ["\n".join(lines[i:i + per_cue]) for i in range(0, len(lines), per_cue)]
+
+
+def _split_duration(texts, duration):
+    """Share a clip's runtime between its cues, in proportion to how much is said."""
+    total = sum(len(t) for t in texts) or 1
+    spans, clock = [], 0.0
+    for index, text in enumerate(texts):
+        span = duration * len(text) / total
+        # The last cue absorbs any rounding so the cues always end exactly on the clip.
+        end = duration if index == len(texts) - 1 else clock + span
+        spans.append((clock, end))
+        clock = end
+    return spans
 
 
 def _run(cmd, cwd=None, timeout=1800):
@@ -203,9 +266,11 @@ class ArkVideoAssemble:
                                "for plain white captions at subtitle_size.",
                 }),
                 "subtitle_size": ("INT", {
-                    "default": 24, "min": 8, "max": 200,
-                    "tooltip": "Only used when caption_style is NOT connected — the "
-                               "style node carries its own font size.",
+                    "default": 0, "min": 0, "max": 200,
+                    "tooltip": "0 = scale to the video (about 4% of frame height), which "
+                               "is what you want when one workflow renders previews and "
+                               "finals at different sizes. Only used when caption_style "
+                               "is NOT connected — the style node carries its own size.",
                 }),
                 "crf": ("INT", {
                     "default": 18, "min": 0, "max": 51,
@@ -234,12 +299,17 @@ class ArkVideoAssemble:
 
         out_dir = _one(output_dir, "")
         name = os.path.basename(str(_one(filename, "final")).strip() or "final")
+        # Typing "myfilm.mp4" is the obvious thing to do, and this node appends the
+        # extension itself — leaving it produced `myfilm.mp4.mp4`.
+        stem, ext = os.path.splitext(name)
+        if stem and ext.lower() in (".mp4", ".mov", ".mkv", ".webm", ".m4v"):
+            name = stem
         plan = _one(scenes_json, "") or ""
         music = str(_one(music_path, "") or "").strip()
         volume = _one(music_volume, 0.18)
         level = _one(normalize_speech, True)
         subs_on = _one(burn_subtitles, True)
-        subs_size = int(_one(subtitle_size, 24))
+        subs_size = int(_one(subtitle_size, 0) or 0)
         style = _one(caption_style, None)
         if style is not None and not style.get("enabled", True):
             # The Caption Style node's own off switch. Kept separate from
@@ -299,11 +369,15 @@ class ArkVideoAssemble:
                   "-c:v", "libx264", "-crf", str(quality), "-preset", "medium",
                   "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", joined])
 
+            resolution = probe_size(joined) if subs_on and plan else (1280, 720)
+            if subs_size <= 0:
+                subs_size = auto_font_size(resolution[1])
+            wrap = wrap_width(resolution[0], subs_size)
+
             subs = None
             if subs_on and plan:
-                subs = (self._write_ass(work, plan, durations, style,
-                                        probe_size(joined))
-                        if style else self._write_srt(work, plan, durations))
+                subs = (self._write_ass(work, plan, durations, style, resolution)
+                        if style else self._write_srt(work, plan, durations, wrap))
 
             final = os.path.join(folder, "%s.mp4" % name)
             cmd = [ffmpeg, "-y", "-i", joined]
@@ -325,10 +399,14 @@ class ArkVideoAssemble:
                     # force_style must NOT be set here — it would override the lot.
                     spec = "subtitles=%s%s" % (SUBS_ASS, ass.fontsdir_arg(style))
                 else:
+                    # MarginV is in the same pixel space as FontSize, so it has to scale
+                    # with the frame as well — a fixed 28 sat a third of the way up a
+                    # 352-line render.
                     spec = ("subtitles=%s:force_style='FontSize=%d,"
                             "PrimaryColour=&Hffffff,OutlineColour=&H80000000,"
-                            "BorderStyle=3,Outline=1,Shadow=0,Alignment=2,MarginV=28'"
-                            % (SUBS_NAME, subs_size))
+                            "BorderStyle=3,Outline=1,Shadow=0,Alignment=2,MarginV=%d'"
+                            % (SUBS_NAME, subs_size,
+                               max(8, int(round(resolution[1] * 0.05)))))
                 filters.append("[0:v]%s[vout]" % spec)
                 if not maps:
                     maps = ["-map", "[vout]", "-map", "0:a?"]
@@ -385,16 +463,22 @@ class ArkVideoAssemble:
         needs_words = style.get("style") in ass.NEEDS_WORD_TIMING
         cues, clock = [], 0.0
         for scene, duration in zip(scenes, durations):
-            text = scene.get("voiceText", "") if isinstance(scene, dict) else ""
+            text = _voice_text(scene)
             if text and duration > 0:
-                cue = {"text": text, "start": clock, "end": clock + duration}
-                if needs_words:
-                    # Inset the speech window, but never let it collapse on a short clip.
-                    lead = min(LEAD_IN, duration * 0.15)
-                    tail = min(TAIL, duration * 0.2)
-                    cue["words"] = ass.estimate_words(text, clock + lead,
-                                                      clock + duration - tail)
-                cues.append(cue)
+                # Same split as the SRT path, so the styled captions and the plain ones
+                # show the same words — a long line is several cues, never a truncation.
+                texts = _cue_texts(text)
+                for body, (start, end) in zip(texts, _split_duration(texts, duration)):
+                    cue = {"text": body, "start": clock + start, "end": clock + end}
+                    if needs_words:
+                        span = end - start
+                        # Inset the speech window, but never let it collapse on a
+                        # short cue.
+                        lead = min(LEAD_IN, span * 0.15)
+                        tail = min(TAIL, span * 0.2)
+                        cue["words"] = ass.estimate_words(
+                            body, clock + start + lead, clock + end - tail)
+                    cues.append(cue)
             clock += duration
         if not cues:
             return None
@@ -408,7 +492,7 @@ class ArkVideoAssemble:
                  ", word timings estimated from the script" if needs_words else ""))
         return path
 
-    def _write_srt(self, work, scenes_json, durations):
+    def _write_srt(self, work, scenes_json, durations, wrap=42):
         scenes = self._scenes(scenes_json)
         if not scenes:
             return None
@@ -416,19 +500,22 @@ class ArkVideoAssemble:
         lines, clock, cue = [], 0.0, 1
         # Positional pairing: clip i is scene i, because the loop preserves order.
         for scene, duration in zip(scenes, durations):
-            text = scene.get("voiceText", "") if isinstance(scene, dict) else ""
+            text = _voice_text(scene)
             if text and duration > 0:
-                lines.append("%d\n%s --> %s\n%s\n"
-                             % (cue, _srt_time(clock), _srt_time(clock + duration),
-                                _wrap(text)))
-                cue += 1
+                texts = _cue_texts(text, wrap)
+                for body, (start, end) in zip(texts, _split_duration(texts, duration)):
+                    lines.append("%d\n%s --> %s\n%s\n"
+                                 % (cue, _srt_time(clock + start),
+                                    _srt_time(clock + end), body))
+                    cue += 1
             clock += duration
         if not lines:
             return None
         path = os.path.join(work, SUBS_NAME)
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(lines))
-        print("[arkennemasis] %d subtitle cues from the scene plan" % (cue - 1))
+        print("[arkennemasis] %d subtitle cues from the scene plan, wrapped at %d chars"
+              % (cue - 1, wrap))
         return path
 
 

@@ -46,6 +46,58 @@ def _both(result):
 
 
 
+def _release_everything(when):
+    """Evict models and the pinned host buffers behind them, and say what it recovered.
+
+    `unload_all_models` is the call that actually evicts; without it ComfyUI reports
+    "0 models unloaded" and keeps ~94 GB of staged weights (63 GB model + 26 GB text
+    encoder + 5 GB VAE) in host RAM. Freeing VRAM alone is not enough — that host side
+    is what runs out, and the failure surfaces as `HostBuffer.read_file_slice failed`
+    or a CUDA OOM raised while the GPU is nearly empty.
+
+    Every call here is optional across ComfyUI versions, so none may fail hard.
+    """
+    import gc
+
+    import comfy.model_management as mm
+
+    before_vram = mm.get_free_memory(mm.get_torch_device()) / 1e9
+    before_ram = _free_ram_gb()
+
+    gc.collect()
+    try:
+        mm.unload_all_models()
+    except Exception as exc:
+        print("[arkennemasis] unload_all_models failed (%s)" % str(exc)[:80])
+    for name in ("cleanup_models_gc", "cleanup_models", "reset_cast_buffers"):
+        fn = getattr(mm, name, None)
+        if callable(fn):
+            try:
+                fn()
+            except Exception as exc:
+                print("[arkennemasis] %s skipped (%s)" % (name, str(exc)[:70]))
+    try:
+        import comfy_aimdo.host_buffer as hb
+        cleanup = getattr(hb, "cleanup_file_reader", None)
+        if callable(cleanup):
+            cleanup()
+    except Exception:
+        pass
+    try:
+        mm.soft_empty_cache(force=True)
+    except Exception:
+        pass
+    gc.collect()
+
+    after_vram = mm.get_free_memory(mm.get_torch_device()) / 1e9
+    after_ram = _free_ram_gb()
+    ram_note = ""
+    if before_ram is not None and after_ram is not None:
+        ram_note = " | RAM %.1f -> %.1f GB" % (before_ram, after_ram)
+    print("[arkennemasis] release (%s): VRAM %.1f -> %.1f GB%s"
+          % (when, before_vram, after_vram, ram_note))
+
+
 def _free_ram_gb():
     """Free system RAM. The number that actually decides whether the next scene runs."""
     try:
@@ -91,7 +143,8 @@ class ArkHailuoScene:
                                                  "the clip its soundtrack."}),
                 "sampler": ("SAMPLER",),
                 "sigmas": ("SIGMAS",),
-                "image": ("IMAGE", {"tooltip": "This scene's still — the first frame."}),
+                "image": ("IMAGE", {"tooltip": "This scene's still — the FIRST frame of "
+                                               "the clip."}),
                 "prompt": ("STRING", {"multiline": True, "default": "",
                                       "forceInput": True}),
                 "width": ("INT", {"default": 1280, "min": 32, "max": 16384, "step": 32}),
@@ -124,11 +177,22 @@ class ArkHailuoScene:
                                "next counter, so clips land in scene order.",
                 }),
             },
+            "optional": {
+                # Optional, and added AFTER the required block, so every graph built
+                # before this existed keeps working untouched: H3 already accepted a
+                # closing frame, this node just never offered one.
+                "last_frame": ("IMAGE", {
+                    "tooltip": "Optional CLOSING frame. Given one, H3 animates the "
+                               "transition from `image` to this, instead of inventing "
+                               "motion from a single still. This is what a "
+                               "first-frame-to-last-frame transformation needs.",
+                }),
+            },
         }
 
     def run(self, model, clip, vae, audio_vae, sampler, sigmas, image, prompt,
             width, height, length, seed, filename_prefix,
-            reseed_each_run=True):
+            reseed_each_run=True, last_frame=None):
         fps = FPS
         import torch
         import folder_paths
@@ -149,10 +213,26 @@ class ArkHailuoScene:
         print("[arkennemasis] scene: %dx%d, %d frames (%.2fs)"
               % (width, height, length, length / max(fps, 1e-6)))
 
+        # Free BEFORE staging, not only after. Freeing at the end is not enough on its
+        # own — and a separate purge NODE cannot help, because `ArkSceneList` declares
+        # OUTPUT_IS_LIST, so ComfyUI runs each node across every scene before moving to
+        # the next one. Every purge in the graph therefore fires up front, when nothing
+        # is loaded, and never between shots. Measured: three purges reporting
+        # "VRAM 49.8 -> 49.8 GB (+0.0)", then shot 1 ending on 1.3 GB VRAM / 5.7 GB RAM
+        # free, then the process dying while staging the text encoder for shot 2.
+        #
+        # This is the only code that runs between one shot and the next, so the release
+        # belongs here. `unload_all_models` is the call that actually evicts — the
+        # cleanup at the end of this function reports "0 models unloaded" without it.
+        _release_everything("before staging")
+
         # --- condition + empty latent -------------------------------------
+        if last_frame is not None:
+            print("[arkennemasis] scene: last_frame supplied — rendering a "
+                  "first-frame-to-last-frame transition")
         cond, latent = _both(MiniMaxH3ImageToVideo.execute(
             clip=clip, vae=vae, prompt=prompt, width=int(width), height=int(height),
-            length=length, first_frame=image, last_frame=None))
+            length=length, first_frame=image, last_frame=last_frame))
 
         # --- sample --------------------------------------------------------
         guider = _first(BasicGuider.execute(model=model, conditioning=cond))
@@ -210,22 +290,9 @@ class ArkHailuoScene:
         # "HostBuffer.read_file_slice failed" and a CUDA OOM raised while the GPU was
         # nearly empty (CUDA OOMs: 0, PyTorch holding 1.2 GB). These calls release the
         # host side. Each is optional across ComfyUI versions, so none may fail hard.
-        import gc
-        gc.collect()
-        for name in ("cleanup_models_gc", "cleanup_models", "reset_cast_buffers"):
-            fn = getattr(mm, name, None)
-            if callable(fn):
-                try:
-                    fn()
-                except Exception as exc:
-                    print("[arkennemasis] %s skipped (%s)" % (name, str(exc)[:70]))
-        try:
-            import comfy_aimdo.host_buffer as hb
-            cleanup = getattr(hb, "cleanup_file_reader", None)
-            if callable(cleanup):
-                cleanup()
-        except Exception:
-            pass
+        # Same release as on entry — this one previously omitted `unload_all_models`,
+        # which is why it reported "0 models unloaded" and freed nothing.
+        _release_everything("after saving")
 
         free = mm.get_free_memory(mm.get_torch_device()) / 1e9
         ram = _free_ram_gb()

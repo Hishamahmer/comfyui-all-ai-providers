@@ -22,3 +22,12 @@ example workflows/nemasis-hyperconsistent.json
 example workflows/nemasis-maldives.json
 example workflows/nemasis-pitch.json
 example workflows/nemasis-space.json
+
+# Third-party code and a private dependency tree, both vendored on purpose:
+#   vendor/qwen_tts  - the upstream Qwen3-TTS package, so a shared workflow does not need
+#                      `pip install qwen-tts` (which needs a source build that fails here)
+#   vendor/tts_env   - transformers 4.57.3, used ONLY by the TTS subprocess so the main
+#                      environment can stay on 5.x for the other eleven packs
+# Not committed: 114 MB, and redistributing someone else's package is a decision to make
+# deliberately rather than by `git add .`.
+vendor/

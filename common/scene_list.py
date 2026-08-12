@@ -21,7 +21,11 @@ from the word count instead, at a natural speaking rate.
 
 import json
 
-WORDS_PER_SECOND = 2.3          # unhurried narration; 2.0-2.6 is the usual band
+# Measured on Qwen3-TTS output rather than assumed: 22 words -> 11.10 s, 21 -> 8.62 s,
+# 17 -> 10.30 s, i.e. 1.65-2.44 and about 2.0 on average. The old 2.3 was optimistic and
+# under-estimated every shot, which is how an 11.10 s line ended up over a 5.17 s clip.
+# Only a fallback now — `ArkNarrationLength` measures the rendered speech instead.
+WORDS_PER_SECOND = 2.0
 
 # LOCKED, and must match ArkHailuoScene.FPS. Hailuo works in frames at 24 fps; this is
 # what converts a scene's requested seconds into a frame count. Not a widget, because a
@@ -99,7 +103,7 @@ class ArkSceneList:
 
         images, videos, voices, numbers, lengths = [], [], [], [], []
         for position, scene in enumerate(scenes, start=1):
-            voice = _as_text(scene.get("voiceText"))
+            voice = _as_text(_pick(scene, "voiceText", "voice_text"))
             seconds = _as_float(scene.get("seconds"))
             if seconds is None:
                 # No duration in the plan — infer it from how long the line takes to
@@ -107,8 +111,8 @@ class ArkSceneList:
                 seconds = len(voice.split()) / WORDS_PER_SECOND if voice else min_seconds
             seconds = min(max(seconds, min_seconds), max_seconds)
 
-            images.append(_as_text(scene.get("image_prompt")))
-            videos.append(_as_text(scene.get("video_prompt")))
+            images.append(_as_text(_pick(scene, "image_prompt", "imagePrompt")))
+            videos.append(_as_text(_pick(scene, "video_prompt", "videoPrompt")))
             voices.append(voice)
             numbers.append(_as_int(scene.get("scene"), position))
             lengths.append(snap_length(seconds, fps))
@@ -122,6 +126,22 @@ class ArkSceneList:
         # the assembler a list where a STRING belongs.
         return (images, videos, voices, numbers, lengths,
                 json.dumps(scenes, ensure_ascii=False))
+
+
+def _pick(scene, *keys):
+    """First key the plan actually carries.
+
+    The pack spells this field ``voiceText`` while its neighbours are ``image_prompt``
+    and ``video_prompt``, so a brief written in one consistent case is always wrong
+    about half the keys. The model then obeys the brief, the key misses, and the shot
+    gets an empty line — which surfaces much later as `ArkQwenTTS: \\`text\\` is empty`
+    rather than as the naming mismatch it is. Accept both spellings instead.
+    """
+    for key in keys:
+        value = scene.get(key)
+        if value not in (None, ""):
+            return value
+    return None
 
 
 def _as_text(value):
