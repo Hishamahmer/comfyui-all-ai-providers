@@ -116,6 +116,19 @@ def _srt_time(seconds):
     return "%02d:%02d:%02d,%03d" % (h, m, s, ms)
 
 
+# libass renders `force_style` sizes against a PlayResY of 288 unless the subtitle file
+# declares one, and an SRT cannot. So a FontSize is NOT pixels — it is scaled by
+# height/288 on the way to the screen. Ignoring that scaled the size twice: 30 asked for
+# on a 704-line frame arrived as ~73px and buried the picture. Everything user-facing here
+# stays in PIXELS and converts at the last moment.
+LIBASS_REF_H = 288
+
+
+def to_libass(pixels, height):
+    """Pixels on screen -> the FontSize/MarginV number libass needs to produce them."""
+    return max(6, int(round(pixels * LIBASS_REF_H / max(int(height), 1))))
+
+
 def auto_font_size(height):
     """Caption size as a fraction of frame height, not a fixed number of points.
 
@@ -405,8 +418,10 @@ class ArkVideoAssemble:
                     spec = ("subtitles=%s:force_style='FontSize=%d,"
                             "PrimaryColour=&Hffffff,OutlineColour=&H80000000,"
                             "BorderStyle=3,Outline=1,Shadow=0,Alignment=2,MarginV=%d'"
-                            % (SUBS_NAME, subs_size,
-                               max(8, int(round(resolution[1] * 0.05)))))
+                            % (SUBS_NAME,
+                               to_libass(subs_size, resolution[1]),
+                               to_libass(max(8, int(round(resolution[1] * 0.05))),
+                                         resolution[1])))
                 filters.append("[0:v]%s[vout]" % spec)
                 if not maps:
                     maps = ["-map", "[vout]", "-map", "0:a?"]

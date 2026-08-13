@@ -51,6 +51,80 @@ _WORKER = os.path.join(_HERE, "qwen_tts_worker.py")
 # second failure is already unlikely and a third is close to certain to be the text.
 ATTEMPTS = 3
 
+# ── The served worker ────────────────────────────────────────────────────────
+# Loading the model costs ~18 s; speaking a seven-second line costs ~8 s. A process
+# per line therefore spends most of a long run reloading the same 2.5 GB. One worker,
+# kept alive and fed line by line, pays that once.
+#
+# Keyed on what is baked in at load time (model + environment): those cannot change
+# after `from_pretrained`, so a different key retires the worker rather than reusing it.
+_SERVER = {"proc": None, "key": None}
+NEWLINE = chr(10)          # avoids escape-mangling through tooling
+
+
+def _stop_server():
+    proc = _SERVER.get("proc")
+    _SERVER["proc"] = _SERVER["key"] = None
+    if proc and proc.poll() is None:
+        try:
+            proc.stdin.write(json.dumps({"stop": True}) + NEWLINE)
+            proc.stdin.flush()
+            proc.wait(timeout=10)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+
+
+def _server(key, job_path):
+    """A live worker for `key`, started if there is not one already.
+
+    The first job travels in the job FILE exactly as one-shot mode does, so the
+    startup path stays identical and there is only one way for it to be wrong.
+    """
+    proc = _SERVER.get("proc")
+    if proc is not None and proc.poll() is None and _SERVER.get("key") == key:
+        return proc, False
+    _stop_server()
+    proc = subprocess.Popen(
+        [sys.executable, _WORKER, job_path, "--serve"],
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, bufsize=1)
+    _SERVER["proc"], _SERVER["key"] = proc, key
+    return proc, True
+
+
+def _ask(proc, job, timeout):
+    """One job in, one JSON reply out. None if the worker stops answering."""
+    import threading
+
+    box = {}
+
+    def read():
+        try:
+            box["line"] = proc.stdout.readline()
+        except Exception as exc:
+            box["error"] = exc
+
+    if job is not None:                  # None = first job, already in the file
+        proc.stdin.write(json.dumps(job) + NEWLINE)
+        proc.stdin.flush()
+    t = threading.Thread(target=read, daemon=True)
+    t.start()
+    t.join(timeout)
+    if t.is_alive() or not box.get("line"):
+        return None                      # ran away, died, or went silent
+    for piece in box["line"].splitlines():
+        piece = piece.strip()
+        if piece.startswith("{"):
+            try:
+                return json.loads(piece)
+            except ValueError:
+                pass
+    return None
+
+
 _LANGUAGES = ["Auto", "English", "Chinese", "Japanese", "Korean", "German", "French",
               "Russian", "Portuguese", "Spanish", "Italian"]
 

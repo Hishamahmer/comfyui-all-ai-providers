@@ -134,6 +134,27 @@ def _narration_length():
     return c, d
 
 
+def _video_save():
+    from .common.video_save import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _video_model():
+    from .common.video_model import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _scene_at():
+    from .common.scene_at import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _caption_style():
     from .common.caption_style import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -198,6 +219,9 @@ _load("purge vram", _purge_vram)
 _load("caption style", _caption_style)
 _load("qwen tts", _qwen_tts)
 _load("narration length", _narration_length)
+_load("video save", _video_save)
+_load("video model", _video_model)
+_load("scene at", _scene_at)
 _load("video dub", _video_dub)
 _load("video assemble", _video_assemble)
 _load("load clips", _load_clips)

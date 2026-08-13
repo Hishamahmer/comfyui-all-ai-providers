@@ -37,8 +37,13 @@ def snap_length(seconds, fps=FPS):
 class ArkNarrationLength:
     CATEGORY = "arkennemasis/Video"
     FUNCTION = "run"
-    RETURN_TYPES = ("INT", "FLOAT", "STRING")
-    RETURN_NAMES = ("length", "seconds", "report")
+    # `seconds_int` is APPENDED, never inserted: output slots are positional, and adding
+    # one in the middle would silently repoint every existing link on this node.
+    # It exists because video models disagree about how a shot is measured — MiniMax H3
+    # wants FRAMES on its 17k+5 grid, LTX-2.5 wants whole SECONDS, and a FLOAT will not
+    # connect to an INT socket.
+    RETURN_TYPES = ("INT", "FLOAT", "STRING", "INT")
+    RETURN_NAMES = ("length", "seconds", "report", "seconds_int")
     DESCRIPTION = ("Measure a narration clip and return the shot length that covers it, "
                    "snapped to MiniMax H3's frame grid. Wire between the TTS node and "
                    "the scene node so every shot outlasts its own voice-over.")
@@ -63,13 +68,38 @@ class ArkNarrationLength:
                                "one shot, so a longer narration has to be shortened in "
                                "the brief or split across two scenes.",
                 }),
+                "lock_seconds": ("FLOAT", {
+                    "default": 0.0, "min": 0.0, "max": 15.1, "step": 0.5,
+                    "tooltip": "0 = fit each shot to its own narration. Above 0, EVERY "
+                               "shot runs this long regardless of what is said — even "
+                               "pacing, at the cost of holding a frame under a short "
+                               "line. The value still snaps to H3's frame grid, so 10 s "
+                               "becomes 10.12 s. Keep the brief's word count under about "
+                               "2 words per second of the locked length, or the voice "
+                               "will outrun the picture.",
+                }),
             },
         }
 
-    def run(self, narration, tail_seconds=0.75, max_seconds=15.0):
+    def run(self, narration, tail_seconds=0.75, max_seconds=15.0, lock_seconds=0.0):
         waveform = narration["waveform"]
         rate = float(narration["sample_rate"]) or 1.0
         spoken = waveform.shape[-1] / rate
+
+        if lock_seconds and lock_seconds > 0:
+            # Every shot the same length. The narration is still measured, because a line
+            # that overruns a locked shot is the one thing the operator needs told — the
+            # dub will hold a frame over the difference and it will look like a fault.
+            length = snap_length(float(lock_seconds))
+            actual = length / FPS
+            report = ("locked %.2fs -> %d frames (%.2fs) | narration %.2fs"
+                      % (lock_seconds, length, actual, spoken))
+            if spoken > actual:
+                report += ("  WARNING: %.2fs of speech in a %.2fs shot — the last frame "
+                           "will freeze for %.2fs. Shorten this line to about %d words."
+                           % (spoken, actual, spoken - actual, int(actual * 2.0)))
+            print("[arkennemasis] %s" % report)
+            return (length, actual, report, int(round(actual)))
 
         wanted = spoken + float(tail_seconds)
         length = snap_length(min(wanted, float(max_seconds)))
@@ -83,7 +113,7 @@ class ArkNarrationLength:
                        "— shorten this scene's voiceText or split the scene"
                        % (spoken, MAX_FRAMES / FPS))
         print("[arkennemasis] %s" % report)
-        return (length, actual, report)
+        return (length, actual, report, int(round(actual)))
 
 
 NODE_CLASS_MAPPINGS = {
