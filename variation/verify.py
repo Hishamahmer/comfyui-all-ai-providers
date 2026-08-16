@@ -236,10 +236,30 @@ def run_checks(candidate, plate, plate_lock, target_region="", target_hex="",
     candidate_area = float((np.asarray(candidate_mask) > 0.5).mean())
     checks["subject_area_plate"] = round(plate_area, 5)
     checks["subject_area_candidate"] = round(candidate_area, 5)
+    # Two independent tests, because they catch different failures.
+    #
+    # The RATIO catches one variation segmenting differently from the plate — a colour
+    # that approaches the background. The ABSOLUTE bound catches segmentation failing
+    # the same way on both, which the ratio cannot see: a transparent product against a
+    # studio sweep yields a "subject" covering most of the frame on the plate AND on
+    # every candidate, so the ratio is a perfect 1.0 and the checks then measure the
+    # canvas while reporting themselves as authoritative. A product silhouette is not
+    # 94% of its own photograph.
+    PLAUSIBLE_MIN, PLAUSIBLE_MAX = 0.002, 0.60
+    plausible = PLAUSIBLE_MIN <= plate_area <= PLAUSIBLE_MAX
     reliable = supplied_masks or (
-        plate_area > 0.001
+        plausible
+        and plate_area > 0.001
         and 0.75 <= (candidate_area / plate_area if plate_area else 0.0) <= 1.35)
     checks["mask_reliable"] = bool(reliable)
+    checks["subject_plausible"] = bool(plausible or supplied_masks)
+    if not plausible and not supplied_masks:
+        notes.append(
+            "The derived subject covers %.1f%% of the plate, which is not a product "
+            "silhouette — segmentation did not separate this object from its background. "
+            "Identity, framing and bleed are reported but NOT used to pass or fail. This "
+            "product needs real region masks (region_mask_dir) for those checks to mean "
+            "anything." % (100.0 * plate_area))
     if not reliable:
         notes.append(
             "Subject segmentation is unreliable for this candidate: it covers %.1f%% of "
@@ -385,7 +405,18 @@ def run_checks(candidate, plate, plate_lock, target_region="", target_hex="",
         region_mask = None
         if region_masks and target_region and target_region in region_masks:
             region_mask = region_masks[target_region]
-        elif np.any(exclude > 0.5):
+            # An EMPTY mask is not "a region containing nothing", it is a failed mask.
+            # Passing it on makes sample_region return None, colour_de is never set, and
+            # decide() then reads "colour not measured" and passes the cell — so a
+            # broken mask silently switches off the check most likely to catch a wrong
+            # image. Treat it as absent and fall through to the wider sample.
+            if not np.any(np.asarray(region_mask) > 0.5):
+                notes.append(
+                    "The mask for region '%s' is empty, so it was ignored. Colour was "
+                    "sampled more widely instead — a reading, but a weaker one than a "
+                    "real region mask gives." % target_region)
+                region_mask = None
+        if region_mask is None and np.any(exclude > 0.5):
             region_mask = exclude
         sampled, count = sample_region(candidate, region_mask)
         if sampled is not None:
@@ -407,16 +438,28 @@ def run_checks(candidate, plate, plate_lock, target_region="", target_hex="",
         # Considered area = everything no axis was allowed to touch. Regions painted by
         # OTHER axes changed on purpose and counting them would flag every multi-axis
         # cell as bleeding into itself.
-        if region_masks:
-            painted = {canonical(n) for n in changed}
-            others = [m for n, m in region_masks.items() if canonical(n) not in painted]
-            if others:
-                considered = np.clip(np.maximum.reduce(others), 0.0, 1.0)
-                considered = considered * (1.0 - np.clip(exclude, 0.0, 1.0))
-                fraction, counted = coverage_outside(
-                    considered, candidate, plate, target_hex, 8.0)
-                checks["bleed_fraction"] = round(fraction, 5)
-                checks["bleed_pixels_considered"] = counted
+        painted = {canonical(n) for n in changed}
+        others = [m for n, m in (region_masks or {}).items()
+                  if canonical(n) not in painted]
+        if others:
+            considered = np.clip(np.maximum.reduce(others), 0.0, 1.0)
+            considered = considered * (1.0 - np.clip(exclude, 0.0, 1.0))
+            fraction, counted = coverage_outside(
+                considered, candidate, plate, target_hex, 8.0)
+            checks["bleed_fraction"] = round(fraction, 5)
+            checks["bleed_pixels_considered"] = counted
+        else:
+            # Bleed is the ONLY check that looks at the regions no axis paints, so when
+            # it cannot run, "everything else stayed identical" is not being verified at
+            # all. Saying nothing here reads as a pass, which is the most misleading
+            # thing this node could do on a product whose whole requirement is that only
+            # one part changes.
+            checks["bleed_measured"] = False
+            notes.append(
+                "Bleed was NOT measured: no mask exists for any unpainted region. "
+                "Nothing is checking that the parts which must stay identical actually "
+                "did. Supply region masks (region_mask_dir at plate lock) to verify "
+                "that, or rely on the AI critic and your own eye for this product.")
 
     # ── 5. Hygiene ──────────────────────────────────────────────────────────
     checks["mean_luma"] = round(float((candidate @ [0.2126, 0.7152, 0.0722]).mean()), 5)

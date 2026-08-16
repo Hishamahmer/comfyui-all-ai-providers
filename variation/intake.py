@@ -529,13 +529,22 @@ class ArkVariationIntake:
             if not name:
                 continue
             checked += 1
+            # Compare on the CANONICAL form of the filename, not the raw string. Tokens
+            # are canonical (`smoke-grey`) while a filename may legitimately be written
+            # for humans (`Dome Nomad 01 - Smoke Grey.png`), and a raw substring test
+            # fails every multi-word value — flagging correct rows as mislabelled, which
+            # trains the operator to disable the check that exists to catch real
+            # mislabelling. The extension is dropped first so a token ending the name is
+            # not glued to it.
+            stem = os.path.splitext(name)[0]
+            haystacks = (name.lower(), canonical(stem))
             bad = []
             for axis in axis_columns:
                 axis_c = canonical(axis)
                 value = row.get(AXIS_PREFIX + axis_c)
                 entry = index.get((axis_c, value))
                 token = (entry or {}).get("filename_token") or value
-                if token and token not in name.lower():
+                if token and not any(token in hay for hay in haystacks):
                     bad.append((axis_c, value, token))
             if bad:
                 detail = "; ".join("axis '%s' = '%s' (expected token '%s')" % b for b in bad)

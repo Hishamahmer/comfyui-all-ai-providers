@@ -23,6 +23,7 @@ import os
 import numpy as np
 import torch
 
+from .job_store import load_job, resolve_dir
 from .schema import (
     ValidationError,
     axis_by_name,
@@ -57,7 +58,8 @@ def build_cells(recipe, variants=None, plates=None):
     cells = []
 
     if variants:
-        for row in variants:
+        total = len(variants)
+        for position, row in enumerate(variants, start=1):
             values = {}
             complete = True
             for axis in axes:
@@ -73,22 +75,26 @@ def build_cells(recipe, variants=None, plates=None):
             filename = str(row.get("filename") or "").strip()
             for plate_id in plate_ids:
                 cells.append(_make_cell(recipe, axes, values, plate_id,
-                                        len(plate_ids) > 1, filename))
+                                        len(plate_ids) > 1, filename,
+                                        position, total))
     else:
         # The general case: N axes, whatever N is.
         value_lists = [[v["id"] for v in (axis.get("values") or [])] for axis in axes]
-        for combination in itertools.product(*value_lists):
+        combinations = list(itertools.product(*value_lists))
+        for position, combination in enumerate(combinations, start=1):
             values = {axes[i]["name"]: combination[i] for i in range(len(axes))}
             for plate_id in plate_ids:
                 cells.append(_make_cell(recipe, axes, values, plate_id,
-                                        len(plate_ids) > 1, ""))
+                                        len(plate_ids) > 1, "",
+                                        position, len(combinations)))
     return cells
 
 
-def _make_cell(recipe, axes, values, plate_id, multi_plate, filename=""):
+def _make_cell(recipe, axes, values, plate_id, multi_plate, filename="",
+               index=None, total=None):
     """One cell record. `key` is the primary key for every artefact this cell produces."""
     if not filename:
-        filename = render_filename(recipe, values)
+        filename = render_filename(recipe, values, index, total)
 
     key = filename
     if multi_plate:
@@ -220,11 +226,26 @@ class ArkCellMatrix:
                                "ones' takes them in order — use it to resume a "
                                "deliberate slice with offset.",
                 }),
+                "skip_delivered": ("BOOLEAN", {
+                    "default": True,
+                    "tooltip": "Leave cells that are already delivered OUT of the list. "
+                               "Resume relies on this: the per-cell skip downstream "
+                               "cannot work behind a fan-out, because ComfyUI unions "
+                               "every item's lazy decision, so one unfinished cell would "
+                               "bill the generator for all of them. Off = rebuild the "
+                               "whole set and pay for it again.",
+                }),
+                "jobs_dir": ("STRING", {
+                    "default": "variation/jobs",
+                    "tooltip": "Where the durable per-cell records live. Only read here, "
+                               "never written.",
+                }),
             },
         }
 
     def run(self, recipe_json, intake_json="", limit=0, offset=0, only_axis_value="",
-            pick="spread across the matrix"):
+            pick="spread across the matrix", skip_delivered=True,
+            jobs_dir="variation/jobs"):
         recipe = json.loads(recipe_json or "{}")
         if not recipe.get("axes"):
             raise ValidationError("ArkCellMatrix: the recipe has no axes.")
@@ -245,6 +266,32 @@ class ArkCellMatrix:
         if pins:
             cells = [c for c in cells
                      if all(canonical(c["axes"].get(a)) == v for a, v in pins.items())]
+
+        # Finished cells leave the list before offset/limit are applied, so `limit 5`
+        # means five cells that still need making rather than five positions that may
+        # already be done. Same rule ArkJobSkip uses downstream: delivered, and the
+        # master still on disk.
+        already = 0
+        if skip_delivered:
+            recipe_hash = recipe.get("recipe_hash") or ""
+            folder = resolve_dir(jobs_dir)
+            keep = []
+            for cell in cells:
+                job = load_job(folder, cell.get("key") or "")
+                done = (job
+                        and job.get("status") in ("passed", "approved", "delivered")
+                        and job.get("master")
+                        and os.path.isfile(job["master"])
+                        and (not recipe_hash
+                             or job.get("recipe_hash") in (None, "", recipe_hash)))
+                if done:
+                    already += 1
+                else:
+                    keep.append(cell)
+            cells = keep
+            if already:
+                print("[arkennemasis] cell matrix: %d cell(s) already delivered — left "
+                      "out of the list, not billed" % already)
 
         if offset:
             cells = cells[int(offset):]
@@ -268,6 +315,8 @@ class ArkCellMatrix:
         ]
         if pins:
             lines.append("  pinned  : %s" % ", ".join("%s=%s" % kv for kv in pins.items()))
+        if already:
+            lines.append("  skipped : %d already delivered (not billed)" % already)
         if offset or limit:
             lines.append("  slice   : offset %d, limit %s" % (offset, limit or "none"))
         lines.append("  selected: %d cells" % len(cells))

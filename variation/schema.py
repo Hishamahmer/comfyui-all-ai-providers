@@ -36,6 +36,12 @@ AXIS_PREFIX = "axis:"
 VARIANT_SYSTEM_COLUMNS = ("status", "output_url")
 SPEC_TYPES = ("hex", "reference_image", "word", "resolved_word")
 
+# Tokens a naming pattern may use that are NOT axis lookups. A filename built only from
+# axis values is a valid primary key and unreadable at a glance — a running number makes
+# a folder of 35 sortable and quotable — so the pattern needs a way to say "the position
+# of this cell" without the validator hunting for an axis called `index`.
+NAMING_RESERVED = ("index", "n")
+
 _HEX_RE = re.compile(r"^#?([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$")
 
 
@@ -377,6 +383,8 @@ def validate_recipe(recipe) -> list:
         # collapse to the same string and outputs overwrite each other.
         for token in re.findall(r"\{([^}]+)\}", naming):
             axis_part = token.split(".", 1)[0]
+            if axis_part in NAMING_RESERVED:      # a running number, not an axis
+                continue
             if axis_part not in seen_axis:
                 problems.append(
                     "Naming pattern references '{%s}' but there is no axis '%s'."
@@ -425,7 +433,7 @@ def value_by_id(axis, value_id):
     return None
 
 
-def render_filename(recipe, axes_values) -> str:
+def render_filename(recipe, axes_values, index=None, total=None) -> str:
     """Build one output filename from the recipe's naming pattern.
 
     Supports `{axis}` and `{axis.field}`, where field is any key on the value —
@@ -435,6 +443,14 @@ def render_filename(recipe, axes_values) -> str:
     manipulation.
     """
     out = recipe.get("naming") or ""
+
+    # `{index}` / `{n}` is a running number rather than an axis lookup, so it is
+    # substituted first and removed from the token list the axis resolver then sees.
+    if index is not None:
+        width = max(2, len(str(int(total or 0)))) if total else 2
+        number = str(int(index)).zfill(width)
+        out = out.replace("{index}", number).replace("{n}", number)
+
     for token in set(re.findall(r"\{([^}]+)\}", out)):
         axis_name, _, field = token.partition(".")
         field = field or "filename_token"

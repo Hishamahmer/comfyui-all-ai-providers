@@ -895,6 +895,15 @@ class ArkStoreExport:
                                "attribute_pa_{taxonomy}. Change it for a different "
                                "platform.",
                 }),
+                # APPENDED LAST: widgets_values is positional.
+                "source_sheet": ("STRING", {
+                    "default": "",
+                    "tooltip": "Path to the client's original sheet. A copy is written "
+                               "beside the generated CSV so the input and the output sit "
+                               "in one folder and can be diffed without hunting for the "
+                               "original - which is the first thing anyone asks for when "
+                               "a delivered row looks wrong.",
+                }),
                 "enabled": ("BOOLEAN", {
                     "default": True,
                     "tooltip": "Off: write no store import file.",
@@ -912,6 +921,7 @@ class ArkStoreExport:
         return float("nan")
 
     def run(self, intake_json, jobs_dir, out_dir, url_prefix="", image_column="Images",
+            source_sheet="",
             attribute_prefix="meta:attribute_pa_", enabled=True,
             only_status="delivered,approved"):
         if not enabled:
@@ -987,6 +997,24 @@ class ArkStoreExport:
                 lines.append("  ... and %d more" % (len(missing) - 25))
         lines += ["", "Verify the image column header against the target store's CSV "
                       "import schema before a live import."]
+
+        # The client's own sheet, copied beside the generated one. A delivery folder gets
+        # separated from its inputs almost immediately, and the first question asked
+        # about a wrong row is "what did the sheet actually say?" — unanswerable once the
+        # two live in different places.
+        if str(source_sheet or "").strip():
+            origin = str(source_sheet).strip().strip('"')
+            if os.path.isfile(origin):
+                import shutil
+                copy = os.path.join(os.path.dirname(path),
+                                    "source-" + os.path.basename(origin))
+                try:
+                    shutil.copyfile(origin, copy)
+                    lines.append("  source sheet : %s" % copy)
+                except OSError as exc:
+                    lines.append("  source sheet : NOT copied (%s)" % exc)
+            else:
+                lines.append("  source sheet : not found at %s" % origin)
 
         print("[arkennemasis] store export: %d rows -> %s" % (len(rows), path))
         return (path, "\n".join(lines), len(rows))

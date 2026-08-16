@@ -223,8 +223,8 @@ class ArkInstructionBrief:
 class ArkPromptRequest:
     CATEGORY = "arkennemasis/Variation"
     FUNCTION = "run"
-    RETURN_TYPES = ("STRING", "INT")
-    RETURN_NAMES = ("request", "count")
+    RETURN_TYPES = ("STRING", "INT", "STRING")
+    RETURN_NAMES = ("request", "count", "keys")
     DESCRIPTION = (
         "STEP 2A — build the single request that asks for every variation's prompt at "
         "once, as a JSON array. Wire it into an LLM with json_only ON, together with "
@@ -283,7 +283,12 @@ class ArkPromptRequest:
 
         request = template % {"count": len(cells), "rows": "\n\n".join(rows)}
         print("[arkennemasis] prompt request: %d variations in one call" % len(cells))
-        return (request, len(cells))
+        # The cell keys, in the order the request lists them. Wired into the LLM's
+        # batch_keys so a batched reply names which item each object answers instead of
+        # being numbered from the model's own viewpoint — the difference between a
+        # prompt reaching its cell and reaching whichever cell shares its position.
+        keys = json.dumps([c.get("key") for c in cells], ensure_ascii=False)
+        return (request, len(cells), keys)
 
 
 class ArkPromptAt:

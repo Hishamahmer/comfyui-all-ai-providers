@@ -121,6 +121,14 @@ class ArkCodexLLM:
                 }),
                 "image_1": ("IMAGE", {"tooltip": "Optional image to look at. Can be a "
                                                  "batch."}),
+                "batch_keys": ("STRING", {
+                    "multiline": True, "default": "", "forceInput": True,
+                    "tooltip": "Optional JSON array of the item keys being asked for. "
+                               "When supplied, batching slices by these keys instead of "
+                               "by scene number, each batch names the exact keys it must "
+                               "return, and the numbering is NOT re-stamped — so the "
+                               "caller can match results by key rather than by position.",
+                }),
                 "image_2": ("IMAGE",),
                 "image_3": ("IMAGE",),
                 "image_4": ("IMAGE",),
@@ -215,7 +223,8 @@ class ArkCodexLLM:
         import time
         return time.time() if force_rerun else ""
 
-    async def run(self, prompt, system_instructions="", image_1=None, image_2=None,
+    async def run(self, prompt, system_instructions="", batch_keys="",
+                  image_1=None, image_2=None,
                   image_3=None, image_4=None, model=MODELS[0], model_override="",
                   reasoning_effort=DEFAULT, json_only=False, codex_home="",
                   allow_refresh=True, timeout_seconds=600, force_rerun=False,
@@ -226,7 +235,8 @@ class ArkCodexLLM:
         async def go():
             if batch_total and batch_size and json_only:
                 return await asyncio.to_thread(
-                    self._batched, prompt, system_instructions, image_1, image_2,
+                    self._batched, prompt, system_instructions, batch_keys,
+                    image_1, image_2,
                     image_3, image_4, model, model_override, reasoning_effort,
                     codex_home, allow_refresh, timeout_seconds,
                     int(batch_total), int(batch_size), speed,
@@ -243,7 +253,8 @@ class ArkCodexLLM:
         async with gate:
             return await go()
 
-    def _batched(self, prompt, system_instructions, image_1, image_2, image_3, image_4,
+    def _batched(self, prompt, system_instructions, batch_keys, image_1, image_2,
+                 image_3, image_4,
                  model, model_override, reasoning_effort, codex_home, allow_refresh,
                  timeout_seconds, batch_total, batch_size, speed=SPEED_STANDARD):
         """Build a long JSON array over several short calls instead of one huge one.
@@ -259,16 +270,102 @@ class ArkCodexLLM:
         and the scene numbers are re-stamped at the end so the array is always 1..N in
         order however the model numbered its own batch.
         """
+        # Keys turn this from "write scenes 9-16 of a story" into "return an object for
+        # each of THESE named items" — the difference between the model choosing which
+        # items a slice covers and being told.
+        keys = []
+        if str(batch_keys or "").strip():
+            try:
+                parsed = json.loads(batch_keys)
+                if isinstance(parsed, list):
+                    keys = [str(k) for k in parsed if str(k).strip()]
+            except ValueError:
+                keys = [line.strip() for line in str(batch_keys).splitlines()
+                        if line.strip()]
+            if keys and len(keys) != batch_total:
+                print("[arkennemasis] codex-llm: %d batch_keys but batch_total is %d — "
+                      "using the keys" % (len(keys), batch_total))
+                batch_total = len(keys)
+
         collected = []
+        answered = {}                  # key -> object; the keyed path's real state
         batch = 0
         account = ""
         while len(collected) < batch_total:
-            first = len(collected) + 1
-            last = min(first + batch_size - 1, batch_total)
+            if keys:
+                # Advance by WHICH keys are still outstanding, not by HOW MANY objects
+                # came back. Counting assumes a short batch dropped its trailing items;
+                # a batch that omits a middle one then shifts the window, so that key is
+                # never asked for again AND an already-answered one is re-requested. The
+                # array still ends up the right length, so nothing downstream notices —
+                # it just has a hole and a duplicate, and the cell with the hole gets
+                # another cell's prompt.
+                mine = [k for k in keys if k not in answered][:batch_size]
+                done = [k for k in keys if k in answered]
+                first = keys.index(mine[0]) + 1
+                last = keys.index(mine[-1]) + 1
+            else:
+                first = len(collected) + 1
+                last = min(first + batch_size - 1, batch_total)
             batch += 1
             wanted = last - first + 1
 
             story_so_far = ""
+            if keys:
+                slice_rule = (
+                    "\n\nYou are answering this request in parts. Return entries for "
+                    "EXACTLY these %d items, in this order, and nothing else:\n%s\n\n"
+                    "Return a JSON array of EXACTLY %d objects. Every object MUST carry "
+                    "its own \"key\" field set to the item key it answers, copied "
+                    "verbatim from the list above — the caller matches on it, and an "
+                    "object whose key is missing or altered is applied to the wrong "
+                    "item. Keep every rule above."
+                    % (len(mine), "\n".join("  - %s" % k for k in mine), len(mine)))
+                if done:
+                    slice_rule += ("\n\nAlready answered, do not repeat: %s"
+                                   % ", ".join(done[-12:]))
+                print("[arkennemasis] codex-llm batch %d: items %d-%d of %d (by key)"
+                      % (batch, first, last, batch_total))
+                text, account = self._blocking(
+                    prompt + slice_rule, system_instructions, image_1, image_2, image_3,
+                    image_4, model, model_override, reasoning_effort, True, codex_home,
+                    allow_refresh, timeout_seconds, speed)
+                try:
+                    part = json.loads(text)
+                except ValueError as exc:
+                    raise RuntimeError("batch %d returned invalid JSON: %s"
+                                       % (batch, exc))
+                if isinstance(part, dict):
+                    for name in ("scenes", "output", "items", "prompts"):
+                        if isinstance(part.get(name), list):
+                            part = part[name]
+                            break
+                if not isinstance(part, list) or not part:
+                    raise RuntimeError("batch %d did not return a JSON array." % batch)
+                # Merge by the key each object carries, so an object that arrives out
+                # of order, twice, or not at all cannot shift anything else. Keys not
+                # answered simply stay outstanding and are asked for again.
+                before = len(answered)
+                for item in part:
+                    if not isinstance(item, dict):
+                        continue
+                    returned = str(item.get("key") or "").strip()
+                    if returned in mine and returned not in answered:
+                        answered[returned] = item
+                if len(answered) == before:
+                    # The count-based loop used to guarantee termination; merging by key
+                    # does not, so a batch that answers none of its keys is fatal rather
+                    # than an infinite retry against a model that cannot comply.
+                    raise RuntimeError(
+                        "batch %d answered none of the %d keys it was given (first: "
+                        "%s). The model is not echoing the key field."
+                        % (batch, len(mine), mine[0]))
+                collected = [answered[k] for k in keys if k in answered]
+                if len(answered) - before < len(mine):
+                    print("[arkennemasis] batch %d answered %d of %d; the rest stay "
+                          "queued by key" % (batch, len(answered) - before, len(mine)))
+                continue
+
             if collected:
                 # Enough for continuity, not so much that it bloats every later call.
                 previous = "\n".join(
@@ -313,9 +410,12 @@ class ArkCodexLLM:
 
         # Re-stamp the numbering: each batch numbers from its own viewpoint, and
         # ArkSceneList needs a clean 1..N.
-        for index, item in enumerate(collected[:batch_total], start=1):
-            if isinstance(item, dict):
-                item["scene"] = index
+        # Re-stamping is for the story path, whose consumer wants a clean 1..N. With
+        # keys it would overwrite the only thing the caller can match on.
+        if not keys:
+            for index, item in enumerate(collected[:batch_total], start=1):
+                if isinstance(item, dict):
+                    item["scene"] = index
         result = json.dumps(collected[:batch_total], ensure_ascii=False)
         print("[arkennemasis] codex-llm assembled %d scenes from %d batches (%d chars)"
               % (len(collected[:batch_total]), batch, len(result)))
