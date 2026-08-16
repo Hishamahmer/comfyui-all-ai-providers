@@ -1,8 +1,18 @@
 # arkennemasis — ComfyUI Nodes
 
-One pack, one menu (**arkennemasis**), many AI use cases: cloud LLMs, image generation,
-and utility nodes. Providers and use cases keep growing — each module loads independently,
-so nothing breaks anything else.
+One pack, one menu (**arkennemasis**), many AI use cases. **61 nodes** today:
+
+| Category | | |
+|---|---|---|
+| **Variation** | 31 | a client's spreadsheet plus one photo → a verified, consistently-framed product image library |
+| **Utility** | 11 | captions, subtitles, image and text helpers |
+| **Video** | 9 | per-shot generation, dubbing, narration-fitted assembly |
+| **Real Estate** | 6 | room redesign presets |
+| **Image Gen · LLM · Audio** | 4 | `gpt-image-2`, GPT-5 text + vision, local TTS |
+
+Providers and use cases keep growing — each module loads independently, so nothing breaks
+anything else. And if you already pay for ChatGPT, none of the image or text nodes need an
+API key.
 
 ---
 
