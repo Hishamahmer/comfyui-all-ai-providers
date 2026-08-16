@@ -25,6 +25,7 @@ and you get the plain white captions this node has always burned.
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -62,6 +63,45 @@ def find_ffprobe():
         if os.path.exists(guess):
             return guess
     return None
+
+
+def probe_speech(path, fallback):
+    """Where the NARRATION stops inside a clip, which is not where the clip stops.
+
+    A shot is a fixed slot and the line is shorter, so the dub pads the rest with silence:
+    audio and video are the same length (concat needs that), and the tail is quiet. So the
+    audio stream's duration no longer says anything about the speech, and captions spread
+    across the slot would drift seconds behind the voice.
+
+    ffmpeg's `silencedetect` finds the quiet tail. If the last silent stretch runs to the
+    end of the clip, the voice stopped where that silence began. Anything else — a clip
+    trimmed to its narration, a probe that fails, a detector that finds nothing — falls
+    back to the clip length, which is correct for those cases.
+    """
+    ffmpeg = find_ffmpeg()
+    if not ffmpeg or fallback <= 0:
+        return fallback
+    try:
+        out = subprocess.run(
+            [ffmpeg, "-hide_banner", "-nostats", "-i", path,
+             "-af", "silencedetect=noise=-45dB:d=0.35", "-f", "null", "-"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=180)
+        log = out.stderr.decode("utf-8", "replace")
+    except Exception:
+        return fallback
+
+    starts = [float(m) for m in re.findall(r"silence_start:\s*(-?[\d.]+)", log)]
+    ends = [float(m) for m in re.findall(r"silence_end:\s*([\d.]+)", log)]
+    if not starts:
+        return fallback
+    last = starts[-1]
+    # Only a silence that runs to the END of the clip marks the end of speech. A pause in
+    # the middle has a matching silence_end after it and must not truncate the captions.
+    closed = [e for e in ends if e > last]
+    if closed and closed[-1] < fallback - 0.2:
+        return fallback
+    speech = max(0.0, min(last, fallback))
+    return speech if speech > 0.3 else fallback
 
 
 def probe_size(path, default=(1280, 720)):
@@ -342,7 +382,7 @@ class ArkVideoAssemble:
 
         work = tempfile.mkdtemp(prefix="ark_assemble_")
         try:
-            paths, durations = [], []
+            paths, durations, speeches = [], [], []
             for index, video in enumerate(clips, start=1):
                 clip = os.path.join(work, "clip_%03d.mp4" % index)
                 # save_to re-encodes from whatever the VIDEO actually is, so this works
@@ -367,6 +407,7 @@ class ArkVideoAssemble:
                     durations.append(float(video.get_duration()))
                 except Exception:
                     durations.append(0.0)
+                speeches.append(probe_speech(clip, durations[-1]))
 
             print("[arkennemasis] assembling %d clips (%.1fs total)%s"
                   % (len(paths), sum(durations),
@@ -389,8 +430,10 @@ class ArkVideoAssemble:
 
             subs = None
             if subs_on and plan:
-                subs = (self._write_ass(work, plan, durations, style, resolution)
-                        if style else self._write_srt(work, plan, durations, wrap))
+                subs = (self._write_ass(work, plan, durations, style, resolution,
+                                        speeches)
+                        if style else self._write_srt(work, plan, durations, wrap,
+                                                      speeches))
 
             final = os.path.join(folder, "%s.mp4" % name)
             cmd = [ffmpeg, "-y", "-i", joined]
@@ -469,7 +512,7 @@ class ArkVideoAssemble:
             scenes = scenes.get("scenes") or scenes.get("output") or []
         return scenes if isinstance(scenes, list) and scenes else None
 
-    def _write_ass(self, work, scenes_json, durations, style, resolution):
+    def _write_ass(self, work, scenes_json, durations, style, resolution, speeches=None):
         """Subtitles as ASS, so the Caption Style node's choices actually reach libass."""
         scenes = self._scenes(scenes_json)
         if not scenes:
@@ -477,13 +520,14 @@ class ArkVideoAssemble:
 
         needs_words = style.get("style") in ass.NEEDS_WORD_TIMING
         cues, clock = [], 0.0
-        for scene, duration in zip(scenes, durations):
+        spoken = speeches or durations
+        for scene, duration, speech in zip(scenes, durations, spoken):
             text = _voice_text(scene)
             if text and duration > 0:
                 # Same split as the SRT path, so the styled captions and the plain ones
                 # show the same words — a long line is several cues, never a truncation.
                 texts = _cue_texts(text)
-                for body, (start, end) in zip(texts, _split_duration(texts, duration)):
+                for body, (start, end) in zip(texts, _split_duration(texts, speech)):
                     cue = {"text": body, "start": clock + start, "end": clock + end}
                     if needs_words:
                         span = end - start
@@ -507,18 +551,19 @@ class ArkVideoAssemble:
                  ", word timings estimated from the script" if needs_words else ""))
         return path
 
-    def _write_srt(self, work, scenes_json, durations, wrap=42):
+    def _write_srt(self, work, scenes_json, durations, wrap=42, speeches=None):
         scenes = self._scenes(scenes_json)
         if not scenes:
             return None
 
         lines, clock, cue = [], 0.0, 1
         # Positional pairing: clip i is scene i, because the loop preserves order.
-        for scene, duration in zip(scenes, durations):
+        spoken = speeches or durations
+        for scene, duration, speech in zip(scenes, durations, spoken):
             text = _voice_text(scene)
             if text and duration > 0:
                 texts = _cue_texts(text, wrap)
-                for body, (start, end) in zip(texts, _split_duration(texts, duration)):
+                for body, (start, end) in zip(texts, _split_duration(texts, speech)):
                     lines.append("%d\n%s --> %s\n%s\n"
                                  % (cue, _srt_time(clock + start),
                                     _srt_time(clock + end), body))

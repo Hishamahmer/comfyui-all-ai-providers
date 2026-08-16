@@ -136,7 +136,22 @@ class ArkVideoDub:
             cmd += ["-vf", "tpad=stop_mode=clone:stop_duration=600", "-shortest"]
         elif fit == "cut video to narration":
             cmd += ["-shortest"]
-        # "keep video length" leaves both streams alone.
+        else:
+            # "keep video length": the shot is a fixed slot and the line is shorter, so the
+            # rest of the slot must be SILENCE — not a short audio stream.
+            #
+            # That distinction is the whole bug. Left alone, the clip carries 10 s of video
+            # and 6 s of audio, which plays fine on its own and then falls apart when the
+            # clips are joined: ffmpeg's concat demuxer expects every clip's streams to run
+            # the same length, so an audio stream that ends early shifts the timestamps of
+            # everything after it and narration starts landing under the wrong scene.
+            #
+            # `apad` extends the audio with real silence and `-shortest` cuts it at the end
+            # of the picture, so audio and video are exactly equal and concat has nothing
+            # to drift. The gap is silent, which is what was asked for.
+            cmd += (["-af", "apad", "-shortest"] if keep_original_at <= 0
+                    else ["-filter_complex", cmd[cmd.index("-filter_complex") + 1] + ",apad",
+                          "-shortest"])
 
         cmd += ["-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
                 "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", out_path]
