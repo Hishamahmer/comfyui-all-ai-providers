@@ -32,11 +32,42 @@ def image_batch_to_data_uris(images):
     return uris
 
 
+PLACEHOLDER_MAX_PIXELS = 64          # an 8x8 tile; no real photograph is this small
+
+
+def is_placeholder(images):
+    """Is this IMAGE socket carrying a "nothing here" tile rather than a picture?
+
+    A node that fans out over a list cannot leave one item's socket unwired the way a
+    single-shot graph can — every item in the list must supply a tensor, so "no image"
+    has to be represented by one. The convention across this pack is a tiny uniform
+    tile, and it must never be transmitted: a model handed an 8x8 black square as a
+    reference does not ignore it, it tries to satisfy it.
+
+    Deliberately narrow. A tile is a placeholder only if it is BOTH minuscule and
+    perfectly uniform, so a genuine small crop with any detail in it still goes.
+    """
+    try:
+        if images is None or images.shape[0] == 0:
+            return True
+        height, width = int(images.shape[1]), int(images.shape[2])
+        if height * width > PLACEHOLDER_MAX_PIXELS:
+            return False
+        return bool(float(images.max() - images.min()) < 1e-6)
+    except (AttributeError, IndexError, TypeError, ValueError):
+        return False
+
+
 def collect_images_to_data_uris(*images):
-    """Several optional IMAGE sockets (each may be a batch) -> flat list of data URIs."""
+    """Several optional IMAGE sockets (each may be a batch) -> flat list of data URIs.
+
+    Placeholder tiles are dropped rather than sent, so a fanned-out cell that has no
+    reference image is indistinguishable — to the model — from one whose socket was
+    never wired.
+    """
     uris = []
     for img in images:
-        if img is not None:
+        if img is not None and not is_placeholder(img):
             uris.extend(image_batch_to_data_uris(img))
     return uris
 

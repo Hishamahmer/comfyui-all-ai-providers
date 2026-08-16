@@ -176,6 +176,13 @@ def _video_assemble():
     return c, d
 
 
+def _variation():
+    from .variation import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _realestate():
     # Private, git-ignored sub-package. A clone of this repo has no realestate/ folder,
     # so this import fails there and _load just reports it — nothing else breaks.
@@ -227,6 +234,7 @@ _load("video assemble", _video_assemble)
 _load("load clips", _load_clips)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
+_load("variation pipeline", _variation)
 # Optional private sub-packages: present on the author's machine, absent from a clone.
 # Loaded only when the folder is actually there, so a normal install stays quiet instead
 # of reporting an import failure for something it was never meant to have.
@@ -240,6 +248,16 @@ _load("codex llm", _codex_llm)
 # Add future providers here, e.g.:
 # _load("ollama provider", _ollama)
 # _load("fal provider", _fal)
+
+# The load-time banner. Last, so it can report the final node count, and wrapped even
+# though `show()` is already defensive — nothing decorative may ever stop the pack
+# loading. Set ARK_BANNER=0 to silence it.
+try:
+    from .common.banner import show as _show_banner
+
+    _show_banner(len(NODE_CLASS_MAPPINGS))
+except Exception as _exc:  # pragma: no cover - cosmetic only
+    print("[arkennemasis] banner skipped: %s" % _exc)
 
 # Front-end assets (the running/"cooking" activity badge).
 WEB_DIRECTORY = "./web"

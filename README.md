@@ -62,6 +62,57 @@ needed; every generation is an API call.
 | arkennemasis/**Video** | arkennemasis Video Assemble (clips + music + subs) | joins every clip, levels each one's speech, ducks a music bed, burns the captions | `STRING`, `VIDEO` |
 | arkennemasis/**Video** | arkennemasis Load Clips (finished clips from disk) | reads a run's finished clips back as a VIDEO list — join a film whose render was interrupted, without re-rendering | `VIDEO` list |
 
+### arkennemasis/**Variation** — the product-variation pipeline
+
+A client's variation spreadsheet plus one locked base photograph in; a verified,
+consistently framed image library out. Any product, any number of variation axes. The
+guarantee is not "good images" — it is that **every delivered image shows the same
+physical object, differing only in the specified attribute**.
+
+**A colour's specification format is a property of the VALUE, not the axis.** Four are
+supported and a real client sheet mixes them inside a single axis:
+
+| Format | `spec_type` | Reference sent? | Colour auto-checked? |
+|---|---|---|---|
+| hex only | `hex` | no — a flat swatch would ask for a flat fill | yes |
+| hex + description | `hex` | no | yes |
+| reference image | `reference_image` | yes | no — there is no target |
+| reference image + hex | `reference_image` | yes | yes |
+
+A bare word with neither is rejected: a word is a request for an opinion, and the model
+gives a different opinion every time it is asked. `ref_url` accepts an `http(s)` URL, a
+`file://` URL, or a bare local path.
+
+Nothing in `variation/` knows what a product is. No region names, no axis names, no
+counts, no filename patterns: all of those arrive from the recipe or the intake mapping,
+and the cell generator is a cartesian product over however many axes the recipe declares.
+
+| Node | What it does | Out |
+|---|---|---|
+| Sheet Probe | reads any client sheet (CSV/TSV/JSON) without interpreting it, and proposes a column mapping | `STRING` |
+| Variation Intake | normalises whatever arrived into VARIANTS / SPECS / PRODUCT and runs every pre-generation validation. **Fails loudly rather than guessing** — a guessed material makes a plausible image that is wrong | `STRING`, `BOOLEAN`, `INT` |
+| Spec Library | downloads, caches and content-hashes every reference; renders a swatch per hex. Per client, accumulates across products | `STRING`, `IMAGE` |
+| Plate Lock | freezes one base photo and measures it: hash, dimensions, colour profile, per-region boxes, proportion ratios. After this it is never regenerated | `IMAGE`, `MASK`, `STRING` |
+| Region Mask | pulls one named region's mask back out of the locked plate, resolving the cell's own target region by itself | `MASK`, `STRING`, `BOOLEAN` |
+| Recipe Brief | the fixed, **product-neutral** Tier 0 meta-prompt — it discovers regions by looking at the photograph | `STRING` |
+| Recipe Compile | validates the model's JSON, merges the library, and **injects both locks and the tolerances as constants** — anything the model wrote there is discarded | `STRING`, `BOOLEAN` |
+| Recipe Gate | the one human checkpoint. Blocks everything downstream until a name is typed. Guards the `paints` field, which is where a wrong answer wastes a whole run | `STRING` |
+| Cell Matrix / Cell At | the cartesian product of **N** axes × plates, then one cell by index. Two nested loops over exactly two axes is a defect, not a simplification | `STRING`, `IMAGE`, `INT` |
+| Prompt Build | assembles one prompt by **pure substitution** — change instruction, then invariants, then both locks, the last three byte-identical across the run. Never calls a model | `STRING` |
+| Prompt Audit | proves every prompt in the run shared one constant block, and fails if not. Prompt variance is *the* mechanism by which a set drifts | `BOOLEAN`, `INT` |
+| Gen Route | picks the deterministic or the generative path per axis. Both inputs lazy, so the branch not taken is **never evaluated** — no API call at all | `IMAGE`, `STRING` |
+| Region Recolour | retints a masked region to an exact hex in CIELAB while keeping the plate's own shading. Free, instant, and **cannot drift by construction** | `IMAGE`, `INT` |
+| Verify Candidate | measures product identity, frame match, colour ΔE2000, bleed and hygiene, then returns pass / soft / hard. The step that used to live in the operator's head | `STRING`, `BOOLEAN`, `FLOAT` |
+| Calibrate | derives tolerances from a real labelled set instead of guesswork, and reports the operator's true current pass rate. No generation spend | `STRING`, `FLOAT` |
+| Job Skip / Job Record / Run Report | durable per-cell records on disk. Job Skip's generate branch is **lazy**, so a finished cell is never re-generated and never re-billed | `IMAGE`, `STRING`, `FLOAT` |
+| Deliver | the format ladder (PNG / white-background JPG / WebP / thumb) filed one directory level per axis. Overwrites in place — no `_v2`, no timestamps | `STRING` |
+| Review Board | an HTML contact sheet whose approve/reject buttons write **straight into the job records**, plus an `.excalidraw` matrix for the client | `STRING` |
+| Store Export | the variation CSV with `meta:attribute_pa_{axis}` columns and each row's image — what turns a folder of images into "the variations are live" | `STRING`, `INT` |
+
+Full instructions, the measured behaviour, and the five verification lessons that cost
+real debugging:
+`claude/workflow-runbooks/variation-pipeline/RUNBOOK.md` in the portable install.
+
 ### Qwen3-TTS — why it needs a one-off setup
 
 **Qwen3-TTS runs in a subprocess, and that is deliberate.** It is written against
@@ -371,6 +422,7 @@ comfyui-arkennemasis/
 │   ├── keys.py                 resolve_key(): node field → env var → .env
 │   ├── image_utils.py          tensor ↔ data-URI ↔ bytes, text normalising
 │   ├── throttle.py             serial_lock(), concurrency_gate(), with_retry()
+│   ├── banner.py               the load-time ASCII banner (ARK_BANNER=0 silences it)
 │   ├── system_instructions.py  the System Instructions node
 │   ├── shot_selector.py        the Shot Selector node (lazy input + ExecutionBlocker)
 │   ├── subject_line.py         the Subject Line node (gender stated once, not per prompt)
@@ -389,6 +441,20 @@ comfyui-arkennemasis/
 ├── replicate_provider/      ONE PROVIDER = ONE FOLDER
 │   ├── nodes.py                Replicate LLM + Image Gen nodes
 │   └── settings.py             the shared Image Gen Settings node
+│
+├── variation/               PRODUCT-VARIATION PIPELINE — a use case, not a provider
+│   ├── schema.py               the canonical 3-table schema + every validator
+│   ├── colour.py               sRGB↔Lab, ΔE2000, robust sampling, shading-preserving recolour
+│   ├── intake.py               Sheet Probe + Variation Intake
+│   ├── spec_library.py         download, cache and hash every reference
+│   ├── plate_lock.py           freeze and measure the base plate; Region Mask
+│   ├── recipe.py               Tier 0 brief, compile+validate, and the human gate
+│   ├── cells.py                the N-axis cartesian product, and one cell by index
+│   ├── prompt_build.py         substitution-only prompts + the constancy audit
+│   ├── job_store.py            durable job records, lazy resume, the run report
+│   ├── recolour.py             the non-generative path and the per-axis router
+│   ├── verify.py               identity / frame / colour / bleed, and calibration
+│   └── deliver.py              format ladder, review board, store import file
 │
 ├── fonts/                   CAPTION FONTS — 13 OFL/Apache families, see fonts/README.md
 │
@@ -409,12 +475,18 @@ categories** (Replicate already serves both `LLM` and `Image Gen`):
 
 ```
 arkennemasis/
-├── LLM         ← replicate_provider · (ollama_provider · fal_provider · …)
-├── Image Gen   ← replicate_provider · (fal_provider · …)
-├── Video Gen   ← (new folder when needed)
-├── Audio       ← (new folder when needed)
+├── LLM         ← replicate_provider · codex_provider
+├── Image Gen   ← replicate_provider · codex_provider · (fal_provider · …)
+├── Video       ← common/ modules (Scene List, Hailuo Scene, Video Assemble, …)
+├── Audio       ← common/qwen_tts_node
+├── Variation   ← variation/ (a USE CASE, not a provider — it calls the others)
 └── Utility     ← common/ modules (System Instructions, Shot Selector, Run Folder, …)
 ```
+
+`variation/` is the first sub-package organised around a **use case** rather than a
+backend. It owns no model and no API client: it calls `codex_provider`'s LLM and image
+nodes like any other consumer would. That is the shape to copy for the next pipeline —
+providers stay thin and swappable, use cases compose them.
 
 ## Adding a module — 3 steps
 
