@@ -44,6 +44,19 @@ SERVICE_TIER = {SPEED_STANDARD: "default", SPEED_FAST: "priority"}
 
 BASE_URL = "https://chatgpt.com/backend-api/codex"
 IMAGE_MODEL = "gpt-image-2"
+
+# Preview frames to ask for. **0 — none.** Nothing consumes them: the node returns one
+# finished image, so a preview was only ever a fallback that could not be used.
+#
+# Measured 2026-08-21, and this is why it is 0 rather than 1. On a run that failed six
+# times, the stream census showed the backend emitting
+# `response.image_generation_call.partial_image` carrying a 2.5 MB payload at
+# `quality: medium`, then `response.completed` with the final `result` never populated —
+# so the node had a medium-quality preview it must not return and no image it could.
+# A second call in the same run, which emitted no partial at all, returned its final on
+# the first attempt. Asking for previews is at best free and at worst the thing that
+# stops the real image arriving; nothing here wants them either way.
+PARTIAL_IMAGES = 0
 # The chat model is only the host that invokes the tool; it makes no pixels itself.
 HOST_MODEL = "gpt-5.5"
 INSTRUCTIONS = ("You are an assistant that must fulfill image generation and image "
@@ -182,32 +195,87 @@ def _iter_sse(response):
         yield got
 
 
+# A 1024x1024 PNG is hundreds of kilobytes of base64. Anything short is a message, an
+# id or a status string, not a picture.
+_MIN_IMAGE_B64 = 2048
+
+
+def _shape_of(value, depth=0):
+    """Key names and value KINDS of a payload — never the values themselves.
+
+    Enough to answer "where did the image go" from a log line, without printing a
+    megabyte of base64 or anything the user would not want on disk.
+    """
+    if isinstance(value, dict):
+        if depth >= 3:
+            return "{%s}" % ", ".join(sorted(value)[:8])
+        return "{%s}" % ", ".join(
+            "%s: %s" % (k, _shape_of(v, depth + 1)) for k, v in list(value.items())[:12])
+    if isinstance(value, list):
+        return "[%d x %s]" % (len(value),
+                              _shape_of(value[0], depth + 1) if value else "-")
+    if isinstance(value, str):
+        return "str(%d)" % len(value)
+    return type(value).__name__
+
+
+def _looks_like_image_b64(value):
+    """Is this string plausibly a base64 image payload rather than ordinary text?"""
+    if not isinstance(value, str) or len(value) < _MIN_IMAGE_B64:
+        return False
+    head = value[:64]
+    return not (" " in head or "\n" in head)
+
+
 def _find_image_b64(value):
-    """``(base64, is_final)`` — newest image in an event payload (shapes vary by version).
+    """``(base64, is_final)`` — the image in an event payload (shapes vary by version).
 
     ``is_final`` separates a finished render from a `partial_images` preview. They used to
     be indistinguishable, so a stream cut short mid-render could silently hand back a
     half-drawn image as if it were the result.
+
+    **A FINAL ALWAYS WINS.** The previous version walked the payload and let the last hit
+    replace whatever it had already found — so an event carrying both the completed
+    `image_generation_call` and a `partial_image_b64` (or any nesting that visited the
+    partial second) returned the PREVIEW and reported "no final image". The caller then
+    retried six times, found the same thing every time, and killed the run with a
+    `CodexStreamTruncated` on a request the backend had actually completed.
     """
-    found = (None, False)
-    if isinstance(value, dict):
-        if value.get("type") == "image_generation_call":
-            result = value.get("result")
-            if isinstance(result, str) and result:
-                found = (result, True)
-        partial = value.get("partial_image_b64")
-        if isinstance(partial, str) and partial:
-            found = (partial, False)
-        for child in value.values():
-            nested = _find_image_b64(child)
-            if nested[0]:
-                found = nested
-    elif isinstance(value, list):
-        for child in value:
-            nested = _find_image_b64(child)
-            if nested[0]:
-                found = nested
-    return found
+    final = None
+    partial = None
+
+    def walk(node):
+        nonlocal final, partial
+        if isinstance(node, dict):
+            # `type` has been both "image_generation_call" and, in later shapes, a
+            # dotted variant of it. Substring rather than equality so a rename of the
+            # kind this undocumented backend does without notice degrades to "still
+            # works" instead of "silently returns previews forever".
+            kind = node.get("type")
+            if isinstance(kind, str) and "image_generation_call" in kind:
+                result = node.get("result")
+                if isinstance(result, str) and result and final is None:
+                    final = result
+            # Fallback shapes, for when the item type gets renamed again. Guarded by
+            # `_looks_like_image_b64` because `result` is a common key for ordinary text
+            # too, and treating a sentence as a PNG fails much later and much worse.
+            for key in ("result", "b64_json", "image_b64"):
+                candidate = node.get(key)
+                if final is None and _looks_like_image_b64(candidate):
+                    final = candidate
+            preview = node.get("partial_image_b64")
+            if isinstance(preview, str) and preview:
+                partial = preview
+            for child in node.values():
+                walk(child)
+        elif isinstance(node, list):
+            for child in node:
+                walk(child)
+
+    walk(value)
+    if final:
+        return (final, True)
+    return (partial, False) if partial else (None, False)
 
 
 # Any of these means the backend finished talking. Without one, the stream was cut off.
@@ -363,7 +431,7 @@ class ArkCodexImageGen:
             content.append({"type": "input_image", "image_url": uri})
 
         tool = {"type": "image_generation", "model": IMAGE_MODEL,
-                "output_format": "png", "partial_images": 1}
+                "output_format": "png", "partial_images": PARTIAL_IMAGES}
         # Best-effort only: this backend ignores `size` (the prompt line above is what
         # actually works). Never raise on a ratio we have no pixel mapping for.
         size = _tool_size(aspect_ratio)
@@ -400,6 +468,8 @@ class ArkCodexImageGen:
             attempt["n"] += 1
             stats = codex_stream.StreamStats("codex-image attempt %d" % attempt["n"])
             images = {}
+            seen_types = []
+            image_shapes = {}
             with httpx.Client(timeout=timeout, headers=headers) as http:
                 with http.stream("POST", BASE_URL + "/responses", json=payload) as resp:
                     stats.headers_at = time.time()
@@ -419,6 +489,21 @@ class ArkCodexImageGen:
                         err.retryable = resp.status_code in (429, 500, 502, 503, 504)
                         raise err
                     def collect(event):
+                        # Keep a shape-only census of the stream. When no final image
+                        # arrives this is the only evidence of WHY, and without it the
+                        # answer is another billed run. Types and key names only —
+                        # never payloads, so nothing large or sensitive is logged.
+                        if isinstance(event, dict):
+                            kind = event.get("type")
+                            if isinstance(kind, str):
+                                seen_types.append(kind)
+                                # `output_item.done` and `completed` are where a finished
+                                # image_generation_call would carry its `result`, and
+                                # neither has "image" in its type — the first census
+                                # missed exactly the two events that answer the question.
+                                if ("image" in kind or kind.endswith("output_item.done")
+                                        or kind.endswith("response.completed")):
+                                    image_shapes.setdefault(kind, _shape_of(event))
                         found, is_final = _find_image_b64(event)
                         if found:
                             if is_final:
@@ -440,27 +525,64 @@ class ArkCodexImageGen:
                 "ok" if final_b64 else "no final image"))
             if final_b64:
                 return final_b64
+
+            # No image. Print the stream's shape ONCE (first attempt only — six
+            # identical censuses is noise), so the next question is answerable from the
+            # log instead of from another billed run.
+            if attempt["n"] == 1:
+                from collections import Counter
+                census = ", ".join("%s x%d" % (name, n)
+                                   for name, n in Counter(seen_types).most_common())
+                print("[arkennemasis] codex-image stream census: %s" % (census or "(none)"))
+                for kind, shape in image_shapes.items():
+                    print("[arkennemasis]   %s -> %s" % (kind, shape))
+                if not image_shapes:
+                    print("[arkennemasis]   no event carried 'image' in its type — the "
+                          "tool may not have been invoked at all")
             # A partial_images preview is a HALF-RENDERED frame. It used to be returned
             # as the result, which is how a low-detail render reached the video stage
             # looking like a finished still. Retry for the real one instead.
             if images.get("partial"):
                 raise CodexStreamTruncated(
                     "Codex completed the response but only sent a partial_images "
-                    "preview, never the final image. Retrying.")
+                    "preview, never the final image. Previews are no longer requested "
+                    "(PARTIAL_IMAGES=0), so receiving one means the backend sent it "
+                    "unasked — and its preview is rendered at a lower quality than the "
+                    "one requested, which is why it is not returned. Retrying.")
             raise CodexStreamTruncated(
-                "Codex completed the response without sending an image.")
+                "Codex completed the response without sending an image. The host model "
+                "answered in text instead of finishing the image tool call — check the "
+                "stream census above for `output_text` events. Retrying.")
 
         print("[arkennemasis] %s via Codex login as %s" % (IMAGE_MODEL, account))
-        image_b64 = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))
+
+        def _substitute(reason):
+            """Hand back the input image so a long run survives one bad scene."""
+            print("[arkennemasis] *** NO IMAGE RETURNED for this scene (%s). "
+                  "Substituting the REFERENCE IMAGE so the run survives - re-render "
+                  "this scene on its own afterwards. ***" % reason)
+            return (image_1, account)
+
+        try:
+            image_b64 = with_retry(call, log=lambda m: print("[arkennemasis] %s" % m))
+        except Exception as exc:
+            # `with_retry` RAISES on its final attempt rather than returning None, so the
+            # `if not image_b64` branch below was unreachable for every exception-based
+            # failure — which is most of them, `CodexStreamTruncated` included. That made
+            # `on_failure` dead for the commonest failure there is, and in a batch a
+            # single truncated stream discarded every option already rendered. Measured
+            # 2026-08-21: six attempts at ~60 s each, then the whole 110-option prompt
+            # died on option one.
+            #
+            # `fail the run` still fails the run — the raise is re-raised untouched — so
+            # nothing changes for a workflow that never set this widget.
+            if on_failure == "use the reference image" and image_1 is not None:
+                return _substitute(type(exc).__name__)
+            raise
         if not image_b64:
             # Definitive, not transient: with_retry has already exhausted its attempts.
-            # Raising here inside a loop discards every scene rendered so far, so allow
-            # substituting the reference rather than losing the whole run.
             if on_failure == "use the reference image" and image_1 is not None:
-                print("[arkennemasis] *** NO IMAGE RETURNED for this scene (likely a "
-                      "moderation refusal). Substituting the REFERENCE IMAGE so the run "
-                      "survives - re-render this scene on its own afterwards. ***")
-                return (image_1, account)
+                return _substitute("likely a moderation refusal")
             raise RuntimeError(
                 "Codex returned no image. The account may not have the image tool, or "
                 "the prompt was refused by moderation. Set on_failure to 'use the "

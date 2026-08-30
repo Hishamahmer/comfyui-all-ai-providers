@@ -227,6 +227,48 @@ def estimate_words(text, start, end):
     return timed
 
 
+def _normalise(word):
+    """Compare words by their letters only.
+
+    Whisper returns " Round" and "Hill," where the script has "Round" and "Hill" — case,
+    leading space and trailing punctuation all differ without the word being different.
+    """
+    return "".join(ch for ch in str(word).lower() if ch.isalnum())
+
+
+def cues_from_timings(timings, per_cue=4):
+    """Build the cues FROM the measured words, so nothing has to be aligned.
+
+    The first version of this tried to keep the script's wording and borrow the measured
+    times, matching the two word by word. That is fragile for a reason no amount of fuzzy
+    matching fixes: the script and the transcript are different TOKENISATIONS of the same
+    speech. Measured on a real run — the script said "one billion dollars" (three words)
+    and the transcript "$1 billion" (two), and every word after that sat one slot late
+    until the end of the line. A one-slot shift is precisely the bug this exists to fix.
+
+    So the measured words ARE the caption. Each carries its own start and end, there is
+    nothing to match, and the mark cannot land on the wrong word by construction.
+
+    It also produces better captions, which is a happy accident rather than the point:
+    the script spells numbers out because a text-to-speech model reads "$1B" wrong, while
+    a caption is read by eye and "$1 billion" is how anyone would write it. The script is
+    written for the ear; the transcript is what was actually said, written for the page.
+
+    Returns [(start, end, words, text)] per cue.
+    """
+    out = []
+    step = max(1, int(per_cue))
+    for index in range(0, len(timings), step):
+        group = timings[index:index + step]
+        words = [{"word": w["word"].strip(), "start": w["start"], "end": w["end"]}
+                 for w in group if w["word"].strip()]
+        if not words:
+            continue
+        out.append((words[0]["start"], words[-1]["end"], words,
+                    " ".join(w["word"] for w in words)))
+    return out
+
+
 def _shape(text, style):
     if style.get("all_caps"):
         text = text.upper()

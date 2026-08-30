@@ -1,6 +1,7 @@
 """arkennemasis — ComfyUI nodes for many AI use cases, under one brand.
 
-Menu layout:  arkennemasis/LLM  ·  /Image Gen  ·  /Utility  ·  /Video
+Menu layout:  arkennemasis/LLM  ·  /Image Gen  ·  /Utility  ·  /Video  ·  /Audio
+              /Variation  ·  /Avatar
 
 Currently bundled:
   * Replicate  — OpenAI GPT-5 LLM (text + vision) and gpt-image-2, via an API key.
@@ -162,6 +163,62 @@ def _caption_style():
     return c, d
 
 
+def _match_aspect():
+    from .common.match_aspect import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _option_board():
+    from .common.option_board import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _word_timings():
+    from .common.word_timings import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _web_shot():
+    from .common.web_shot import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _screenshot_one():
+    from .common.screenshot_one import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _mask_refine():
+    from .common.mask_refine import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _overlay_subject():
+    from .common.overlay_subject import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _avatar():
+    from .avatar import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _load_clips():
     from .common.load_clips import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -187,6 +244,35 @@ def _realestate():
     # Private, git-ignored sub-package. A clone of this repo has no realestate/ folder,
     # so this import fails there and _load just reports it — nothing else breaks.
     from .realestate import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _hairstyle():
+    # Private, git-ignored sub-package, same arrangement as realestate/. A clone of this
+    # repo has no hairstyle/ folder, so this import fails there and _load just reports
+    # it — nothing else breaks.
+    from .hairstyle import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _thumbnail():
+    # Private, git-ignored sub-package, same arrangement as realestate/ and hairstyle/.
+    from .thumbnail import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
+def _ecom():
+    # Private, git-ignored sub-package, same arrangement as realestate/, hairstyle/ and
+    # thumbnail/. Its own package rather than a fourth catalog behind the hairstyle
+    # picker: the hairstyle lock forbids a change of pose, which is the only thing this
+    # tool does.
+    from .ecom import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
     )
     return c, d
@@ -232,9 +318,16 @@ _load("scene at", _scene_at)
 _load("video dub", _video_dub)
 _load("video assemble", _video_assemble)
 _load("load clips", _load_clips)
+_load("option board", _option_board)
+_load("match aspect", _match_aspect)
+_load("word timings", _word_timings)
+_load("web shot", _web_shot)
+_load("screenshotone", _screenshot_one)
+_load("mask refine", _mask_refine)
+_load("overlay subject", _overlay_subject)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
-_load("variation pipeline", _variation)
+_load("avatar", _avatar)
 # Optional private sub-packages: present on the author's machine, absent from a clone.
 # Loaded only when the folder is actually there, so a normal install stays quiet instead
 # of reporting an import failure for something it was never meant to have.
@@ -242,6 +335,18 @@ import os as _os
 
 if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "realestate")):
     _load("real estate", _realestate)
+if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "hairstyle")):
+    _load("hairstyle", _hairstyle)
+if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "thumbnail")):
+    _load("thumbnail", _thumbnail)
+if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "ecom")):
+    _load("ecom poses", _ecom)
+# `variation` joined this list later than the others. It shipped publicly in 6d84cf4 with
+# the compiler meta-prompt and both stock locks sitting in `recipe.py` as widget defaults,
+# which is the product rather than the plumbing. Now treated like the rest: present here,
+# absent from a clone.
+if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "variation")):
+    _load("variation pipeline", _variation)
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
 _load("codex llm", _codex_llm)

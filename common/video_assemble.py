@@ -318,6 +318,13 @@ class ArkVideoAssemble:
                                "one of the five subtitle styles. Leave it unconnected "
                                "for plain white captions at subtitle_size.",
                 }),
+                "word_timings": ("STRING", {
+                    "default": "", "multiline": False, "forceInput": True,
+                    "tooltip": "Measured word timings from ArkWordTimings. Supplied, the "
+                               "moving caption styles mark the REAL word and the cue "
+                               "boundaries come from the audio too. Left unwired, both "
+                               "fall back to an estimate that drifts.",
+                }),
                 "subtitle_size": ("INT", {
                     "default": 0, "min": 0, "max": 200,
                     "tooltip": "0 = scale to the video (about 4% of frame height), which "
@@ -336,7 +343,8 @@ class ArkVideoAssemble:
     def IS_CHANGED(cls, **kwargs):
         return float("nan")          # always re-assemble; the clips may have changed
 
-    def run(self, videos, output_dir, filename, scenes_json=None, music_path=None,
+    def run(self, videos, output_dir, filename, word_timings=None, scenes_json=None,
+            music_path=None,
             music_volume=None, normalize_speech=None, burn_subtitles=None,
             caption_style=None, subtitle_size=None, crf=None):
         ffmpeg = find_ffmpeg()
@@ -369,6 +377,11 @@ class ArkVideoAssemble:
             # `burn_subtitles` so either one can silence captions on its own.
             subs_on, style = False, None
         quality = int(_one(crf, 18))
+        # UNWRAPPED like every other scalar. INPUT_IS_LIST wraps them all, and a
+        # list reaching `json.loads` raises straight into the except that falls
+        # back to the estimate — so the measured timings were silently ignored and
+        # the captions drifted exactly as if the feature did not exist.
+        timings = _one(word_timings, "") or ""
 
         folder = str(out_dir).strip()
         if not folder or not os.path.isabs(folder):
@@ -431,7 +444,7 @@ class ArkVideoAssemble:
             subs = None
             if subs_on and plan:
                 subs = (self._write_ass(work, plan, durations, style, resolution,
-                                        speeches)
+                                        speeches, timings)
                         if style else self._write_srt(work, plan, durations, wrap,
                                                       speeches))
 
@@ -512,14 +525,31 @@ class ArkVideoAssemble:
             scenes = scenes.get("scenes") or scenes.get("output") or []
         return scenes if isinstance(scenes, list) and scenes else None
 
-    def _write_ass(self, work, scenes_json, durations, style, resolution, speeches=None):
+    def _write_ass(self, work, scenes_json, durations, style, resolution, speeches=None,
+                   word_timings=None):
         """Subtitles as ASS, so the Caption Style node's choices actually reach libass."""
         scenes = self._scenes(scenes_json)
         if not scenes:
             return None
 
+        # Measured timings, if any. They cover the whole audio track, so they are used
+        # ONLY when there is a single clip — with several, each clip's narration is a
+        # separate recording and a flat list cannot say which clip a word belongs to.
+        measured = None
+        if word_timings and len(durations) == 1:
+            try:
+                measured = json.loads(word_timings)
+                if not isinstance(measured, list) or not measured:
+                    measured = None
+            except Exception:
+                measured = None
+        elif word_timings:
+            print("[arkennemasis] word timings supplied but there are %d clips — they "
+                  "describe one continuous track, so the estimate is used instead."
+                  % len(durations))
+
         needs_words = style.get("style") in ass.NEEDS_WORD_TIMING
-        cues, clock = [], 0.0
+        cues, clock, source = [], 0.0, "estimated from the script"
         spoken = speeches or durations
         for scene, duration, speech in zip(scenes, durations, spoken):
             text = _voice_text(scene)
@@ -527,17 +557,32 @@ class ArkVideoAssemble:
                 # Same split as the SRT path, so the styled captions and the plain ones
                 # show the same words — a long line is several cues, never a truncation.
                 texts = _cue_texts(text)
-                for body, (start, end) in zip(texts, _split_duration(texts, speech)):
-                    cue = {"text": body, "start": clock + start, "end": clock + end}
-                    if needs_words:
-                        span = end - start
-                        # Inset the speech window, but never let it collapse on a
-                        # short cue.
-                        lead = min(LEAD_IN, span * 0.15)
-                        tail = min(TAIL, span * 0.2)
-                        cue["words"] = ass.estimate_words(
-                            body, clock + start + lead, clock + end - tail)
-                    cues.append(cue)
+                built = (ass.cues_from_timings(measured,
+                                               style.get("max_words_per_line") or 4)
+                         if measured else None)
+                if built:
+                    # The audio decides the words, when each cue appears and when each
+                    # word is marked. Previously ALL THREE came from the same proportional
+                    # guess, so a cue could be on screen before its first word was spoken.
+                    source = "measured from the audio"
+                    for start, end, words, body in built:
+                        cue = {"text": body, "start": clock + start, "end": clock + end}
+                        if needs_words:
+                            cue["words"] = [dict(w, start=clock + w["start"],
+                                                 end=clock + w["end"]) for w in words]
+                        cues.append(cue)
+                else:
+                    for body, (start, end) in zip(texts, _split_duration(texts, speech)):
+                        cue = {"text": body, "start": clock + start, "end": clock + end}
+                        if needs_words:
+                            span = end - start
+                            # Inset the speech window, but never let it collapse on a
+                            # short cue.
+                            lead = min(LEAD_IN, span * 0.15)
+                            tail = min(TAIL, span * 0.2)
+                            cue["words"] = ass.estimate_words(
+                                body, clock + start + lead, clock + end - tail)
+                        cues.append(cue)
             clock += duration
         if not cues:
             return None
@@ -548,7 +593,7 @@ class ArkVideoAssemble:
         print("[arkennemasis] %d subtitle cues as ASS — %s in %s at %dx%d%s"
               % (len(cues), style.get("style"), style.get("font"),
                  resolution[0], resolution[1],
-                 ", word timings estimated from the script" if needs_words else ""))
+                 (", word timings " + source) if needs_words else ""))
         return path
 
     def _write_srt(self, work, scenes_json, durations, wrap=42, speeches=None):

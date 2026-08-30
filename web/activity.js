@@ -26,6 +26,16 @@ const ANIMATED_NODES = new Set([
   // Shells out to ffmpeg per clip.
   "ArkVideoDub",
   "ArkVideoAssemble",
+  // Launches a headless browser and waits for a real page to load — twice when it is
+  // fetching the text as well. Ten seconds of nothing on the canvas otherwise.
+  "ArkWebShot",
+  // Compositing is fast per frame and there are a great many frames; a minute of video
+  // is well over a thousand passes through the loop.
+  "ArkOverlaySubject",
+  // Loads ~3 GB of Whisper before it transcribes anything.
+  "ArkWordTimings",
+  // Launches a browser per source; a slow publisher is a minute on its own.
+  "ArkScreenshotOne",
 ]);
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
