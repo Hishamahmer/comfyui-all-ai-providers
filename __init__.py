@@ -233,49 +233,9 @@ def _video_assemble():
     return c, d
 
 
-def _variation():
-    from .variation import (
-        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
-    )
-    return c, d
 
 
-def _realestate():
-    # Private, git-ignored sub-package. A clone of this repo has no realestate/ folder,
-    # so this import fails there and _load just reports it — nothing else breaks.
-    from .realestate import (
-        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
-    )
-    return c, d
 
-
-def _hairstyle():
-    # Private, git-ignored sub-package, same arrangement as realestate/. A clone of this
-    # repo has no hairstyle/ folder, so this import fails there and _load just reports
-    # it — nothing else breaks.
-    from .hairstyle import (
-        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
-    )
-    return c, d
-
-
-def _thumbnail():
-    # Private, git-ignored sub-package, same arrangement as realestate/ and hairstyle/.
-    from .thumbnail import (
-        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
-    )
-    return c, d
-
-
-def _ecom():
-    # Private, git-ignored sub-package, same arrangement as realestate/, hairstyle/ and
-    # thumbnail/. Its own package rather than a fourth catalog behind the hairstyle
-    # picker: the hairstyle lock forbids a change of pose, which is the only thing this
-    # tool does.
-    from .ecom import (
-        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
-    )
-    return c, d
 
 
 def _codex():
@@ -328,25 +288,11 @@ _load("overlay subject", _overlay_subject)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
 _load("avatar", _avatar)
-# Optional private sub-packages: present on the author's machine, absent from a clone.
-# Loaded only when the folder is actually there, so a normal install stays quiet instead
-# of reporting an import failure for something it was never meant to have.
-import os as _os
-
-if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "realestate")):
-    _load("real estate", _realestate)
-if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "hairstyle")):
-    _load("hairstyle", _hairstyle)
-if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "thumbnail")):
-    _load("thumbnail", _thumbnail)
-if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "ecom")):
-    _load("ecom poses", _ecom)
-# `variation` joined this list later than the others. It shipped publicly in 6d84cf4 with
-# the compiler meta-prompt and both stock locks sitting in `recipe.py` as widget defaults,
-# which is the product rather than the plumbing. Now treated like the rest: present here,
-# absent from a clone.
-if _os.path.isdir(_os.path.join(_os.path.dirname(__file__), "variation")):
-    _load("variation pipeline", _variation)
+# The private packages - real estate, hairstyle, thumbnail, ecom poses and the
+# variation pipeline - are no longer here. They live in the separate
+# `comfyui-delusionalmachines` pack, which is where the authored system instructions
+# belong: they are the product, and this repo is public. ComfyUI loads both packs into
+# one registry, so a canvas mixing nodes from each keeps working with no change.
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
 _load("codex llm", _codex_llm)
