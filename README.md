@@ -1,18 +1,38 @@
 # arkennemasis — ComfyUI Nodes
 
-One pack, one menu (**arkennemasis**), many AI use cases. **61 nodes** today:
+One pack, one menu (**arkennemasis**), many AI use cases. **75 nodes** today:
 
 | Category | | |
 |---|---|---|
-| **Variation** | 31 | a client's spreadsheet plus one photo → a verified, consistently-framed product image library |
-| **Utility** | 11 | captions, subtitles, image and text helpers |
-| **Video** | 9 | per-shot generation, dubbing, narration-fitted assembly |
-| **Real Estate** | 6 | room redesign presets |
-| **Image Gen · LLM · Audio** | 4 | `gpt-image-2`, GPT-5 text + vision, local TTS |
+| **Variation** | 35 | a client's spreadsheet plus one photo → a verified, consistently-framed product image library |
+| **Utility** | 17 | web capture, masks, compositing, boards, captions, image and text helpers |
+| **Video** | 10 | per-shot generation, dubbing, measured captions, narration-fitted assembly |
+| **Avatar** | 6 | find a story, write it, speak it, and put a presenter in front of it |
+| **Image Gen · LLM · Audio** | 7 | `gpt-image-2`, GPT-5 text + vision, local TTS |
 
 Providers and use cases keep growing — each module loads independently, so nothing breaks
 anything else. And if you already pay for ChatGPT, none of the image or text nodes need an
 API key.
+
+---
+
+## What you can build
+
+| You want | The pack gives you |
+|---|---|
+| **A talking-head news video, every morning, by itself** | It finds a story, writes it, speaks it, animates a presenter, cuts them out and stands them in front of a screenshot of the article. It remembers what it already covered. |
+| **A narrated film from one brief** | Write the idea once. It plans the scenes, renders each one, makes every shot last as long as its voice-over, then joins them with music and subtitles. |
+| **A product photo library from a spreadsheet** | One photo of the product plus a list of colours or finishes in, a full set of images out — same object every time, only the named part changing. |
+| **A training dataset for a character LoRA** | One photo in, 24 shots out, each with its caption file. Ready-made workflow included. |
+| **The same picture, many versions** | Different hair, different language, different pose. You supply the list of variants; the pack runs them and puts every result on one board to compare. |
+
+**You bring the words, the pack brings the machine.** Nothing here tells a model what to
+write — the prompts are yours. These nodes handle the parts that are the same every time:
+looping, retrying, staying in budget, keeping the shape, timing captions to speech,
+writing files where you expect them.
+
+**It won't quietly spend your money.** You can run 3 of 30 branches and the other 27 never
+execute, so a paid node upstream is never called. Every run gets its own folder and a log.
 
 ---
 
@@ -71,6 +91,31 @@ needed; every generation is an API call.
 | arkennemasis/**Video** | arkennemasis Caption Style (font + subtitle style) | one of five subtitle styles, any installed font, colours, outline, box, size, 3×3 position — and an on/off switch | `ARK_CAPTION_STYLE` |
 | arkennemasis/**Video** | arkennemasis Video Assemble (clips + music + subs) | joins every clip, levels each one's speech, ducks a music bed, burns the captions | `STRING`, `VIDEO` |
 | arkennemasis/**Video** | arkennemasis Load Clips (finished clips from disk) | reads a run's finished clips back as a VIDEO list — join a film whose render was interrupted, without re-rendering | `VIDEO` list |
+| arkennemasis/**Video** | arkennemasis Scene Split / Scene At | pull one scene out of a JSON plan — by parsing it, or by index | `STRING` |
+| arkennemasis/**Video** | arkennemasis Word Timings | transcribes the finished narration and returns **when each word is actually spoken**. Moving caption styles need real times; guessing from word count drifts | `STRING` |
+| arkennemasis/**Video** | arkennemasis Video Model / Video Save | pick one video model without both loading, and write a clip then free the weights | `MODEL`, `VIDEO` |
+| arkennemasis/**Utility** | arkennemasis Web Shot (page → picture, text, links) | drives a local Chrome and gives you a screenshot, the readable text, and the links. Free, and it can scroll to a selector first | `IMAGE`, `STRING` |
+| arkennemasis/**Utility** | arkennemasis ScreenshotOne | the hosted version of the same job, with ads and cookie banners blocked. Some sites photograph as a consent dialog through a plain browser and correctly through this | `IMAGE`, `STRING` |
+| arkennemasis/**Utility** | arkennemasis Mask Refine | turns a per-frame segmentation mask into one you can composite through — a segmenter is right frame by frame and jittery as a video | `MASK` |
+| arkennemasis/**Utility** | arkennemasis Overlay Subject | stands a cut-out subject on a background at a chosen size and position. The part a hosted avatar service does for you and never lets you adjust | `IMAGE` |
+| arkennemasis/**Utility** | arkennemasis Match Aspect | measures the image being edited and pins the generator's output to that shape. Without it an "auto" setting says nothing about shape and the model reframes your picture | `ARK_IMAGE_SETTINGS` |
+| arkennemasis/**Utility** | arkennemasis Option Board | collects a fanned-out run onto one labelled `.excalidraw` board plus a preview — how you judge a set rather than a picture | `STRING`, `IMAGE` |
+| arkennemasis/**Utility** | arkennemasis Purge VRAM | unloads models between stages, so a big image model and a big video model can share one canvas | passthrough |
+
+### arkennemasis/**Avatar** — a story in, a presenter telling it out
+
+Six nodes that turn "cover today's news about X" into a captioned vertical video, with no
+one watching. They compose with the Video and Utility nodes above rather than replacing
+them.
+
+| Node | What it does |
+|---|---|
+| **Avatar Brief** | one labelled box per thing you actually decide: the beat, the sources, the voice, the length |
+| **Story Pick** | reads the model's choice back out and checks it — a real article, from the list it was shown, not one it invented |
+| **Story History** | what has already been covered, so tomorrow picks something else |
+| **Story Record** | writes today's story into that history — **only once a video file exists**. A run that produced nothing covered nothing |
+| **Avatar Script** | splits one answer into the spoken script, the caption and the headline |
+| **Avatar Frames** | how long the clip must be, measured from the voice that will play over it |
 
 ### arkennemasis/**Variation** — the product-variation pipeline
 
@@ -78,6 +123,22 @@ A client's variation spreadsheet plus one locked base photograph in; a verified,
 consistently framed image library out. Any product, any number of variation axes. The
 guarantee is not "good images" — it is that **every delivered image shows the same
 physical object, differing only in the specified attribute**.
+
+**35 nodes, described here as a pipeline rather than one by one** — they are stages of a
+single machine and are wired for you by the workflow, not picked individually off a menu.
+There are two paths: the **ten-stage pipeline** below, for when a client hands you a messy
+sheet and the prompts still have to be worked out, and a shorter **CSV catalogue** path
+(`Catalogue Load` / `Fan-Out` / `Save` / `Board`) for when the prompts already exist and
+one row means one image.
+
+Choose the short one only when the answers are already written. It gives up the
+measurement, the bounded retry, the durable job records, the drift audit and the human
+gate — which are the ten-stage version's whole reason to exist.
+
+> **The prompts are not in this repo.** The compiler brief, the two locks and the critic's
+> rubric live in `variation/prompts_local.py`, which is git-ignored. The nodes work
+> without it; the prompt boxes just come up empty, and the wording is yours to write. A
+> saved workflow carries its own copy, so a graph someone shares with you runs as-is.
 
 **A colour's specification format is a property of the VALUE, not the axis.** Four are
 supported and a real client sheet mixes them inside a single axis:
