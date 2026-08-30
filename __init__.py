@@ -238,6 +238,13 @@ def _video_assemble():
 
 
 
+def _variation():
+    from .variation import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _codex():
     from .codex_provider.nodes import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -288,11 +295,15 @@ _load("overlay subject", _overlay_subject)
 _load("subject line", _subject_line)
 _load("text file save", _text_file_save)
 _load("avatar", _avatar)
-# The private packages - real estate, hairstyle, thumbnail, ecom poses and the
-# variation pipeline - are no longer here. They live in the separate
+_load("variation pipeline", _variation)
+# The private packages - real estate, hairstyle, thumbnail and ecom poses - are no longer
+# here. They live in the separate
 # `comfyui-delusionalmachines` pack, which is where the authored system instructions
 # belong: they are the product, and this repo is public. ComfyUI loads both packs into
 # one registry, so a canvas mixing nodes from each keeps working with no change.
+#
+# `variation` stays here by decision, prompts and all: its compiler meta-prompt and two
+# locks shipped publicly in 6d84cf4 and are staying public.
 _load("replicate provider", _replicate)
 _load("codex provider", _codex)
 _load("codex llm", _codex_llm)

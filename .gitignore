@@ -26,14 +26,6 @@ web/hairstyle.js
 thumbnail/
 web/thumbnail.js
 
-# PRIVATE — the product / interior-design variation pipeline and its prompts. Unlike the
-# four packages above this one was published once, in 6d84cf4, before the rule was
-# settled: recipe.py carries the compiler meta-prompt and both stock locks as widget
-# defaults, and those are the product. Removed from the repo here; the history rewrite is
-# what actually takes them off GitHub.
-variation/
-web/variation.js
-
 # local-only workflows — kept on disk, deliberately not published.
 # Only these ship: Character Dataset (GPT-Image-2) - Codex,
 # HyperConsistent StoryMaker - OpenAI, HyperConsistent StoryMaker - Flux 2.
@@ -58,3 +50,9 @@ vendor/
 # garment, same white ground) is the product, so they stay local to this machine.
 ecom/
 web/ecom.js
+
+# PRIVATE — the variation pipeline's authored prompts: the compiler meta-prompt, both
+# locks, the reference-material wording, the prompt brief and the critic rubric. They are
+# the product. The canvas carries them in widgets_values, so a saved graph runs without
+# this file; it only seeds the defaults on the authoring machine.
+variation/prompts_local.py
