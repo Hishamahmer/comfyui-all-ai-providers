@@ -56,3 +56,6 @@ web/ecom.js
 # the product. The canvas carries them in widgets_values, so a saved graph runs without
 # this file; it only seeds the defaults on the authoring machine.
 variation/prompts_local.py
+
+# Example workflows are kept locally only, not published.
+example workflows/
