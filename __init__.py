@@ -135,6 +135,13 @@ def _narration_length():
     return c, d
 
 
+def _narration_fit():
+    from .common.narration_fit import (
+        NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
+    )
+    return c, d
+
+
 def _video_save():
     from .common.video_save import (
         NODE_CLASS_MAPPINGS as c, NODE_DISPLAY_NAME_MAPPINGS as d,
@@ -279,6 +286,7 @@ _load("purge vram", _purge_vram)
 _load("caption style", _caption_style)
 _load("qwen tts", _qwen_tts)
 _load("narration length", _narration_length)
+_load("narration fit", _narration_fit)
 _load("video save", _video_save)
 _load("video model", _video_model)
 _load("scene at", _scene_at)
