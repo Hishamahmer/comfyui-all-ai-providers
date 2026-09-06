@@ -21,6 +21,8 @@ from the word count instead, at a natural speaking rate.
 
 import json
 
+from .scene_at import unfence
+
 # Measured on Qwen3-TTS output rather than assumed: 22 words -> 11.10 s, 21 -> 8.62 s,
 # 17 -> 10.30 s, i.e. 1.65-2.44 and about 2.0 on average. The old 2.3 was optimistic and
 # under-estimated every shot, which is how an 11.10 s line ended up over a 5.17 s clip.
@@ -82,7 +84,7 @@ class ArkSceneList:
 
     def run(self, scenes_json, min_seconds=10.0, max_seconds=15.0, limit=0):
         fps = FPS
-        raw = str(scenes_json).strip()
+        raw = unfence(scenes_json)
         try:
             scenes = json.loads(raw) if raw else []
         except ValueError as exc:

@@ -21,11 +21,33 @@ from __future__ import annotations
 import json
 
 
+def unfence(text):
+    """Strip a markdown code fence a model wrapped its JSON in.
+
+    Local models do this constantly no matter how firmly the brief says not to —
+    ```json on the first line and ``` on the last. Cloud models mostly obey, which is
+    why this went unnoticed until a local writer was wired in and every run died on
+    `scenes_json is not valid JSON ... first 200 chars: ```json`. Asking more loudly in
+    the prompt does not fix a thing the model does anyway; accepting what models
+    actually emit does.
+    """
+    text = str(text or "").strip()
+    if not text.startswith("```"):
+        return text
+    lines = text.splitlines()
+    lines = lines[1:]                       # drop the opening ``` or ```json
+    while lines and not lines[-1].strip().startswith("```"):
+        lines.pop()                         # trailing chatter after the closing fence
+    if lines:
+        lines.pop()                         # drop the closing ```
+    return chr(10).join(lines).strip()
+
+
 def parse_scenes(scenes_json):
     """The scene array, under any of the shapes a model tends to return."""
     if isinstance(scenes_json, list):
         return scenes_json
-    text = str(scenes_json or "").strip()
+    text = unfence(scenes_json)
     if not text:
         return []
     try:
